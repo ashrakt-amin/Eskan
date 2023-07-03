@@ -17,6 +17,8 @@ class RegisterUserController extends Controller
     use TraitResponseTrait ;
     public function register(Request $request)
     {
+        $admin = Auth::user();
+        if ($admin->name == 'admin' && $admin->phone == '01095425446') {
 
 
         $validatedData = $request->validate([
@@ -28,14 +30,16 @@ class RegisterUserController extends Controller
         $user = new User();
         $user->name = $validatedData['name'];
         $user->password = Hash::make($validatedData['password']);
+        $user->phone = $validatedData['phone'];
+
         $user->save();
 
         if($user){
-        $success['token'] =  $user->createToken('admin')->plainTextToken;
+        $success['token'] =  $user->createToken('user')->plainTextToken;
         $success['tokenName'] =  DB::table('personal_access_tokens')->orderBy('id', 'DESC')->select('name')->where(['tokenable_id'=>$user->id])->first();
         $success['name'] =  $user;
         return $this->sendResponse($success, 'تم التسجيل بنجاح.');
-       
+        } 
     } else {
         return response()->json([
             'message' => "unauthenticated",

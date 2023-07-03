@@ -12,7 +12,7 @@ use App\Http\Controllers\Api\auth\RegisterUserController;
 
 
 //start register
-Route::prefix("register")->group(function () {
+Route::middleware('auth:sanctum')->prefix("register")->group(function () {
     Route::post("users",  [RegisterUserController::class, "register"])->name("register.users");
 });
 
