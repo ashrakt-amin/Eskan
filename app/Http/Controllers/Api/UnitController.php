@@ -35,9 +35,10 @@ class UnitController extends Controller
     }
 
 
-    public function show(Unit $unit)
+    public function show($id)
     {
-        //
+        return $this->sendResponse($this->Repository->find($id), " ", 200);
+
     }
 
 

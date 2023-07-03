@@ -22,12 +22,14 @@ Route::prefix("login")->group(function () {
 Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 //end register
 
+Route::resource('seek_money', SeekMoneyController::class);
+Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+Route::resource('units', UnitController::class)->only(['index', 'show']);
+Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 
 
 Route::middleware('auth:sanctum')->group(function () {
-
-    Route::resource('seek_money', SeekMoneyController::class);
-    Route::resource('projects', ProjectController::class);
-    Route::resource('units', UnitController::class);
-    Route::resource('units_type', unitsTypeController::class);
+    Route::resource('projects', ProjectController::class)->except(['index', 'show']);
+    Route::resource('units', UnitController::class)->except(['index', 'show']);
+    Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
 });
