@@ -56,6 +56,20 @@ class UnitRepository implements UnitInterface
         return $this->sendResponse(" ", "تم حذف المشروع بشكل نهائى", 200);
     }
 
+    
+    public function filter(array $attributes)
+    {
+        return function ($q) use ($attributes) {
+
+            !array_key_exists('project_id', $attributes) || $attributes['project_id'] == 0   ?: $q
+                ->where(['project_id' => $attributes['project_id']]);
+
+            !array_key_exists('type_id', $attributes) || $attributes['type_id'] == 0   ?: $q
+                ->where(['type_id' => $attributes['type_id']]);
+
+        };
+    }
+
     public function theLatest(array $attributes)
     {
         return function ($q) use ($attributes) {
@@ -69,7 +83,9 @@ class UnitRepository implements UnitInterface
     public function forAllConditions(array $attributes)
     {
         return $this->model
-            ->where($this->theLatest($attributes));
+            ->where($this->theLatest($attributes))
+            ->where($this->filter($attributes));
+
     }
 
 

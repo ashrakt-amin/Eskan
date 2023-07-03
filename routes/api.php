@@ -32,4 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
+    Route::get("user", [LoginUserController::class, "show"]);
+
 });
