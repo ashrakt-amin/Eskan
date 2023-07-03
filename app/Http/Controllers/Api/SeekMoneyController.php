@@ -10,19 +10,19 @@ use App\Http\Resources\SeekMoneyResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 
-class SeekMoneyController extends Controller
-{
 
+class SeekMoneyController extends Controller
+
+{
     use TraitResponseTrait;
-   
+
     public function index()
     {
-       $data = SeekMoney::all();
-       return $this->sendResponse(SeekMoneyResource::collection($data), "", 200);
-
+        $data = SeekMoney::all();
+        return $this->sendResponse(SeekMoneyResource::collection($data), "", 200);
     }
 
-    
+
     public function create()
     {
         //
@@ -31,7 +31,7 @@ class SeekMoneyController extends Controller
     public function store(SeekMoneyRequest $request)
     {
         SeekMoney::create($request->validated());
-        return $this->sendResponse( '', "تم التسجيل", 200);
+        return $this->sendResponse('', "تم التسجيل", 200);
     }
 
 
@@ -40,7 +40,7 @@ class SeekMoneyController extends Controller
         //
     }
 
-    
+
     public function edit(string $id)
     {
         //
