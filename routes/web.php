@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\SeekMoneyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +13,7 @@ use App\Http\Controllers\Api\SeekMoneyController;
 |
 */
 
+
 Route::get('/', function () {
-    "gg";
+    return view('welcome');
 });
