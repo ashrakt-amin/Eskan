@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\unitsType;
+use App\Models\UnitsType;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,7 +27,7 @@ class unitsTypeSeeder extends Seeder
         ];
 
         foreach($types as $type){
-            unitsType::create([
+            UnitsType::create([
                 'name' => $type['name'],
                 ]); 
             }
