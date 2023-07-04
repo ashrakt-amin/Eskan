@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\UnitsType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Unit\unitTypeResource;
+use App\Http\Resources\Unit\UnitTypeResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 
@@ -16,7 +16,7 @@ class unitsTypeController extends Controller
     public function index()
     {
         $data = UnitsType::all();
-        return $this->sendResponse(unitTypeResource::collection($data) , " " ,200);
+        return $this->sendResponse(UnitTypeResource::collection($data) , " " ,200);
 
     }
 
