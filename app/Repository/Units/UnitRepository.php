@@ -15,20 +15,19 @@ class UnitRepository implements UnitInterface
 
     public function __construct(Unit $model)
     {
-        $this->model = $model  ;
-      }
+        $this->model = $model;
+    }
 
     public function all(): Collection
     {
-       return $this->model->all();
-
+        return $this->model->all();
     }
 
 
     public function store(array $attributes)
     {
         $data = $this->model->create($attributes);
-        return $data ;
+        return $data;
     }
 
 
@@ -40,23 +39,21 @@ class UnitRepository implements UnitInterface
 
 
 
-    public function edit($id, array $attributes): ?Unit
+    public function edit($id, $attributes): ?Unit
     {
-
-        $project = Unit::findOrFail($id);
-        $project->update($attributes);
-        return $project;
+        $unit = $this->model->findOrFail($id);
+        $data = $attributes->all();
+        $unit->update($data);
+        return $unit;
     }
 
 
     public function delete($id)
     {
-       $this->model::findOrFail($id)->delete;
-       
-        return $this->sendResponse(" ", "تم حذف المشروع بشكل نهائى", 200);
+        return  $this->model::findOrFail($id)->delete();
     }
 
-    
+
     public function filter(array $attributes)
     {
         return function ($q) use ($attributes) {
@@ -66,7 +63,6 @@ class UnitRepository implements UnitInterface
 
             !array_key_exists('type_id', $attributes) || $attributes['type_id'] == 0   ?: $q
                 ->where(['type_id' => $attributes['type_id']]);
-
         };
     }
 
@@ -85,7 +81,6 @@ class UnitRepository implements UnitInterface
         return $this->model
             ->where($this->theLatest($attributes))
             ->where($this->filter($attributes));
-
     }
 
 
@@ -135,7 +130,7 @@ class UnitRepository implements UnitInterface
     }
 
 
-    
+
     public function forAllConditionsReturn(array $attributes, $resourceCollection)
     {
         $this->resourceCollection = $resourceCollection;
@@ -144,8 +139,6 @@ class UnitRepository implements UnitInterface
             || array_key_exists('table', $attributes) || array_key_exists('status', $attributes)
             ? $this->forAllConditionsPaginate($attributes, $resourceCollection)
             : (array_key_exists('latest', $attributes) ? $this->forAllConditionsLatest($attributes, $resourceCollection)
-                    : $this->forAllConditionsRandom($attributes, $resourceCollection));
+                : $this->forAllConditionsRandom($attributes, $resourceCollection));
     }
-
-
 }

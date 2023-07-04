@@ -43,14 +43,16 @@ class UnitController extends Controller
 
 
 
-    public function update(Request $request, Unit $unit)
+    public function update(Request $request, $id)
     {
-        //
+        return $this->sendResponse($this->Repository->edit($id  ,$request), " تم تعديل الوحده ", 200);
+
     }
 
 
-    public function destroy(Unit $unit)
+    public function destroy($id)
     {
-        //
+        return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
+
     }
 }

@@ -14,7 +14,7 @@ interface ProjectInterface
 
     public function find($id):?Project;
 
-    public function edit($id, array $attributes):?Project;
+    public function edit($id, $attributes):?Project;
 
     public function delete($id);
 

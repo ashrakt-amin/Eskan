@@ -41,19 +41,19 @@ class ProjectRepository implements ProjectInterface
 
 
 
-    public function edit($id, array $attributes): ?Project
+    public function edit($id,  $attributes): ?Project
     {
 
-        $project = Project::findOrFail($id);
-        $project->update($attributes);
+        $project =$this->model->findOrFail($id);
+        $data = $attributes->all();
+        $project->update($data);
         return $project;
     }
 
 
     public function delete($id)
     {
-       $this->model::findOrFail($id)->delete;
+       return $this->model::findOrFail($id)->delete();
        
-        return $this->sendResponse(" ", "تم حذف المشروع بشكل نهائى", 200);
     }
 }

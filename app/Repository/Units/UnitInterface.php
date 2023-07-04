@@ -14,7 +14,7 @@ interface UnitInterface
 
     public function find($id):?Unit;
 
-    public function edit($id, array $attributes):?Unit;
+    public function edit($id, $attributes):?Unit;
 
     public function delete($id);
 

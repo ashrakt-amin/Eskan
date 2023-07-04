@@ -42,14 +42,16 @@ class ProjectController extends Controller
     }
 
   
-    public function update(Request $request, Project $project)
+    public function update(Request $request,$id)
     {
-        //
+        return $this->sendResponse($this->Repository->edit($id , $request), " تم تعديل المشروع", 200);
+
     }
 
   
-    public function destroy(Project $project)
+    public function destroy($id)
     {
-        //
+        return $this->sendResponse($this->Repository->delete($id), " تم حذف المشروع ", 200);
+
     }
 }

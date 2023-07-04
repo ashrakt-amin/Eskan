@@ -27,11 +27,18 @@ Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 
+// start auth
 
 Route::middleware('auth:sanctum')->group(function () {
+
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
+    Route::patch('project/update/{id}', [ProjectController::class, 'update']);
+
     Route::resource('units', UnitController::class)->except(['index', 'show']);
+    Route::patch('unit/update/{id}', [UnitController::class, 'update']);
+
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::get("user", [LoginUserController::class, "show"]);
-
 });
+
+// end auth
