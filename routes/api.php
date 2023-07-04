@@ -6,9 +6,9 @@ use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
-use App\Http\Controllers\Api\auth\LogoutController;
-use App\Http\Controllers\Api\auth\LoginUserController;
-use App\Http\Controllers\Api\auth\RegisterUserController;
+use App\Http\Controllers\Api\Auth\LogoutController;
+use App\Http\Controllers\Api\Auth\LoginUserController;
+use App\Http\Controllers\Api\Auth\RegisterUserController;
 
 
 //start register
