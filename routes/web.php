@@ -15,5 +15,5 @@ use App\Http\Controllers\Api\SeekMoneyController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    "gg";
 });
