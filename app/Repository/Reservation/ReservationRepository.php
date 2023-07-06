@@ -38,15 +38,6 @@ class ReservationRepository implements ReservationInterface
 
 
 
-    public function edit($id, $attributes): ?Reservation
-    {
-        $unit = $this->model->findOrFail($id);
-        $data = $attributes->all();
-        $unit->update($data);
-        return $unit;
-    }
-
-
     public function delete($id)
     {
         return  $this->model::findOrFail($id)->delete();

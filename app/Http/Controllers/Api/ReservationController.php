@@ -32,29 +32,16 @@ class ReservationController extends Controller
     }
 
 
-    public function show(Reservation $reservation)
+    public function show($id)
     {
-        //
+        return $this->sendResponse($this->Repository->find($id), " ", 200);
+
     }
 
-    public function edit(Reservation $reservation)
+  
+    public function destroy($id)
     {
-        //
-    }
+        return $this->sendResponse($this->Repository->delete($id), " تم حذف التسجيل ", 200);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Reservation $reservation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Reservation $reservation)
-    {
-        //
     }
 }
