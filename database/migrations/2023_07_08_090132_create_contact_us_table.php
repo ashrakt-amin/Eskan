@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->String('name');
             $table->String('phone');
-            $table->foreignId('unitType_id')->constrained('units_types')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->String('unit_type');
             $table->timestamps();
         });
     }
