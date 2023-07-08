@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Repository\Units\UnitInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Units\UnitRepository;
+use App\Repository\Contact\ContactInterface;
 use App\Repository\Project\ProjectInterface;
+use App\Repository\Contact\ContactRepository;
 use App\Repository\Project\ProjectRepository;
 use App\Repository\Reservation\ReservationInterface;
 use App\Repository\Reservation\ReservationRepository;
@@ -19,21 +21,11 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ProjectInterface::class,ProjectRepository::class);
         $this->app->bind(UnitInterface::class,UnitRepository::class);
         $this->app->bind(ReservationInterface::class,ReservationRepository::class);
-
-
-
-
-
-
+        $this->app->bind(ContactInterface::class,ContactRepository::class);
         
     
     }
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
     public function boot()
     {
         //

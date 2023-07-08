@@ -4,12 +4,13 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\Auth\LogoutController;
+use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
-use App\Http\Controllers\Api\ReservationController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -27,6 +28,7 @@ Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 Route::resource('reservation', ReservationController::class);
+Route::resource('contact_us', ContactUsController::class);
 
 
 // start auth
