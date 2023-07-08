@@ -22,12 +22,12 @@ class ContactUsController extends Controller
         $this->Repository = $Repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-                $data = $this->Repository->all();
-        return $this->sendResponse(ContactResource::collection($data) , " " ,200);
-
+        return $this->Repository->forAllConditionsReturn($request->all(), ContactResource::class);
     }
+
+
 
     public function store(ContactRequest $request)
     {
@@ -46,7 +46,7 @@ class ContactUsController extends Controller
   
     public function destroy($id)
     {
-        return $this->sendResponse($this->Repository->delete($id), " تم حذف المشروع ", 200);
+        return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
 
     }
 }

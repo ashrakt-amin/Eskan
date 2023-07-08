@@ -44,17 +44,6 @@ class ContactRepository implements ContactInterface
     }
 
 
-    public function filter(array $attributes)
-    {
-        return function ($q) use ($attributes) {
-
-            !array_key_exists('project_id', $attributes) || $attributes['project_id'] == 0   ?: $q
-                ->where(['project_id' => $attributes['project_id']]);
-
-            !array_key_exists('unit_id', $attributes) || $attributes['unit_id'] == 0   ?: $q
-                ->where(['unit_id' => $attributes['unit_id']]);
-        };
-    }
 
     public function theLatest(array $attributes)
     {
@@ -69,8 +58,7 @@ class ContactRepository implements ContactInterface
     public function forAllConditions(array $attributes)
     {
         return $this->model
-            ->where($this->theLatest($attributes))
-            ->where($this->filter($attributes));
+            ->where($this->theLatest($attributes));
     }
 
 
