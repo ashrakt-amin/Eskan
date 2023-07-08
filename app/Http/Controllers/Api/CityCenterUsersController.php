@@ -3,32 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Models\CityCenterUsers;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ContactRequest;
-use App\Http\Resources\ContactResource;
-use App\Repository\Contact\ContactInterface;
+use App\Http\Requests\CityCenterUsersRequest;
+use App\Http\Resources\CityCenterUsersResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+use App\Repository\CityCenterUsers\CityCenterUsersInterface;
 
-
-class ContactUsController extends Controller
+class CityCenterUsersController extends Controller
 {
     use TraitResponseTrait ;
     protected $Repository ;  
     
 
-    public function __construct(ContactInterface $Repository)
+    public function __construct(CityCenterUsersInterface $Repository)
     {
         $this->Repository = $Repository;
     }
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), ContactResource::class);
+        return $this->Repository->forAllConditionsReturn($request->all(), CityCenterUsersResource::class);
     }
 
 
 
-    public function store(ContactRequest $request)
+    public function store(CityCenterUsersRequest $request)
     {
         $this->Repository->store($request->validated());
         return $this->sendResponse('', "تم التسجيل ", 200);
