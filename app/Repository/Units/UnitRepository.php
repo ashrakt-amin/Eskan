@@ -5,10 +5,12 @@ namespace App\Repository\Units;
 use App\Models\Unit;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
+use Exception;
 
 class UnitRepository implements UnitInterface
 {
-    use TraitResponseTrait;
+    use TraitResponseTrait , TraitImageProccessingTrait;
     public $model;
 
     protected $resourceCollection;
@@ -26,8 +28,16 @@ class UnitRepository implements UnitInterface
 
     public function store(array $attributes)
     {
-        $data = $this->model->create($attributes);
-        return $data;
+        try{
+            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units',500,600);
+            $data = $this->model->create($attributes);
+            return $data;
+        }catch(\Exception $e){
+
+            return $e->getMessage();
+
+        }
+      
     }
 
 
@@ -42,7 +52,11 @@ class UnitRepository implements UnitInterface
     public function edit($id, $attributes): ?Unit
     {
         $unit = $this->model->findOrFail($id);
-        $data = $attributes->all();
+        $data = $attributes->except('img');
+        if ($attributes->hasFile('img') && $attributes->img != "") {
+            $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
+            $data['img'] = $this->aspectForResize($attributes->img, 'Units', 500, 600);
+        }
         $unit->update($data);
         return $unit;
     }
@@ -50,7 +64,15 @@ class UnitRepository implements UnitInterface
 
     public function delete($id)
     {
-        return  $this->model::findOrFail($id)->delete();
+        $unit = $this->model::findOrFail($id);
+        if($unit->img){
+            $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
+    }
+    $unit->delete();
+        
+
+        
+
     }
 
 

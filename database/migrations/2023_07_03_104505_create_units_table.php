@@ -18,6 +18,10 @@ return new class extends Migration
             $table->decimal('meter_price', 16, 2);
             $table->String('advance');
             $table->String('installment');
+            $table->String('img');
+            $table->integer('rooms');
+            $table->String('duration');
+            $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('type_id')->constrained('units_types')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();

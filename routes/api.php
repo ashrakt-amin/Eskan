@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
+use App\Http\Controllers\Api\LevelController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -31,6 +32,10 @@ Route::resource('units_type', unitsTypeController::class)->only(['index', 'show'
 Route::resource('reservation', ReservationController::class);
 Route::resource('contact_us', ContactUsController::class);
 Route::resource('CityCenter_users', CityCenterUsersController::class);
+Route::get('levels', [LevelController::class,'index']);
+Route::get('levels/{id}', [LevelController::class,'show']);
+
+
 
 
 
