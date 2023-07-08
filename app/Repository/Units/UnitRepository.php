@@ -10,7 +10,7 @@ use Exception;
 
 class UnitRepository implements UnitInterface
 {
-    use TraitResponseTrait , TraitImageProccessingTrait;
+    use TraitResponseTrait, TraitImageProccessingTrait;
     public $model;
 
     protected $resourceCollection;
@@ -28,16 +28,14 @@ class UnitRepository implements UnitInterface
 
     public function store(array $attributes)
     {
-        try{
-            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units',500,600);
+        try {
+            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
             $data = $this->model->create($attributes);
             return $data;
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
 
             return $e->getMessage();
-
         }
-      
     }
 
 
@@ -65,14 +63,10 @@ class UnitRepository implements UnitInterface
     public function delete($id)
     {
         $unit = $this->model::findOrFail($id);
-        if($unit->img){
+        if ($unit->img) {
             $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
-    }
-    $unit->delete();
-        
-
-        
-
+        }
+        $unit->delete();
     }
 
 
@@ -85,6 +79,12 @@ class UnitRepository implements UnitInterface
 
             !array_key_exists('type_id', $attributes) || $attributes['type_id'] == 0   ?: $q
                 ->where(['type_id' => $attributes['type_id']]);
+
+            !array_key_exists('space', $attributes) || $attributes['space'] == 0   ?: $q
+                ->where(['space' => $attributes['space']]);
+
+            !array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0   ?: $q
+                ->where(['level_id' => $attributes['level_id']]);
         };
     }
 
