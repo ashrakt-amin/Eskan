@@ -95,7 +95,7 @@ trait ImageProccessingTrait
             $constraint->aspectRatio();
         });
         $imgPath = $strRandom . $name;
-        $thepath = storage_path('images/'.$path);
+        $thepath = storage_path('app/public/images/'.$path);
         if (!File::exists($thepath)) {
             File::makeDirectory($thepath, 0755, true, true);
         }

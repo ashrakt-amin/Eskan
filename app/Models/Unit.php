@@ -11,31 +11,29 @@ class Unit extends Model
     const IMAGE_PATH = 'Units';
     protected $appends = ['path'];
 
-    protected $fillable = ['number','img','rooms','duration','level_id','space','meter_price','advance', 'installment','type_id','project_id'];
+    protected $fillable = ['number', 'img', 'rooms', 'duration', 'level_id', 'space', 'meter_price', 'advance', 'installment', 'type_id', 'project_id'];
 
-    public function type(){
-        return $this->belongsTo(UnitsType::class ,'type_id');
+    public function type()
+    {
+        return $this->belongsTo(UnitsType::class, 'type_id');
     }
 
-    public function level(){
-        return $this->belongsTo(Level::class ,'level_id');
+    public function level()
+    {
+        return $this->belongsTo(Level::class, 'level_id');
     }
 
-    public function project(){
-        return $this->belongsTo(Project::class ,'project_id');
+    public function project()
+    {
+        return $this->belongsTo(Project::class, 'project_id');
     }
 
     public function getPathAttribute()
     {
-        if(env('APP_URL') == "http://localhost"){
-
-            return asset('storage/app/public/images/Units'). "/".$this->img;
-            
-        }else{
-            return asset('storage/images/Units'). "/".$this->img;
-
-
+        if (env('APP_URL') == "http://localhost") {
+            return asset('storage/images/Units') . "/" . $this->img;
+        } else {
+            return asset('storage/app/public/images/Units') . "/" . $this->img;
         }
-
     }
 }
