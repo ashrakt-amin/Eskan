@@ -29,11 +29,12 @@ class Unit extends Model
     {
         if(env('APP_URL') == "http://localhost"){
 
-            return asset('storage/app/public/images/Units'). "/".$this->img;
-            
-        }else{
             return asset('storage/images/Units'). "/".$this->img;
 
+            
+        }else{
+
+            return asset('storage/app/public/images/Units'). "/".$this->img;
 
         }
 
