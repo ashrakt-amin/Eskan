@@ -47,9 +47,9 @@ class UnitRepository implements UnitInterface
 
 
 
-    public function edit($id, $attributes): ?Unit
+    public function edit($attributes): ?Unit
     {
-        $unit = $this->model->findOrFail($id);
+        $unit = $this->model->findOrFail($attributes->id);
         $data = $attributes->except('img');
         if ($attributes->hasFile('img') && $attributes->img != "") {
             $this->deleteImage(Unit::IMAGE_PATH, $unit->img);

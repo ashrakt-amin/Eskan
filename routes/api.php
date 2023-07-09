@@ -47,7 +47,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
 
     Route::resource('units', UnitController::class)->except(['index', 'show']);
-    Route::patch('unit/update/{id}', [UnitController::class, 'update']);
+    Route::post('unit/update', [UnitController::class, 'storeUp']);
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::get("user", [LoginUserController::class, "show"]);

@@ -43,9 +43,9 @@ class UnitController extends Controller
 
 
 
-    public function update(Request $request, $id)
+    public function storeUp(Request $request)
     {
-        return $this->sendResponse($this->Repository->edit($id  ,$request), " تم تعديل الوحده ", 200);
+        return $this->sendResponse($this->Repository->edit($request), " تم تعديل الوحده ", 200);
 
     }
 
