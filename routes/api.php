@@ -34,8 +34,7 @@ Route::resource('contact_us', ContactUsController::class);
 Route::resource('CityCenter_users', CityCenterUsersController::class);
 Route::get('levels', [LevelController::class,'index']);
 Route::get('levels/{id}', [LevelController::class,'show']);
-
-
+Route::get('unit/space', [UnitController::class, 'space']);
 
 
 
@@ -48,7 +47,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::post('unit/update', [UnitController::class, 'storeUp']);
-    Route::get('unit/space', [UnitController::class, 'space']);
 
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
