@@ -55,4 +55,18 @@ class UnitController extends Controller
         return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
 
     }
+
+    
+   
+    public function space()
+    {
+        $spaces = Unit::all();
+        $unique_data = $spaces->unique('space')->pluck('space')->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique spaces!",
+            'data' => $unique_data
+        ], 200);
+    }
+
 }

@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::post('unit/update', [UnitController::class, 'storeUp']);
+    Route::get('unit/space', [UnitController::class, 'space']);
+
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::get("user", [LoginUserController::class, "show"]);
