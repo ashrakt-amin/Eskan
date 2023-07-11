@@ -85,6 +85,9 @@ class UnitRepository implements UnitInterface
 
             !array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0   ?: $q
                 ->where(['level_id' => $attributes['level_id']]);
+
+            !array_key_exists('contract', $attributes) ?: $q
+                ->where('contract','<>',null);
         };
     }
 

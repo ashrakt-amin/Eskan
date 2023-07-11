@@ -19,6 +19,7 @@ return new class extends Migration
             $table->String('advance');
             $table->String('installment');
             $table->String('img');
+            $table->String('contract')->nullable();
             $table->integer('rooms');
             $table->String('duration');
             $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete()->cascadeOnUpdate();

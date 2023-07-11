@@ -18,15 +18,16 @@ class UnitRequest extends FormRequest
         return [
             'number'      => 'required',
             'space'       => 'required',
-            'img'       => 'required',
+            'img'         => 'required',
+            'contract'    => 'nullable',
             'rooms'       => 'required',
-            'duration'       => 'required',
+            'duration'    => 'required',
             'meter_price' => 'required',
             'advance'     => 'required',
             'installment' => 'required',
             'type_id'     => 'required',
             'project_id'  => 'required',
-            'level_id'  => 'required',
+            'level_id'    => 'required',
 
         ];
     }
