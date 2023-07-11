@@ -69,4 +69,16 @@ class UnitController extends Controller
         ], 200);
     }
 
+    
+    public function meterPrice()
+    {
+        $meter_price = Unit::all();
+        $unique_data = $meter_price->unique('meter_price')->pluck('meter_price')->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique meter price!",
+            'data' => $unique_data
+        ], 200);
+    }
+
 }

@@ -37,8 +37,7 @@ Route::resource('owners', OwnerController::class);
 Route::get('levels', [LevelController::class,'index']);
 Route::get('levels/{id}', [LevelController::class,'show']);
 Route::get('unit/space', [UnitController::class, 'space']);
-
-
+Route::get('unit/meter_price', [UnitController::class, 'meterPrice']);
 
 
 // start auth
