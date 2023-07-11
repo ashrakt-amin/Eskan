@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UnitController;
+use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\OwnerController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\SeekMoneyController;
@@ -10,9 +12,8 @@ use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
-use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
-use App\Http\Controllers\Api\LevelController;
+use App\Http\Controllers\Api\Auth\RegisterUserController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -32,9 +33,11 @@ Route::resource('units_type', unitsTypeController::class)->only(['index', 'show'
 Route::resource('reservation', ReservationController::class);
 Route::resource('contact_us', ContactUsController::class);
 Route::resource('CityCenter_users', CityCenterUsersController::class);
+Route::resource('owners', OwnerController::class);
 Route::get('levels', [LevelController::class,'index']);
 Route::get('levels/{id}', [LevelController::class,'show']);
 Route::get('unit/space', [UnitController::class, 'space']);
+
 
 
 

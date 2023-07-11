@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Repository\Units\UnitInterface;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Units\UnitRepository;
+use App\Repository\Owners\OwnerInterface;
+use App\Repository\Owners\OwnerRepository;
 use App\Repository\Contact\ContactInterface;
 use App\Repository\Project\ProjectInterface;
 use App\Repository\Contact\ContactRepository;
@@ -25,6 +27,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ReservationInterface::class,ReservationRepository::class);
         $this->app->bind(ContactInterface::class,ContactRepository::class);
         $this->app->bind(CityCenterUsersInterface::class,CityCenterUsersRepository::class);
+        $this->app->bind(OwnerInterface::class,OwnerRepository::class);
+
 
         
         
