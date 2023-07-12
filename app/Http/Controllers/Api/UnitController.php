@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Unit;
+use App\Models\Level;
 use Illuminate\Http\Request;
 use App\Http\Requests\UnitRequest;
 use App\Http\Controllers\Controller;
@@ -38,7 +39,6 @@ class UnitController extends Controller
     public function show($id)
     {
         return $this->sendResponse($this->Repository->find($id), " ", 200);
-
     }
 
 
@@ -46,18 +46,16 @@ class UnitController extends Controller
     public function storeUp(Request $request)
     {
         return $this->sendResponse($this->Repository->edit($request), " تم تعديل الوحده ", 200);
-
     }
 
 
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
-
     }
 
-    
-   
+
+
     public function space()
     {
         $spaces = Unit::all();
@@ -69,7 +67,7 @@ class UnitController extends Controller
         ], 200);
     }
 
-    
+
     public function meterPrice()
     {
         $meter_price = Unit::all();
@@ -81,4 +79,19 @@ class UnitController extends Controller
         ], 200);
     }
 
+
+
+
+    public function levels()
+    {
+        $unit_level = Unit::all();
+        $unique_data = $unit_level->unique('level_id')->pluck('level_id')->values()->all();
+        sort($unique_data);
+
+        return response()->json([
+            'status' => true,
+            'message' => "unique level",
+            'data' => $unique_data
+        ], 200);
+    }
 }
