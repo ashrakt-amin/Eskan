@@ -9,4 +9,9 @@ class Level extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+
+    public function units()
+    {
+        return $this->hasMany(Unit::class, 'level_id');
+    }
 }

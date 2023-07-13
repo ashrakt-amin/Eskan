@@ -84,14 +84,11 @@ class UnitController extends Controller
 
     public function levels()
     {
-        $unit_level = Unit::all();
-        $unique_data = $unit_level->unique('level_id')->pluck('level_id')->values()->all();
-        sort($unique_data);
-
+        $unit_level = Level::has('units')->get();
         return response()->json([
             'status' => true,
             'message' => "unique level",
-            'data' => $unique_data
+            'data' => $unit_level
         ], 200);
     }
 }
