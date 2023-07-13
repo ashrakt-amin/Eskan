@@ -11,7 +11,8 @@ class Unit extends Model
     const IMAGE_PATH = 'Units';
     protected $appends = ['path'];
 
-    protected $fillable = ['number', 'img','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price', 'advance', 'installment', 'type_id', 'project_id'];
+    protected $fillable = ['number', 'img','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
+                           'advance_rate' , 'advance', 'installment', 'type_id', 'project_id'];
 
     public function type()
     {

@@ -29,7 +29,9 @@ class UnitRepository implements UnitInterface
     public function store(array $attributes)
     {
         try {
+
             $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+            $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -47,16 +49,27 @@ class UnitRepository implements UnitInterface
 
 
 
-    public function edit($attributes): ?Unit
+    public function edit($attributes)
     {
         $unit = $this->model->findOrFail($attributes->id);
         $data = $attributes->except('img');
+
         if ($attributes->hasFile('img') && $attributes->img != "") {
             $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
             $data['img'] = $this->aspectForResize($attributes->img, 'Units', 500, 600);
+        } elseif ($attributes->has('advance_rate')) {
+            $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
+            $data['advance'] =  $advance;
+        } elseif ($attributes->has('space')) {
+            $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
+            $data['advance'] =  $advance;
+        } elseif ($attributes->has('meter_price')) {
+            $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
+            $data['advance'] =  $advance;
         }
+
         $unit->update($data);
-        return $unit;
+       
     }
 
 
@@ -90,7 +103,7 @@ class UnitRepository implements UnitInterface
                 ->where(['meter_price' => $attributes['meter_price']]);
 
             !array_key_exists('contract', $attributes) ?: $q
-                ->where('contract','<>',null);
+                ->where('contract', '<>', null);
         };
     }
 

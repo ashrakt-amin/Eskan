@@ -16,7 +16,8 @@ return new class extends Migration
             $table->String('number');
             $table->decimal('space', 16, 2);
             $table->decimal('meter_price', 16, 2);
-            $table->String('advance');
+            $table->integer('advance_rate');
+            $table->decimal('advance')->nullable();
             $table->String('installment');
             $table->String('img');
             $table->String('contract')->nullable();
