@@ -30,9 +30,12 @@ class UnitRepository implements UnitInterface
     {
         try {
 
-            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+           // $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
             $data = $this->model->create($attributes);
+            $data->unitImages()->createMany(
+                $this->aspectForResizeImages($attributes['img'], 'Units', 'img', 500, 600)
+            );
             return $data;
         } catch (\Exception $e) {
 

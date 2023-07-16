@@ -11,7 +11,7 @@ class Unit extends Model
     const IMAGE_PATH = 'Units';
     protected $appends = ['path'];
 
-    protected $fillable = ['number', 'img','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
+    protected $fillable = ['number','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
                            'advance_rate' , 'advance', 'installment', 'type_id', 'project_id'];
 
     public function type()
@@ -29,12 +29,10 @@ class Unit extends Model
         return $this->belongsTo(Project::class, 'project_id');
     }
 
-    public function getPathAttribute()
+    public function unitImages()
     {
-        if (env('APP_URL') == "http://localhost") {
-            return asset('storage/images/Units') . "/" . $this->img;
-        } else {
-            return asset('storage/app/public/images/Units') . "/" . $this->img;
-        }
+        return $this->hasMany(UnitImage::class);
     }
+
+   
 }

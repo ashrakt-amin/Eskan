@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('advance_rate');
             $table->decimal('advance')->nullable();
             $table->String('installment');
-            $table->String('img');
             $table->String('contract')->nullable();
             $table->integer('rooms');
             $table->String('duration');

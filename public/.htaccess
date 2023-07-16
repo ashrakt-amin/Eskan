@@ -1,8 +1,12 @@
 <IfModule mod_rewrite.c>
+<<<<<<< HEAD
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
-
+    <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+    
     RewriteEngine On
 
     # Handle Authorization Header
@@ -19,3 +23,21 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+=======
+# That was ONLY to protect you from 500 errors
+# if your server did not have mod_rewrite enabled
+
+    <IfModule mod_headers.c>
+    Header set Access-Control-Allow-Origin "*"
+    </IfModule>
+
+RewriteEngine On
+# RewriteBase /
+# NOT needed unless you're using mod_alias to redirect
+
+RewriteCond %{REQUEST_URI} !/public
+RewriteRule ^(.*)$ public/$1 [L]
+# Direct all requests to /public folder
+
+</IfModule>
+>>>>>>> f2f964617a61db8012cd13fbf571c5ca970825f9
