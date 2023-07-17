@@ -41,7 +41,6 @@ Route::get('unit/meter_price', [UnitController::class, 'meterPrice']);
 Route::get('unit/levels', [UnitController::class, 'levels']);
 
 
-
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -54,6 +53,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
+    Route::post('unit/Images', [UnitController::class, 'storeImages']);
+
     Route::get("user", [LoginUserController::class, "show"]);
 
     // Route::resource('reservation', ReservationController::class)->except(['index', 'show']);

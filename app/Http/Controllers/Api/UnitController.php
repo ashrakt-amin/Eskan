@@ -42,10 +42,15 @@ class UnitController extends Controller
     }
 
 
-
-    public function storeUp(Request $request)
+    public function update(Request $request)
     {
-        return $this->sendResponse($this->Repository->edit($request), " تم تعديل الوحده ", 200);
+        return $this->sendResponse($this->Repository->edit($request), "تم التعديل ", 200);
+    }
+
+
+    public function storeImages(Request $request)
+    {
+        return $this->sendResponse($this->Repository->storeImages($request), "تم اضافه صور ", 200);
     }
 
 

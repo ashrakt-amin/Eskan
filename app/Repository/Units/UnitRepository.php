@@ -55,12 +55,7 @@ class UnitRepository implements UnitInterface
     public function edit($attributes)
     {
         $unit = $this->model->findOrFail($attributes->id);
-        $data = $attributes->except('img');
-
-        if ($attributes->hasFile('img') && $attributes->img != "") {
-            $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
-            $data['img'] = $this->aspectForResize($attributes->img, 'Units', 500, 600);
-        } elseif ($attributes->has('advance_rate')) {
+        if ($attributes->has('advance_rate')) {
             $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
             $data['advance'] =  $advance;
         } elseif ($attributes->has('space')) {
@@ -75,6 +70,13 @@ class UnitRepository implements UnitInterface
        
     }
 
+
+    public function storeImages($attributes){
+
+       $unit = $this->model->findOrFail($attributes->id);
+       $unit->unitImages()->createMany($this->aspectForResizeImages($attributes['img'], 'Units', 'img', 600, 600));
+       return true ;
+    }
 
     public function delete($id)
     {

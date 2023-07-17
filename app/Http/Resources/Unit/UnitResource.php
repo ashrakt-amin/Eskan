@@ -13,7 +13,6 @@ class UnitResource extends JsonResource
         return [
             'id'          => $this->id,
             'number'      => $this->number,
-            'img'         => $this->path,
             'contract'    => $this->contract,
             'rooms'       => $this->rooms,
             'duration'    => $this->duration,
@@ -27,7 +26,9 @@ class UnitResource extends JsonResource
             'level_id'                  => [
                 'id'     => $this->level_id,
                 'name'   => $this->level->name
-            ]
+            ],
+            'img'        =>UnitImageResource::collection($this->unitImages),
+            
         ];
     }
 }

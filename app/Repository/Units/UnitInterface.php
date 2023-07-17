@@ -16,6 +16,8 @@ interface UnitInterface
 
     public function edit($attributes);
 
+    public function storeImages($attributes);
+
     public function delete($id);
 
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
