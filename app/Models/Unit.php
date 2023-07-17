@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     use HasFactory;
-    const IMAGE_PATH = 'Units';
-    protected $appends = ['path'];
 
     protected $fillable = ['number','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
                            'advance_rate' , 'advance', 'installment', 'type_id', 'project_id'];
