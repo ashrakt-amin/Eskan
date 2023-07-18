@@ -42,7 +42,7 @@ class UnitController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function storeUp(Request $request)
     {
         return $this->sendResponse($this->Repository->edit($request), "تم التعديل ", 200);
     }
