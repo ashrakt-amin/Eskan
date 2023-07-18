@@ -54,7 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
-            Route::post('update', 'storeUp');
+            Route::post('/update', 'storeUp');
             Route::post('/images', 'storeImages');
             Route::delete('/delete/image/{id}', 'destroyImage');
         });

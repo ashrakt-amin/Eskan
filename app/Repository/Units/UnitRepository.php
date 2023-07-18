@@ -55,19 +55,20 @@ class UnitRepository implements UnitInterface
 
     public function edit($attributes)
     {
-        $unit = $this->model->findOrFail($attributes->id);
-        if ($attributes->has('advance_rate')) {
-            $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
-            $data['advance'] =  $advance;
-        } elseif ($attributes->has('space')) {
-            $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
-            $data['advance'] =  $advance;
-        } elseif ($attributes->has('meter_price')) {
-            $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
-            $data['advance'] =  $advance;
-        }
 
-        $unit->update($data);
+        $unit = $this->model->findOrFail($attributes->id);
+        if ($attributes['advance_rate']) {
+            $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
+            $attributes['advance'] = $advance;
+        } elseif ($attributes['space']) {
+            $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
+            $attributes['advance'] = $advance;
+        } elseif ($attributes['meter_price']) {
+            $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
+            $attributes['advance'] = $advance;
+        }
+        $unit->update($attributes->all());
+        return true;
     }
 
 
