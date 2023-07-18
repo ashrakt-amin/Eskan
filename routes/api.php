@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\UnitImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UnitController;
@@ -48,12 +49,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
 
-    Route::resource('units', UnitController::class)->except(['index', 'show']);
-    Route::post('unit/update', [UnitController::class, 'storeUp']);
-
-
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
-    Route::post('unit/Images', [UnitController::class, 'storeImages']);
+
+    Route::resource('units', UnitController::class)->except(['index', 'show']);
+    Route::prefix("units")->group(function () {
+        Route::controller(UnitController::class)->group(function () {
+            Route::post('update', 'storeUp');
+            Route::post('/images', 'storeImages');
+            Route::delete('/delete/image/{id}', 'destroyImage');
+        });
+    });
 
     Route::get("user", [LoginUserController::class, "show"]);
 

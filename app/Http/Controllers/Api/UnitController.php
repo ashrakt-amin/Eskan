@@ -59,6 +59,15 @@ class UnitController extends Controller
         return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
     }
 
+    public function destroyImage($id)
+    {
+        return $this->sendResponse($this->Repository->deleteImageUnit($id), " تم حذف الوحده ", 200);
+    }
+
+
+
+
+
 
 
     public function space()

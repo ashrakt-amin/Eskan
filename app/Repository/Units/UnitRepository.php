@@ -2,11 +2,12 @@
 
 namespace App\Repository\Units;
 
+use Exception;
 use App\Models\Unit;
+use App\Models\UnitImage;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
-use Exception;
 
 class UnitRepository implements UnitInterface
 {
@@ -30,7 +31,7 @@ class UnitRepository implements UnitInterface
     {
         try {
 
-           // $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+            // $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
             $data = $this->model->create($attributes);
             $data->unitImages()->createMany(
@@ -67,25 +68,41 @@ class UnitRepository implements UnitInterface
         }
 
         $unit->update($data);
-       
     }
 
-
-    public function storeImages($attributes){
-
-       $unit = $this->model->findOrFail($attributes->id);
-       $unit->unitImages()->createMany($this->aspectForResizeImages($attributes['img'], 'Units', 'img', 600, 600));
-       return true ;
-    }
 
     public function delete($id)
     {
-        $unit = $this->model::findOrFail($id);
-        if ($unit->img) {
-            $this->deleteImage(Unit::IMAGE_PATH, $unit->img);
+        $unit = $this->model->findOrFail($id);
+        if ($unit->unitImages != null) {
+            foreach ($unit->unitImages as $img) {
+                $this->deleteImage('Units', $img->img);
+            }
+            $unit->unitImages()->delete();
         }
         $unit->delete();
+        return true;
     }
+
+
+
+    public function deleteImageUnit($id)
+    {
+        $image = UnitImage::find($id);
+        $this->deleteImage('Units', $image->img);
+        $image->delete();
+        return true;
+    }
+
+
+    public function storeImages($attributes)
+    {
+
+        $unit = $this->model->findOrFail($attributes->id);
+        $unit->unitImages()->createMany($this->aspectForResizeImages($attributes['img'], 'Units', 'img', 600, 600));
+        return true;
+    }
+
 
 
     public function filter(array $attributes)

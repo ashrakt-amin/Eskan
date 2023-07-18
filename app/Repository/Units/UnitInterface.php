@@ -18,6 +18,8 @@ interface UnitInterface
 
     public function storeImages($attributes);
 
+    public function deleteImageUnit($id);
+
     public function delete($id);
 
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
