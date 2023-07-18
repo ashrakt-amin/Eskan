@@ -72,8 +72,9 @@ class UnitController extends Controller
 
     public function space()
     {
-        $spaces = Unit::all();
-        $unique_data = $spaces->unique('space')->pluck('space')->values()->all();
+        $spaces = Unit::orderBy('space', 'asc')->get();
+        $unique_data = $spaces->unique('space')->pluck('space')
+                              ->values()->all();
         return response()->json([
             'status' => true,
             'message' => "unique spaces!",
