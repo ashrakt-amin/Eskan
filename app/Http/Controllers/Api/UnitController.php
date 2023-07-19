@@ -72,7 +72,7 @@ class UnitController extends Controller
 
     public function space($meter_price = '')
     {
-        if ($meter_price != null) {
+        if ($meter_price != null && $meter_price != 0) {
             $spaces = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
         } else {
             $spaces = Unit::orderBy('space', 'asc')->get();
@@ -89,7 +89,7 @@ class UnitController extends Controller
 
     public function meterPrice($space = '')
     {
-        if ($space != null) {
+        if ($space != null && $space != 0) {
             $meter_price = Unit::where('space', $space)->get();
         } else {
             $meter_price = Unit::all();
