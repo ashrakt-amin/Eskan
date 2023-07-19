@@ -70,11 +70,15 @@ class UnitController extends Controller
 
 
 
-    public function space()
+    public function space($meter_price = '')
     {
-        $spaces = Unit::orderBy('space', 'asc')->get();
+        if ($meter_price != null) {
+            $spaces = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
+        } else {
+            $spaces = Unit::orderBy('space', 'asc')->get();
+        }
         $unique_data = $spaces->unique('space')->pluck('space')
-                              ->values()->all();
+            ->values()->all();
         return response()->json([
             'status' => true,
             'message' => "unique spaces!",
@@ -83,9 +87,13 @@ class UnitController extends Controller
     }
 
 
-    public function meterPrice()
+    public function meterPrice($space = '')
     {
-        $meter_price = Unit::all();
+        if ($space != null) {
+            $meter_price = Unit::where('space', $space)->get();
+        } else {
+            $meter_price = Unit::all();
+        }
         $unique_data = $meter_price->unique('meter_price')->pluck('meter_price')->values()->all();
         return response()->json([
             'status' => true,

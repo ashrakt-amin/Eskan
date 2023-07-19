@@ -37,9 +37,15 @@ Route::resource('CityCenter_users', CityCenterUsersController::class);
 Route::resource('owners', OwnerController::class);
 Route::get('levels', [LevelController::class,'index']);
 Route::get('levels/{id}', [LevelController::class,'show']);
-Route::get('unit/space', [UnitController::class, 'space']);
-Route::get('unit/meter_price', [UnitController::class, 'meterPrice']);
-Route::get('unit/levels', [UnitController::class, 'levels']);
+
+Route::prefix("unit")->group(function () {
+    Route::controller(UnitController::class)->group(function () {
+        Route::get('/space/{meter_price?}', 'space');
+        Route::get('/meter_price/{space?}', 'meterPrice');
+        Route::get('/levels', 'levels');
+    });
+});
+
 
 
 // start auth
