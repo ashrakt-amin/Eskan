@@ -16,7 +16,8 @@ class CityCenterUsersResource extends JsonResource
             'phone'           => $this->phone,
             'address'         => $this->address,
             'space'           => $this->space,
-            'activity'        => $this->activity
+            'activity'        => $this->activity,
+            'job'             => $this->job
         ];    
 
 

@@ -20,7 +20,8 @@ class CityCenterUsersRequest extends FormRequest
             'job'     => 'required',
             'address' => 'required',
             'space'   => 'required',
-            'activity'=> 'required'
+            'activity'=> 'required',
+            'job'     => 'required'
 
 
         ];

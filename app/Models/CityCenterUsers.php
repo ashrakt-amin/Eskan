@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class CityCenterUsers extends Model
 {
     use HasFactory;
-    protected $fillable = ['id' , 'name' , 'phone' , 'address' , 'space' , 'activity'];
+    protected $fillable = ['id' , 'name' , 'phone' , 'address' , 'space' , 'activity' ,'job'];
 }
