@@ -38,7 +38,9 @@ class UnitController extends Controller
 
     public function show($id)
     {
-        return $this->sendResponse($this->Repository->find($id), " ", 200);
+        $unit = $this->Repository->find($id);
+        return $this->sendResponse(new UnitResource($unit) , " ", 200);
+
     }
 
 
@@ -127,7 +129,5 @@ class UnitController extends Controller
         }
         //$numbers =$units->unique('number')->pluck('number')->values()->all();
     }
-
-
     
 }
