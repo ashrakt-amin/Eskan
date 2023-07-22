@@ -114,4 +114,20 @@ class UnitController extends Controller
             'data' => $unit_level
         ], 200);
     }
+
+    
+
+    public function numbers($level,$number)
+    {
+        $unit =Unit::where('level_id', $level )->where('number' , $number )->first();
+        if(isset($unit)){
+            return $this->sendResponse(new UnitResource($unit) , " ", 200);
+        }else{
+            return $this->sendError("error", "unit not found ", 404);
+        }
+        //$numbers =$units->unique('number')->pluck('number')->values()->all();
+    }
+
+
+    
 }
