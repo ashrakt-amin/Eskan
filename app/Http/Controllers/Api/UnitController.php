@@ -94,7 +94,7 @@ class UnitController extends Controller
         if ($space != null && $space != 0) {
             $meter_price = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
         } else {
-            $meter_price = Unit::all();
+            $meter_price = Unit::orderBy('meter_price', 'asc')->get();
         }
         $unique_data = $meter_price->unique('meter_price')->pluck('meter_price')->values()->all();
         return response()->json([
