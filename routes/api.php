@@ -42,7 +42,7 @@ Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
         Route::get('/meter_price/{space?}', 'meterPrice');
-        Route::get('/levels', 'levels');
+        Route::get('/levels/{meter_price?}/{space?}', 'levels');
         Route::get('/numbers/{level}/{number}', 'numbers');
 
     });

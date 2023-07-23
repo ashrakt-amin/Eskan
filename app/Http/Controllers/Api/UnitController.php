@@ -71,7 +71,6 @@ class UnitController extends Controller
 
 
 
-
     public function space($meter_price = '')
     {
         if ($meter_price != null && $meter_price != 0) {
@@ -106,10 +105,23 @@ class UnitController extends Controller
 
 
 
-
-    public function levels()
+    public function levels($meter_price = 0 , $space = 0)
     {
-        $unit_level = Level::has('units')->get();
+        if ($meter_price != 0 && $space != 0) {
+            $unit = Unit::where('meter_price', $meter_price)->where('space', $space)
+                  ->orderBy('level_id', 'asc')->get();
+        }elseif($meter_price != 0 && $space == 0) {
+            $unit = Unit::where('meter_price', $meter_price)
+                  ->orderBy('level_id', 'asc')->get();
+        }elseif($meter_price == 0 && $space != 0) {
+            $unit = Unit::where('space', $space)
+                  ->orderBy('level_id', 'asc')->get();
+        } else {
+            $unit = Unit::orderBy('level_id', 'asc')->get();
+        }
+
+        $unit_level = $unit->unique('level_id')->pluck('level_id')->values()->all();
+
         return response()->json([
             'status' => true,
             'message' => "unique level",
