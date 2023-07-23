@@ -35,7 +35,7 @@ Route::resource('reservation', ReservationController::class);
 Route::resource('contact_us', ContactUsController::class);
 Route::resource('CityCenter_users', CityCenterUsersController::class);
 Route::resource('owners', OwnerController::class);
-Route::get('levels', [LevelController::class,'index']);
+Route::get('unit/levels', [LevelController::class,'index']);
 Route::get('levels/{id}', [LevelController::class,'show']);
 
 Route::prefix("unit")->group(function () {
