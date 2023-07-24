@@ -91,17 +91,25 @@ class UnitController extends Controller
     public function meterPrice($space = '')
     {
         if ($space != null && $space != 0) {
-            $meter_price = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
+            $unit = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
         } else {
-            $meter_price = Unit::orderBy('meter_price', 'asc')->get();
+            $unit = Unit::orderBy('meter_price', 'asc')->get();
         }
-        $unique_data = $meter_price->unique('meter_price')->pluck('meter_price')->values()->all();
+        $level = $unit->unique('level_id')
+        ->pluck('level_id')->values()->all();
+
+        $unique_data = $unit->unique('meter_price')
+        ->pluck('meter_price')->values()->all();
+        
+        $data = [$unique_data,$level];
         return response()->json([
             'status' => true,
             'message' => "unique meter price!",
-            'data' => $unique_data
+            'meter_price' => $unique_data,
+            'level'=>$level
         ], 200);
     }
+
 
 
 
@@ -117,15 +125,23 @@ class UnitController extends Controller
             $unit = Unit::where('space', $space)
                   ->orderBy('level_id', 'asc')->get();
         } else {
-            $unit = Unit::orderBy('level_id', 'asc')->get();
+            $unit = Unit::all();
         }
-
-        $unit_level = $unit->unique('level_id')->pluck('level_id')->values()->all();
-
+    $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
+       $levels = Level::all();
+$data = [];
+       foreach($unit_levels as $unit_level){
+          foreach($levels as $level){
+        if($level->id == $unit_level ){
+            $data[]= $level; 
+        }
+    }
+      
+       }
         return response()->json([
             'status' => true,
             'message' => "unique level",
-            'data' => $unit_level
+            'data' => $data
         ], 200);
     }
 
