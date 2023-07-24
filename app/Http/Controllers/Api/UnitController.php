@@ -95,18 +95,16 @@ class UnitController extends Controller
         } else {
             $unit = Unit::orderBy('meter_price', 'asc')->get();
         }
-        $level = $unit->unique('level_id')
-        ->pluck('level_id')->values()->all();
+        // $level = $unit->unique('level_id')
+        // ->pluck('level_id')->values()->all();
 
         $unique_data = $unit->unique('meter_price')
         ->pluck('meter_price')->values()->all();
         
-        $data = [$unique_data,$level];
         return response()->json([
             'status' => true,
             'message' => "unique meter price!",
-            'meter_price' => $unique_data,
-            'level'=>$level
+            'data' => $unique_data,
         ], 200);
     }
 
@@ -129,7 +127,6 @@ class UnitController extends Controller
         }
     $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
        $levels = Level::all();
-$data = [];
        foreach($unit_levels as $unit_level){
           foreach($levels as $level){
         if($level->id == $unit_level ){
