@@ -39,7 +39,7 @@ Route::resource('owners', OwnerController::class);
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
 
-Route::get('filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
+Route::get('unit/filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
