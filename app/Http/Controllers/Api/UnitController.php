@@ -31,8 +31,13 @@ class UnitController extends Controller
 
     public function store(UnitRequest $request)
     {
-        $this->Repository->store($request->validated());
+       $data = $this->Repository->store($request->validated());
+       if(isset($data->id)){
         return $this->sendResponse('', "تم تسجيل وحده جديده بنجاح", 200);
+       }else{
+        return $this->sendError( "error",'', 404);
+
+       }
     }
 
 

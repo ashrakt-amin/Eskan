@@ -39,11 +39,11 @@ Route::resource('owners', OwnerController::class);
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
 
+Route::get('filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
         Route::get('/meter_price/{space?}', 'meterPrice');
-        Route::get('/levels/{meter_price?}/{space?}', 'levels');
         Route::get('/numbers/{level}/{number}', 'numbers');
     });
 });
@@ -71,7 +71,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get("user", [LoginUserController::class, "show"]);
 
     Route::resource('image', ImageController::class)->except(['index', 'show']);
-    Route::post("update_image", [ImageController::class, "updateImage"]);
+    Route::post("update", [ImageController::class, "updateImage"]);
 
 
     // Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
