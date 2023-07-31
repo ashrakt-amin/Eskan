@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 
@@ -35,8 +36,8 @@ Route::resource('reservation', ReservationController::class);
 Route::resource('contact_us', ContactUsController::class);
 Route::resource('CityCenter_users', CityCenterUsersController::class);
 Route::resource('owners', OwnerController::class);
-Route::get('unit/levels', [LevelController::class,'index']);
-Route::get('levels/{id}', [LevelController::class,'show']);
+Route::get('unit/levels', [LevelController::class, 'index']);
+Route::get('levels/{id}', [LevelController::class, 'show']);
 
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
@@ -44,11 +45,10 @@ Route::prefix("unit")->group(function () {
         Route::get('/meter_price/{space?}', 'meterPrice');
         Route::get('/levels/{meter_price?}/{space?}', 'levels');
         Route::get('/numbers/{level}/{number}', 'numbers');
-
     });
 });
 
-
+Route::resource('image',ImageController::class)->only(['index', 'show']);
 
 // start auth
 
@@ -69,6 +69,10 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get("user", [LoginUserController::class, "show"]);
+
+    Route::resource('image', ImageController::class)->except(['index', 'show']);
+    Route::post("update_image", [ImageController::class, "updateImage"]);
+
 
     // Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
     // Route::patch('reservation/update/{id}', [ReservationController::class, 'update']);
