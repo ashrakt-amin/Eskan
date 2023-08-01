@@ -27,9 +27,10 @@ class ReservationResource extends JsonResource
                 'meter_price' => $this->unit->meter_price,
                 'advance'     => $this->unit->advance,
                 'installment' => $this->unit->installment,
-                'type'     => $this->unit->type->name,
-            ]           
-
+                'type'        => $this->unit->type->name,
+                'level'       =>$this->unit->level->name
+            ],
+        
         ];
     }
 }
