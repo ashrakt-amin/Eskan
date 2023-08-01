@@ -31,27 +31,30 @@ class UnitController extends Controller
 
     public function store(UnitRequest $request)
     {
-       $data = $this->Repository->store($request->validated());
-       if(isset($data->id)){
-        return $this->sendResponse('', "تم تسجيل وحده جديده بنجاح", 200);
-       }else{
-        return $this->sendError( "error",'', 404);
-
-       }
+        $data = $this->Repository->store($request->validated());
+        if (isset($data->errorInfo)) {
+            return $this->sendError($data->errorInfo, 'error', 404);
+        } else {
+            return $this->sendResponse('', "تم تسجيل وحده جديده بنجاح", 200);
+        }
     }
 
 
     public function show($id)
     {
         $unit = $this->Repository->find($id);
-        return $this->sendResponse(new UnitResource($unit) , " ", 200);
-
+        return $this->sendResponse(new UnitResource($unit), " ", 200);
     }
 
 
     public function storeUp(Request $request)
     {
-        return $this->sendResponse($this->Repository->edit($request), "تم التعديل ", 200);
+        $data = $this->Repository->edit($request);
+        if (isset($data->errorInfo)) {
+            return $this->sendError($data->errorInfo, 'error', 404);
+        } else {
+            return $this->sendResponse('', "تم التعديل ", 200);
+        }
     }
 
 
@@ -104,8 +107,8 @@ class UnitController extends Controller
         // ->pluck('level_id')->values()->all();
 
         $unique_data = $unit->unique('meter_price')
-        ->pluck('meter_price')->values()->all();
-        
+            ->pluck('meter_price')->values()->all();
+
         return response()->json([
             'status' => true,
             'message' => "unique meter price!",
@@ -116,30 +119,29 @@ class UnitController extends Controller
 
 
 
-    public function levels($meter_price = 0 , $space = 0)
+    public function levels($meter_price = 0, $space = 0)
     {
         if ($meter_price != 0 && $space != 0) {
             $unit = Unit::where('meter_price', $meter_price)->where('space', $space)
-                  ->orderBy('level_id', 'asc')->get();
-        }elseif($meter_price != 0 && $space == 0) {
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($meter_price != 0 && $space == 0) {
             $unit = Unit::where('meter_price', $meter_price)
-                  ->orderBy('level_id', 'asc')->get();
-        }elseif($meter_price == 0 && $space != 0) {
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($meter_price == 0 && $space != 0) {
             $unit = Unit::where('space', $space)
-                  ->orderBy('level_id', 'asc')->get();
+                ->orderBy('level_id', 'asc')->get();
         } else {
             $unit = Unit::all();
         }
-    $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
-       $levels = Level::all();
-       foreach($unit_levels as $unit_level){
-          foreach($levels as $level){
-        if($level->id == $unit_level ){
-            $data[]= $level; 
+        $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
+        $levels = Level::all();
+        foreach ($unit_levels as $unit_level) {
+            foreach ($levels as $level) {
+                if ($level->id == $unit_level) {
+                    $data[] = $level;
+                }
+            }
         }
-    }
-      
-       }
         return response()->json([
             'status' => true,
             'message' => "unique level",
@@ -147,17 +149,16 @@ class UnitController extends Controller
         ], 200);
     }
 
-    
 
-    public function numbers($level,$number)
+
+    public function numbers($level, $number)
     {
-        $unit =Unit::where('level_id', $level )->where('number' , $number )->first();
-        if(isset($unit)){
-            return $this->sendResponse(new UnitResource($unit) , " ", 200);
-        }else{
+        $unit = Unit::where('level_id', $level)->where('number', $number)->first();
+        if (isset($unit)) {
+            return $this->sendResponse(new UnitResource($unit), " ", 200);
+        } else {
             return $this->sendError("error", "unit not found ", 404);
         }
         //$numbers =$units->unique('number')->pluck('number')->values()->all();
     }
-    
 }

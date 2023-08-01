@@ -55,22 +55,25 @@ class UnitRepository implements UnitInterface
 
     public function edit($attributes)
     {
+        try {
+            $unit = $this->model->findOrFail($attributes->id);
+            if ($attributes['advance_rate']) {
+                $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
+                $attributes['advance'] = $advance;
+            } elseif ($attributes['space']) {
+                $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
+                $attributes['advance'] = $advance;
+            } elseif ($attributes['meter_price']) {
+                $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
+                $attributes['advance'] = $advance;
+            }
+            $unit->update($attributes->all());
+            return $unit;
+        } catch (\Exception $e) {
 
-        $unit = $this->model->findOrFail($attributes->id);
-        if ($attributes['advance_rate']) {
-            $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
-            $attributes['advance'] = $advance;
-        } elseif ($attributes['space']) {
-            $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
-            $attributes['advance'] = $advance;
-        } elseif ($attributes['meter_price']) {
-            $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
-            $attributes['advance'] = $advance;
+            return $e->getMessage();
         }
-        $unit->update($attributes->all());
-        return true;
     }
-
 
     public function delete($id)
     {
