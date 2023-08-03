@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 
@@ -28,6 +29,7 @@ Route::prefix("login")->group(function () {
 Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 //end register
 
+Route::resource('text', TextController::class)->only(['index', 'show']);
 Route::resource('seek_money', SeekMoneyController::class);
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
@@ -53,6 +55,8 @@ Route::resource('image',ImageController::class)->only(['index', 'show']);
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
+
+    Route::resource('text', TextController::class)->except(['index', 'show']);
 
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
