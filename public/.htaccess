@@ -1,17 +1,21 @@
 <IfModule mod_rewrite.c>
-# That was ONLY to protect you from 500 errors
-# if your server did not have mod_rewrite enabled
-
-    <IfModule mod_headers.c>
-    Header set Access-Control-Allow-Origin "*"
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
     </IfModule>
 
-RewriteEngine On
-# RewriteBase /
-# NOT needed unless you're using mod_alias to redirect
+    RewriteEngine On
 
-RewriteCond %{REQUEST_URI} !/public
-RewriteRule ^(.*)$ public/$1 [L]
-# Direct all requests to /public folder
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
 </IfModule>
