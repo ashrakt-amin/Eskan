@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Resources\Unit\UnitResource;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -11,6 +12,7 @@ class ReservationResource extends JsonResource
 
     public function toArray(Request $request): array
     {
+        $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d H:i:s');
         return [
             'id'              => $this->id,
             'name'            => $this->name,
@@ -30,7 +32,7 @@ class ReservationResource extends JsonResource
                 'type'        => $this->unit->type->name,
                 'level'       =>$this->unit->level->name
             ],
-            'created_at'             => $this->created_at,
+            'created_at'             =>  $formattedCreatedAt,
 
         
         ];
