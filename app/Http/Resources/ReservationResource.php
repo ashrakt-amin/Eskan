@@ -30,6 +30,8 @@ class ReservationResource extends JsonResource
                 'type'        => $this->unit->type->name,
                 'level'       =>$this->unit->level->name
             ],
+            'created_at'             => $this->created_at,
+
         
         ];
     }
