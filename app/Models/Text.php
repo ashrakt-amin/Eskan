@@ -11,7 +11,7 @@ class Text extends Model
 
     const IMAGE_PATH = 'Blog';
     protected $appends = ['path'];
-    protected $fillable = ['name','description','img'];
+    protected $fillable = ['name','description','img','title'];
 
 
 
