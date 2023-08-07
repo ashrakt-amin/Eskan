@@ -57,7 +57,7 @@ Route::resource('image',ImageController::class)->only(['index', 'show']);
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('text', TextController::class)->except(['index', 'show']);
-
+    Route::post('text/update',[TextController::class , 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
 

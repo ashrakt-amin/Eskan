@@ -6,7 +6,6 @@ use App\Models\Text;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TextResource;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
@@ -42,6 +41,7 @@ class TextController extends Controller
             'title'       => $request->title
 
         ]);
+        
         return $this->sendResponse($data, "success", 200);
     }
 
@@ -51,9 +51,9 @@ class TextController extends Controller
         return $this->sendResponse(TextResource::collection($data), "success", 200);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        $data = Text::findOrFail($id);
+        $data = Text::findOrFail($request->id);
         if (isset($request['img']) && $request['img'] != "") {
             $img = $this->aspectForResize($request['img'], Text::IMAGE_PATH, 500, 600);
             $this->deleteImage(Text::IMAGE_PATH,  $data->img);
