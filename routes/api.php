@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\UnitImage;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\LevelController;
@@ -50,19 +48,17 @@ Route::prefix("unit")->group(function () {
     });
 });
 
-Route::resource('image',ImageController::class)->only(['index', 'show']);
+Route::resource('image', ImageController::class)->only(['index', 'show']);
 
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('text', TextController::class)->except(['index', 'show']);
-    Route::post('text/update',[TextController::class , 'update']);
+    Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
-
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
-
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
@@ -73,13 +69,17 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get("user", [LoginUserController::class, "show"]);
-
     Route::resource('image', ImageController::class)->except(['index', 'show']);
     Route::post("update", [ImageController::class, "updateImage"]);
 
 
-    // Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
-    // Route::patch('reservation/update/{id}', [ReservationController::class, 'update']);
+  
+
+    Route::delete('seek_money/force_delete/{id}', [ SeekMoneyController::class,'forceDelete']);
+    Route::delete('reservation/force_delete/{id}', [ ReservationController::class,'forceDelete']);
+    Route::delete('contact_us/force_delete/{id}', [ ContactUsController::class,'forceDelete']);
+    Route::delete('CityCenter_users/force_delete/{id}', [ CityCenterUsersController::class,'forceDelete']);
+    Route::delete('owners/force_delete/{id}', [ OwnerController::class,'forceDelete']);
 
 });
 

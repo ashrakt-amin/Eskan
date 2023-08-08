@@ -23,10 +23,11 @@ class CityCenterUsersController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), CityCenterUsersResource::class);
+      
+            return $this->Repository->forAllConditionsReturn($request->all(), CityCenterUsersResource::class);
     }
 
-
+    
 
     public function store(CityCenterUsersRequest $request)
     {
@@ -46,6 +47,13 @@ class CityCenterUsersController extends Controller
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
+
+    }
+
+    
+    public function forceDelete($id)
+    {
+        return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
 
     }
 }

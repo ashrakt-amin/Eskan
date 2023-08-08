@@ -16,7 +16,7 @@ class OwnerRequest extends FormRequest
     {
         return [
             'name'        => 'required',
-            'phone'       => 'required',
+            'phone'       => 'required|unique:owners,phone',
             'job'         => 'required',
             'address'     => 'required',
             'unit_type'   => 'required',

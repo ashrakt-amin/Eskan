@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Repository\Contact;
-use App\Models\ContactUs;
+namespace App\Repository\SeekMoney;
+
+use App\Models\SeekMoney;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
-class ContactRepository implements ContactInterface
+class seekMoneyRepository implements seekMoneyInterface
 {
     use TraitResponseTrait;
     public $model;
 
     protected $resourceCollection;
 
-    public function __construct(ContactUs $model)
+    public function __construct(SeekMoney $model)
     {
         $this->model = $model;
     }
@@ -31,7 +32,7 @@ class ContactRepository implements ContactInterface
 
 
 
-    public function find($id): ?ContactUs
+    public function find($id)
     {
         return $this->model->findOrFail($id);
     }
@@ -44,14 +45,14 @@ class ContactRepository implements ContactInterface
     }
 
 
-    
     public function forceDelete($id)
     {
         $data = $this->model->onlyTrashed()->findOrFail($id);
         $data->forceDelete();
         return true;
     }
-    
+
+
 
     public function theLatest(array $attributes)
     {

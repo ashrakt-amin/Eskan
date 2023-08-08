@@ -18,7 +18,7 @@ class SeekMoneyRequest extends FormRequest
         return [
             'name'                => 'required',
             'address'             => 'required',
-            'phone'               => 'required',
+            'phone'               => 'required|unique:seek_money,phone',
             'job'                 => 'required',
             'face_book_active'    => 'nullable',
             'work_background'     => 'required',

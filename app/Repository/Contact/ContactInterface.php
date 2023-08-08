@@ -15,6 +15,8 @@ interface ContactInterface
 
     public function delete($id);
 
+    public function forceDelete($id);
+    
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
 
 

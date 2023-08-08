@@ -16,7 +16,7 @@ class CityCenterUsersRequest extends FormRequest
     {
         return [
             'name'    => 'required',
-            'phone'   => 'required',
+            'phone'   => 'required|unique:city_center_users,phone',
             'job'     => 'required',
             'address' => 'required',
             'space'   => 'required',

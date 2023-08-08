@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repository\CityCenterUsers;
+
 use App\Models\CityCenterUsers;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -41,6 +42,14 @@ class CityCenterUsersRepository implements CityCenterUsersInterface
     public function delete($id)
     {
         return  $this->model::findOrFail($id)->delete();
+    }
+
+
+    public function forceDelete($id)
+    {
+        $data = $this->model->onlyTrashed()->findOrFail($id);
+        $data->forceDelete();
+        return true;
     }
 
 

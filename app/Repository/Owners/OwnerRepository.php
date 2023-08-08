@@ -40,6 +40,23 @@ class OwnerRepository implements OwnerInterface
     }
 
 
+    
+
+    public function delete($id)
+    {
+        return  $this->model::findOrFail($id)->delete();
+    }
+
+
+    
+    public function forceDelete($id)
+    {
+        $data = $this->model->onlyTrashed()->findOrFail($id);
+        $data->forceDelete();
+        return true;
+    }
+
+    
 
     public function theLatest(array $attributes)
     {

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Repository\Reservation;
+
 use App\Models\Reservation;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -44,6 +45,15 @@ class ReservationRepository implements ReservationInterface
     }
 
 
+    
+    public function forceDelete($id)
+    {
+        $data = $this->model->onlyTrashed()->findOrFail($id);
+        $data->forceDelete();
+        return true;
+    }
+    
+
     public function filter(array $attributes)
     {
         return function ($q) use ($attributes) {
@@ -53,6 +63,7 @@ class ReservationRepository implements ReservationInterface
 
             !array_key_exists('unit_id', $attributes) || $attributes['unit_id'] == 0   ?: $q
                 ->where(['unit_id' => $attributes['unit_id']]);
+
         };
     }
 
@@ -125,8 +136,8 @@ class ReservationRepository implements ReservationInterface
     {
         $this->resourceCollection = $resourceCollection;
 
-        return array_key_exists('paginate', $attributes) || array_key_exists('card', $attributes)
-            || array_key_exists('table', $attributes) || array_key_exists('status', $attributes)
+        return array_key_exists('paginate', $attributes) || array_key_exists('elbadry', $attributes)
+            || array_key_exists('elmadina', $attributes) || array_key_exists('status', $attributes)
             ? $this->forAllConditionsPaginate($attributes, $resourceCollection)
             : (array_key_exists('latest', $attributes) ? $this->forAllConditionsLatest($attributes, $resourceCollection)
                 : $this->forAllConditionsRandom($attributes, $resourceCollection));

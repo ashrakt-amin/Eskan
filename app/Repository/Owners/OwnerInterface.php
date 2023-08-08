@@ -12,6 +12,10 @@ interface OwnerInterface
 
     public function find($id):?Owner;
 
+    public function delete($id);
+
+    public function forceDelete($id);
+
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
 
   

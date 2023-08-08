@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SeekMoneyRequest;
 use App\Http\Resources\SeekMoneyResource;
+use App\Repository\Contact\ContactInterface;
+use App\Repository\SeekMoney\seekMoneyInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 
@@ -16,10 +18,17 @@ class SeekMoneyController extends Controller
 {
     use TraitResponseTrait;
 
-    public function index()
+    public $Repository;
+    public function __construct(seekMoneyInterface $Repository)
     {
-        $data = SeekMoney::all();
-        return $this->sendResponse(SeekMoneyResource::collection($data), "", 200);
+        $this->Repository = $Repository;
+    }
+
+
+    public function index(Request $request)
+    {
+        return $this->Repository->forAllConditionsReturn($request->all(),SeekMoneyResource::class);
+
     }
 
 
@@ -30,8 +39,8 @@ class SeekMoneyController extends Controller
 
     public function store(SeekMoneyRequest $request)
     {
-        SeekMoney::create($request->validated());
-        return $this->sendResponse('', "تم التسجيل", 200);
+       $data = $this->Repository->store($request->validated());
+        return $this->sendResponse($data, "تم التسجيل ", 200);
     }
 
 
@@ -41,11 +50,6 @@ class SeekMoneyController extends Controller
     }
 
 
-    public function edit(string $id)
-    {
-        //
-    }
-
     public function update(Request $request, string $id)
     {
         //
@@ -53,7 +57,15 @@ class SeekMoneyController extends Controller
 
     public function destroy($id)
     {
-        SeekMoney::findOrFail($id)->delete();
-        return $this->sendResponse('', " تم الحذف ", 200);
+        return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
+
+    }
+
+
+    
+    public function forceDelete($id)
+    {
+        return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
+
     }
 }

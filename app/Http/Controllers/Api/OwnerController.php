@@ -39,5 +39,19 @@ class OwnerController extends Controller
         }
     
       
+        
+    public function destroy($id)
+    {
+        return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
+
+    }
+
+    
+    public function forceDelete($id)
+    {
+        return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
+
+    }
+    
     }
     

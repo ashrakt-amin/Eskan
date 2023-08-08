@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Repository\Reservation;
+namespace App\Repository\SeekMoney;
 
-use App\Models\Reservation;
 use Illuminate\Support\Collection;
 
-interface ReservationInterface
+interface seekMoneyInterface
 {
     public function all(): Collection;
 
     public function store(array $attributes);
 
-    public function find($id): ?Reservation;
+    public function find($id);
 
     public function delete($id);
 
     public function forceDelete($id);
-    
+
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
 
 

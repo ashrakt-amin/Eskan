@@ -11,6 +11,8 @@ use App\Repository\Contact\ContactInterface;
 use App\Repository\Project\ProjectInterface;
 use App\Repository\Contact\ContactRepository;
 use App\Repository\Project\ProjectRepository;
+use App\Repository\SeekMoney\seekMoneyInterface;
+use App\Repository\SeekMoney\seekMoneyRepository;
 use App\Repository\Reservation\ReservationInterface;
 use App\Repository\Reservation\ReservationRepository;
 use App\Repository\CityCenterUsers\CityCenterUsersInterface;
@@ -28,6 +30,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(ContactInterface::class,ContactRepository::class);
         $this->app->bind(CityCenterUsersInterface::class,CityCenterUsersRepository::class);
         $this->app->bind(OwnerInterface::class,OwnerRepository::class);
+        $this->app->bind(seekMoneyInterface::class,seekMoneyRepository::class);
+
 
 
         
