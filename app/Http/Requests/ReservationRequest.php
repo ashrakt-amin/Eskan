@@ -18,7 +18,7 @@ class ReservationRequest extends FormRequest
 
         return [
             'name'      => 'required',
-            'phone'     => 'required',
+            'phone'     => 'required|unique:reservations,phone',
             'job'       => 'required',
             'project_id'=> 'required',
             'unit_id'   => 'nullable',
