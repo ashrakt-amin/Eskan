@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Resources\Unit;
+
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UnitResource extends JsonResource
@@ -14,19 +15,22 @@ class UnitResource extends JsonResource
             'contract'    => $this->contract,
             'rooms'       => $this->rooms,
             'duration'    => $this->duration,
-            'space'       => is_int($this->space) ? (int)$this->space : (float)$this->space ,
+            'space'       => is_int($this->space) ? (int)$this->space : (float)$this->space,
             'meter_price' => is_int($this->meter_price) ? (int)$this->meter_price : (float)$this->meter_price,
-            'advance_rate'=> (int)$this->advance_rate,
-            'advance'     => is_int($this->advance) ? (int)$this->advance: (float)$this->advance,
+            'advance_rate' => (int)$this->advance_rate,
+            'advance'     => is_int($this->advance) ? (int)$this->advance : (float)$this->advance,
             'installment' => is_int($this->installment) ? (int)$this->installment : (float)$this->installment,
             'type'        => $this->type->name,
             'project'     => $this->project->name,
             'level_id'                  => [
                 'id'     => $this->level_id,
-                'name'   => $this->level->name
+                'name'   => $this->level->name,
             ],
-            'img'        =>UnitImageResource::collection($this->unitImages),
-            
+            'images'                  => [
+                'unit_img'     => $this->unitImage->unitpath,
+                'block_img'   => $this->unitImage->blockpath,
+            ]
+
         ];
     }
 }

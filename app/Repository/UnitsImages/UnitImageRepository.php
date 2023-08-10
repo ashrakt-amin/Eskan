@@ -1,22 +1,21 @@
 <?php
 
-namespace App\Repository\Units;
+namespace App\Repository\UnitsImages;
 
-use Exception;
-use App\Models\Unit;
-use App\Models\UnitImage;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
+use App\Models\UnitsImage;
 
-class UnitRepository implements UnitInterface
+
+class UnitImageRepository implements UnitImageInterface
 {
     use TraitResponseTrait, TraitImageProccessingTrait;
     public $model;
 
     protected $resourceCollection;
 
-    public function __construct(Unit $model)
+    public function __construct(UnitsImage $model)
     {
         $this->model = $model;
     }
@@ -30,11 +29,14 @@ class UnitRepository implements UnitInterface
     public function store(array $attributes)
     {
         try {
-
-            // $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
-            $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
-            $data = $this->model->create($attributes);
-            return $data;
+            $unit_img = $this->aspectForResize($attributes['unit_img'], UnitsImage::Unit_PATH, 500, 600);
+            $block_img = $this->aspectForResize($attributes['block_img'], UnitsImage::Block_PATH, 500, 600);
+            $data =  $this->model->create([
+                'unit_img' =>  $unit_img,
+                'block_img' =>  $block_img,
+            ]);
+                return true;
+            
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -42,7 +44,7 @@ class UnitRepository implements UnitInterface
 
 
 
-    public function find($id): ?Unit
+    public function find($id): ?UnitsImage
     {
         return $this->model->findOrFail($id);
     }
@@ -52,20 +54,18 @@ class UnitRepository implements UnitInterface
     public function edit($attributes)
     {
         try {
-            $unit = $this->model->findOrFail($attributes->id);
-            if ($attributes['advance_rate']) {
-                $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
-                $attributes['advance'] = $advance;
-            } elseif ($attributes['space']) {
-                $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
-                $attributes['advance'] = $advance;
-            } elseif ($attributes['meter_price']) {
-                $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
-                $attributes['advance'] = $advance;
+            $data = $this->model->findOrFail($attributes->id);
+            if ($attributes['unit_img'] != null) {
+                $this->deleteImage(UnitsImage::Unit_PATH, $data->unit_img);
+                $unit_img = $this->aspectForResize($attributes['unit_img'], UnitsImage::Unit_PATH, 500, 600);
+                $data->update(['img' => $unit_img]);
+            } elseif ($attributes['block_img']) {
+                $this->deleteImage(UnitsImage::Block_PATH, $data->block_img);
+                $block_img = $this->aspectForResize($attributes['block_img'], UnitsImage::Block_PATH, 500, 600);
+                $data->update(['img' => $block_img]);
             }
 
-            $unit->update($attributes->all());
-            return $unit;
+            return $data;
         } catch (\Exception $e) {
 
             return $e->getMessage();
@@ -74,64 +74,14 @@ class UnitRepository implements UnitInterface
 
     public function delete($id)
     {
-        $unit = $this->model->findOrFail($id);
-        // if ($unit->unitImages != null) {
-        //     foreach ($unit->unitImages as $img) {
-        //         $this->deleteImage('Units', $img->img);
-        //     }
-        //     $unit->unitImages()->delete();
-        // }
-        $unit->delete();
+        $data = $this->model->findOrFail($id);
+        $this->deleteImage(UnitsImage::Unit_PATH, $data->unit_img);
+        $this->deleteImage(UnitsImage::Block_PATH, $data->block_img);
+        $data->delete();
         return true;
     }
 
 
-
-    public function deleteImageUnit($id)
-    {
-        $image = UnitImage::find($id);
-        $this->deleteImage('Units', $image->img);
-        $image->delete();
-        return true;
-    }
-
-
-    public function storeImages($attributes)
-    {
-
-        $unit = $this->model->findOrFail($attributes->id);
-        $unit->unitImages()->createMany($this->aspectForResizeImages($attributes['img'], 'Units', 'img', 600, 600));
-        return true;
-    }
-
-
-
-    public function filter(array $attributes)
-    {
-        return function ($q) use ($attributes) {
-
-            !array_key_exists('project_id', $attributes) || $attributes['project_id'] == 0   ?: $q
-                ->where(['project_id' => $attributes['project_id']]);
-
-            !array_key_exists('number', $attributes) || $attributes['number'] == 0   ?: $q
-                ->where(['number' => $attributes['number']]);
-
-            !array_key_exists('type_id', $attributes) || $attributes['type_id'] == 0   ?: $q
-                ->where(['type_id' => $attributes['type_id']]);
-
-            !array_key_exists('space', $attributes) || $attributes['space'] == 0   ?: $q
-                ->where(['space' => $attributes['space']]);
-
-            !array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0   ?: $q
-                ->where(['level_id' => $attributes['level_id']]);
-
-            !array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0   ?: $q
-                ->where(['meter_price' => $attributes['meter_price']]);
-
-            !array_key_exists('contract', $attributes) ?: $q
-                ->where('contract', '<>', null);
-        };
-    }
 
     public function theLatest(array $attributes)
     {
@@ -146,8 +96,7 @@ class UnitRepository implements UnitInterface
     public function forAllConditions(array $attributes)
     {
         return $this->model
-            ->where($this->theLatest($attributes))
-            ->where($this->filter($attributes));
+            ->where($this->theLatest($attributes));
     }
 
 

@@ -12,7 +12,9 @@ class UnitImageResource extends JsonResource
 
         return [
             'id'          => $this->id,
-            'img'      => $this->path,
+            'unit_img'      => $this->unitpath,
+            'block_img'      => $this->blockpath,
+
         ];
     }
 }

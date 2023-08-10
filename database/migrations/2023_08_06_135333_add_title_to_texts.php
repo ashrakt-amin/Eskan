@@ -13,18 +13,14 @@ return new class extends Migration
     {
         Schema::table('texts', function (Blueprint $table) {
             $table->String('title')->nullable();
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+
     public function down(): void
     {
         Schema::table('texts', function (Blueprint $table) {
-         //   $table->dropColumn('title');
-
+            $table->dropColumn('title');
         });
     }
 };

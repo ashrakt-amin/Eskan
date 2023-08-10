@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\UnitController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\OwnerController;
+use App\Http\Controllers\Api\UnitsImageController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\SeekMoneyController;
@@ -11,8 +14,6 @@ use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
-use App\Http\Controllers\Api\ImageController;
-use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 
@@ -67,6 +68,10 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/delete/image/{id}', 'destroyImage');
         });
     });
+    Route::resource('unit_images', UnitsImageController::class);
+    Route::post('unit_images/update', [UnitsImageController::class,'storeUp']);
+
+
 
     Route::get("user", [LoginUserController::class, "show"]);
     Route::resource('image', ImageController::class)->except(['index', 'show']);
