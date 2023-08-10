@@ -39,6 +39,8 @@ Route::resource('CityCenter_users', CityCenterUsersController::class);
 Route::resource('owners', OwnerController::class);
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
+Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
+
 
 Route::get('unit/filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
 Route::prefix("unit")->group(function () {
@@ -68,7 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/delete/image/{id}', 'destroyImage');
         });
     });
-    Route::resource('unit_images', UnitsImageController::class);
+    Route::resource('unit_images', UnitsImageController::class)->except(['index', 'show']);
     Route::post('unit_images/update', [UnitsImageController::class,'storeUp']);
 
 
