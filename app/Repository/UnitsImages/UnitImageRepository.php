@@ -58,11 +58,11 @@ class UnitImageRepository implements UnitImageInterface
             if ($attributes['unit_img'] != null) {
                 $this->deleteImage(UnitsImage::Unit_PATH, $data->unit_img);
                 $unit_img = $this->aspectForResize($attributes['unit_img'], UnitsImage::Unit_PATH, 500, 600);
-                $data->update(['img' => $unit_img]);
+                $data->update(['unit_img' => $unit_img]);
             } elseif ($attributes['block_img']) {
                 $this->deleteImage(UnitsImage::Block_PATH, $data->block_img);
                 $block_img = $this->aspectForResize($attributes['block_img'], UnitsImage::Block_PATH, 500, 600);
-                $data->update(['img' => $block_img]);
+                $data->update(['block_img' => $block_img]);
             }
 
             return $data;
