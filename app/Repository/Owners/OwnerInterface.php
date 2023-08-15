@@ -12,6 +12,8 @@ interface OwnerInterface
 
     public function find($id):?Owner;
 
+    public function edit($id, $attributes):?Owner;
+
     public function delete($id);
 
     public function forceDelete($id);

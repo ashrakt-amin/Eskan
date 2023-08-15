@@ -36,6 +36,17 @@ class ContactRepository implements ContactInterface
         return $this->model->findOrFail($id);
     }
 
+    
+    public function edit($id,  $attributes): ?ContactUs
+    {
+        $data = $this->model->findOrFail($id);
+        if ($attributes['feedback'] != null) {
+            $data->update([
+                'feedback' => $attributes['feedback']
+            ]);
+        }
+        return $data;
+    }
 
 
     public function delete($id)

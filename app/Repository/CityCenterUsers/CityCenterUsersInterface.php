@@ -2,6 +2,7 @@
 
 namespace App\Repository\CityCenterUsers;
 
+use App\Models\CityCenterUsers;
 use Illuminate\Support\Collection;
 
 interface CityCenterUsersInterface
@@ -11,6 +12,9 @@ interface CityCenterUsersInterface
     public function store(array $attributes);
 
     public function find($id);
+
+    public function edit($id, $attributes):?CityCenterUsers;
+
 
     public function delete($id);
 

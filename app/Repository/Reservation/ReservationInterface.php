@@ -13,6 +13,8 @@ interface ReservationInterface
 
     public function find($id): ?Reservation;
 
+    public function edit($id, $attributes):? Reservation;
+
     public function delete($id);
 
     public function forceDelete($id);

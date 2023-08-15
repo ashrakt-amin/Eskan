@@ -10,5 +10,5 @@ class CityCenterUsers extends Model
 {
     use HasFactory , SoftDeletes;
     protected $dates = ['deleted_at'];
-    protected $fillable = ['id' , 'name' , 'phone' , 'address' , 'space' , 'activity' ,'job'];
+    protected $fillable = ['id' , 'name' , 'phone' , 'address' , 'space' , 'activity' ,'job' ,'feedback'];
 }

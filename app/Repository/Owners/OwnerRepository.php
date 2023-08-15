@@ -41,6 +41,16 @@ class OwnerRepository implements OwnerInterface
 
 
     
+    public function edit($id,  $attributes): ?Owner
+    {
+        $data = $this->model->findOrFail($id);
+        if ($attributes['feedback'] != null) {
+            $data->update([
+                'feedback' => $attributes['feedback']
+            ]);
+        }
+        return $data;
+    }
 
     public function delete($id)
     {

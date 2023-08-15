@@ -22,6 +22,7 @@ class CityCenterUsersResource extends JsonResource
             'activity'        => $this->activity,
             'job'             => $this->job,
             'created_at'      => $formattedCreatedAt,
+            'feedback'        => $this->feedback
 
         ];    
 

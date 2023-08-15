@@ -23,6 +23,8 @@ class SeekMoneyRequest extends FormRequest
             'face_book_active'    => 'nullable',
             'work_background'     => 'required',
             'has_wide_netWork'    => 'required',
+            'feedback'            =>'nullable',
+
 
         ];
     }

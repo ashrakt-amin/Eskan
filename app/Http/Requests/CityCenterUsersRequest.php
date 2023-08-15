@@ -21,7 +21,8 @@ class CityCenterUsersRequest extends FormRequest
             'address' => 'required',
             'space'   => 'required',
             'activity'=> 'required',
-            'job'     => 'required'
+            'job'     => 'required',
+            'feedback' =>'nullable',
 
 
         ];

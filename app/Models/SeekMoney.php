@@ -10,7 +10,7 @@ class SeekMoney extends Model
 {
     use HasFactory , SoftDeletes;
 
-    protected $fillable = ['name','phone','address','job','face_book_active','work_background','has_wide_netWork'];
+    protected $fillable = ['name','phone','address','job','face_book_active','work_background','has_wide_netWork' ,'feedback'];
 
     
 }

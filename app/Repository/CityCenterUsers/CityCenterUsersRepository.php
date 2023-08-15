@@ -38,6 +38,17 @@ class CityCenterUsersRepository implements CityCenterUsersInterface
     }
 
 
+    public function edit($id,  $attributes): ?CityCenterUsers
+    {
+        $data = $this->model->findOrFail($id);
+        if ($attributes['feedback'] != null) {
+            $data->update([
+                'feedback' => $attributes['feedback']
+            ]);
+        }
+        return $data;
+    }
+
 
     public function delete($id)
     {

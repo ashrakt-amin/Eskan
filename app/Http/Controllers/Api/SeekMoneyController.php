@@ -27,45 +27,33 @@ class SeekMoneyController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(),SeekMoneyResource::class);
-
-    }
-
-
-    public function create()
-    {
-        //
+        return $this->Repository->forAllConditionsReturn($request->all(), SeekMoneyResource::class);
     }
 
     public function store(SeekMoneyRequest $request)
     {
-       $data = $this->Repository->store($request->validated());
+        $data = $this->Repository->store($request->validated());
         return $this->sendResponse($data, "تم التسجيل ", 200);
     }
 
 
-    public function show(string $id)
+
+    public function update(Request $request, $id)
     {
-        //
+        return $this->sendResponse($this->Repository->edit($id, $request), " تم تعديل ", 200);
     }
 
 
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+
 
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
-
     }
 
 
-    
     public function forceDelete($id)
     {
         return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
-
     }
 }

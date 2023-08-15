@@ -22,6 +22,8 @@ class SeekMoneyResource extends JsonResource
             'work_background' =>$this->work_background,
             'has_wide_netWork'=>$this->has_wide_netWork,
             'created_at'      => $formattedCreatedAt,
+            'feedback'        => $this->feedback
+
 
 
         ];  

@@ -33,6 +33,8 @@ class ReservationResource extends JsonResource
                 'level'       =>$this->unit->level->name
             ],
             'created_at'             =>  $formattedCreatedAt,
+            'feedback'        => $this->feedback
+
 
         
         ];

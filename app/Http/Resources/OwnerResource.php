@@ -27,6 +27,8 @@ class OwnerResource extends JsonResource
             'price'       => $this->price,
             'premium'     => $this->premium,
             'created_at'  => $formattedCreatedAt,
+            'feedback'        => $this->feedback
+
 
         ];
     }

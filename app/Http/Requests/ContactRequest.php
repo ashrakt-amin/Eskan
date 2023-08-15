@@ -17,7 +17,9 @@ class ContactRequest extends FormRequest
         return [
             'name'        => 'required',
             'phone'       => 'required|unique:contact_us,phone',
-            'unit_type'   => 'required'
+            'unit_type'   => 'required',
+            'feedback' =>'nullable',
+
         ];
     }
 }

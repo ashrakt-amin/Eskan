@@ -42,6 +42,12 @@ class ContactUsController extends Controller
     }
 
   
+    public function update(Request $request,$id)
+    {
+        return $this->sendResponse($this->Repository->edit($id , $request), " تم تعديل ", 200);
+
+    }
+    
   
     public function destroy($id)
     {

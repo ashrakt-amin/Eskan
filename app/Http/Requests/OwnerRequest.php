@@ -21,7 +21,9 @@ class OwnerRequest extends FormRequest
             'address'     => 'required',
             'unit_type'   => 'required',
             'price'       => 'required',
-            'premium'     => 'required'
+            'premium'     => 'required',
+            'feedback' =>'nullable',
+
 
         ];
     }

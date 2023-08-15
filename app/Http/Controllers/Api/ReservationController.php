@@ -35,20 +35,23 @@ class ReservationController extends Controller
     public function show($id)
     {
         return $this->sendResponse($this->Repository->find($id), " ", 200);
-
     }
 
-  
+
+    public function update(Request $request, $id)
+    {
+        return $this->sendResponse($this->Repository->edit($id, $request), " تم تعديل ", 200);
+    }
+
+
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
-
     }
 
-    
+
     public function forceDelete($id)
     {
         return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
-
     }
 }

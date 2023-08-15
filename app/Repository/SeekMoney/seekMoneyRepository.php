@@ -38,6 +38,16 @@ class seekMoneyRepository implements seekMoneyInterface
     }
 
 
+    public function edit($id,  $attributes): ?SeekMoney
+    {
+        $data = $this->model->findOrFail($id);
+        if ($attributes['feedback'] != null) {
+            $data->update([
+                'feedback' => $attributes['feedback']
+            ]);
+        }
+        return $data;
+    }
 
     public function delete($id)
     {

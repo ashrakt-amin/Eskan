@@ -13,6 +13,8 @@ interface ContactInterface
 
     public function find($id): ?ContactUs;
 
+    public function edit($id, $attributes):?ContactUs;
+
     public function delete($id);
 
     public function forceDelete($id);
