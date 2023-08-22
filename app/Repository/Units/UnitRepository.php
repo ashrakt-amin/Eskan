@@ -130,9 +130,6 @@ class UnitRepository implements UnitInterface
 
             !array_key_exists('contract', $attributes) ?: $q
                 ->where('contract', '<>', null);
-
-
-
         };
     }
 
@@ -152,7 +149,6 @@ class UnitRepository implements UnitInterface
             ->where($this->theLatest($attributes))
             ->where($this->filter($attributes))
             ->orderByRaw('(contract)ASC');
-            
     }
 
 
@@ -207,8 +203,8 @@ class UnitRepository implements UnitInterface
     {
         $this->resourceCollection = $resourceCollection;
 
-        return array_key_exists('paginate', $attributes) || array_key_exists('card', $attributes)||
-          array_key_exists('table', $attributes) || array_key_exists('status', $attributes)
+        return array_key_exists('paginate', $attributes) || array_key_exists('card', $attributes) ||
+            array_key_exists('table', $attributes) || array_key_exists('status', $attributes)
             ? $this->forAllConditionsPaginate($attributes, $resourceCollection)
             : (array_key_exists('latest', $attributes) ? $this->forAllConditionsLatest($attributes, $resourceCollection)
                 : $this->forAllConditionsRandom($attributes, $resourceCollection));

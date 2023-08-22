@@ -10,14 +10,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('units', function (Blueprint $table) {
-            $table->foreignId('unit_image_id')->constrained('units_images')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('unit_image_id')->nullable()->constrained('units_images')->cascadeOnDelete()->cascadeOnUpdate();
         });
     }
 
     public function down(): void
     {
         Schema::table('units', function (Blueprint $table) {
-            $table->dropColumn('unit_image_id')->after('project_id');
+            $table->dropColumn('unit_image_id');
 
         });
     }

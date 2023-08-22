@@ -26,7 +26,7 @@ class UnitResource extends JsonResource
                 'id'     => $this->level_id,
                 'name'   => $this->level->name,
             ],
-            'images'                  => [
+            'images'                  =>$this->unitImage == null ? "null" : [
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
             ]
