@@ -7,6 +7,7 @@ use App\Models\ContactUs;
 use App\Models\Owner;
 use App\Models\Reservation;
 use App\Models\SeekMoney;
+use App\Models\Wallet;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 
@@ -36,6 +37,10 @@ class DeleteExpiredRecords extends Command
             ->forceDelete();
 
         SeekMoney::onlyTrashed()
+            ->where('deleted_at', '<', $thirtyDaysAgo)
+            ->forceDelete();
+
+        Wallet::onlyTrashed()
             ->where('deleted_at', '<', $thirtyDaysAgo)
             ->forceDelete();
 
