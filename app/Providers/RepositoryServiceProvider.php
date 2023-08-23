@@ -19,7 +19,8 @@ use App\Repository\Reservation\ReservationInterface;
 use App\Repository\Reservation\ReservationRepository;
 use App\Repository\CityCenterUsers\CityCenterUsersInterface;
 use App\Repository\CityCenterUsers\CityCenterUsersRepository;
-
+use App\Repository\Wallet\WalletInterface;
+use App\Repository\Wallet\WalletRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,6 +35,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CityCenterUsersInterface::class,CityCenterUsersRepository::class);
         $this->app->bind(OwnerInterface::class,OwnerRepository::class);
         $this->app->bind(seekMoneyInterface::class,seekMoneyRepository::class);
+        $this->app->bind(WalletInterface::class,WalletRepository::class);
+
       
     }
     
