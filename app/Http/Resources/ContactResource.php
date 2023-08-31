@@ -19,9 +19,10 @@ class ContactResource extends JsonResource
             'phone'           => $this->phone,
             'unit_type'       => $this->unit_type,
             'created_at'      => $formattedCreatedAt,
-            'feedback'        => $this->feedback
-
-
+            'feedback'        => $this->feedback,
+            'space'           => $this->required,
+            'breif'           => $this->required
+            
         ];    
 
 

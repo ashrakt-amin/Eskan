@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ContactUs extends Model
 {
     use HasFactory , SoftDeletes ;
-    protected $fillable = ['name' , 'phone' , 'unit_type','feedback'] ;
+    protected $fillable = ['name' , 'phone' , 'unit_type' , 'space' , 'breif' ,'feedback'] ;
 
   
 }
