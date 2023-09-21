@@ -87,8 +87,6 @@ class BazarRepository implements BazarInterface
             !array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0   ?: $q
                 ->where(['meter_price' => $attributes['meter_price']]);
 
-            !array_key_exists('contract', $attributes) ?: $q
-                ->where('contract', '<>', null);
         };
     }
 

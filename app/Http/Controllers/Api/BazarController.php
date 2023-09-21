@@ -90,9 +90,6 @@ class BazarController extends Controller
         } else {
             $unit = Bazar::orderBy('meter_price', 'asc')->get();
         }
-        // $level = $unit->unique('level_id')
-        // ->pluck('level_id')->values()->all();
-
         $unique_data = $unit->unique('meter_price')
             ->pluck('meter_price')->values()->all();
 
@@ -104,20 +101,4 @@ class BazarController extends Controller
     }
 
 
-
-
-
-
-
-
-    public function numbers($level, $number)
-    {
-        $unit = Bazar::where('level_id', $level)->where('number', $number)->first();
-        if (isset($unit)) {
-            return $this->sendResponse(new BazarResource($unit), " ", 200);
-        } else {
-            return $this->sendError("error", "unit not found ", 404);
-        }
-        //$numbers =$units->unique('number')->pluck('number')->values()->all();
-    }
 }

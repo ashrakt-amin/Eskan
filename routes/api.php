@@ -55,6 +55,13 @@ Route::prefix("unit")->group(function () {
     });
 });
 
+Route::prefix("bazar")->group(function () {
+    Route::controller(BazarController::class)->group(function () {
+        Route::get('/space/{meter_price?}', 'space');
+        Route::get('/meter_price/{space?}', 'meterPrice');
+    });
+});
+
 Route::resource('image', ImageController::class)->only(['index', 'show']);
 
 // start auth
