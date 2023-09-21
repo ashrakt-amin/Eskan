@@ -3,20 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\UnitController;
+use App\Http\Controllers\Api\BazarController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\OwnerController;
-use App\Http\Controllers\Api\UnitsImageController;
+use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
+use App\Http\Controllers\Api\UnitsImageController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
-use App\Http\Controllers\Api\WalletController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -33,6 +34,7 @@ Route::resource('text', TextController::class)->only(['index', 'show']);
 Route::resource('seek_money', SeekMoneyController::class);
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
+Route::resource('bazar', BazarController::class)->only(['index', 'show']);
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 Route::resource('reservation', ReservationController::class);
 Route::resource('contact_us', ContactUsController::class);
@@ -65,6 +67,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);
+    Route::resource('bazar', BazarController::class)->except(['index', 'show']);
+    Route::post('bazar/update',[BazarController::class,'storeUp']);
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
             Route::post('/update', 'storeUp');
