@@ -21,6 +21,8 @@ use App\Repository\UnitsImages\UnitImageInterface;
 use App\Repository\UnitsImages\UnitImageRepository;
 use App\Repository\Reservation\ReservationInterface;
 use App\Repository\Reservation\ReservationRepository;
+use App\Repository\BazarCustomer\BazarCustomerInterface;
+use App\Repository\BazarCustomer\BazarCustomerRepository;
 use App\Repository\CityCenterUsers\CityCenterUsersInterface;
 use App\Repository\CityCenterUsers\CityCenterUsersRepository;
 
@@ -33,6 +35,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(UnitInterface::class,UnitRepository::class);
         $this->app->bind(UnitImageInterface::class,UnitImageRepository::class);
         $this->app->bind(BazarInterface::class,BazarRepository::class);
+        $this->app->bind(BazarCustomerInterface::class,BazarCustomerRepository::class);
         $this->app->bind(ReservationInterface::class,ReservationRepository::class);
         $this->app->bind(ContactInterface::class,ContactRepository::class);
         $this->app->bind(CityCenterUsersInterface::class,CityCenterUsersRepository::class);

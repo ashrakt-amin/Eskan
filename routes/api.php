@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
+use App\Http\Controllers\Api\BazarCustomerController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -36,11 +37,14 @@ Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
-Route::resource('reservation', ReservationController::class);
-Route::resource('contact_us', ContactUsController::class);
-Route::resource('wallet', WalletController::class);
-Route::resource('CityCenter_users', CityCenterUsersController::class);
-Route::resource('owners', OwnerController::class);
+
+Route::resource('reservation', ReservationController::class)->only(['index', 'show']);
+Route::resource('contact_us', ContactUsController::class)->only(['index', 'show']);
+Route::resource('wallet', WalletController::class)->only(['index', 'show']);
+Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show']);
+Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show']);
+Route::resource('owners', OwnerController::class)->only(['index', 'show']);
+
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
 Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
@@ -94,6 +98,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
   
+Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
+Route::resource('contact_us', ContactUsController::class)->except(['index', 'show']);
+Route::resource('wallet', WalletController::class)->except(['index', 'show']);
+Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show']);
+Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show']);
+Route::resource('owners', OwnerController::class)->except(['index', 'show']);
+
 
     Route::delete('seek_money/force_delete/{id}', [ SeekMoneyController::class,'forceDelete']);
     Route::delete('reservation/force_delete/{id}', [ ReservationController::class,'forceDelete']);
