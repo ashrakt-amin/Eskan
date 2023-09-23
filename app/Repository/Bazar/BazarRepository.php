@@ -29,11 +29,10 @@ class BazarRepository implements BazarInterface
     public function store(array $attributes)
     {
         try {
-
            // $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
            $data = $this->model->create($attributes);
-            return $data;
+            return true;
         } catch (\Exception $e) {
             return $e->getMessage();
         }
@@ -59,7 +58,8 @@ class BazarRepository implements BazarInterface
             } else{
             $data->update($attributes->all());
             }
-            return $data;
+
+            return true;
         } catch (\Exception $e) {
 
             return $e->getMessage();
@@ -86,6 +86,10 @@ class BazarRepository implements BazarInterface
 
             !array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0   ?: $q
                 ->where(['meter_price' => $attributes['meter_price']]);
+
+            !array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0   ?: $q
+                ->where(['revenue' => $attributes['revenue']]);
+
 
         };
     }

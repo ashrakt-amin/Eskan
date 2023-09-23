@@ -11,7 +11,7 @@ interface BazarCustomerInterface
 
     public function find($id);
 
-    public function edit($id, $attributes):?BazarCustomer;
+    public function edit($id, $attributes);
 
     public function delete($id);
 

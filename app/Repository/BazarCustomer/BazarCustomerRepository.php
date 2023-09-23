@@ -26,8 +26,13 @@ class BazarCustomerRepository implements BazarCustomerInterface
 
     public function store(array $attributes)
     {
-        $data = $this->model->create($attributes);
-        return $data;
+        try {
+           $this->model->create($attributes);
+            return true;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    
     }
 
 
@@ -38,16 +43,22 @@ class BazarCustomerRepository implements BazarCustomerInterface
     }
 
 
-    public function edit($id,  $attributes): ?BazarCustomer
+    public function edit($id,  $attributes)
     {
-        $data = $this->model->findOrFail($id);
-        // if ($attributes['feedback'] != null) {
-        //     $data->update([
-        //         'feedback' => $attributes['feedback']
-        //     ]);
-        // }
-        $data->update($attributes->all());
-        return $data;
+        try {
+            $data = $this->model->findOrFail($id);
+            // if ($attributes['feedback'] != null) {
+            //     $data->update([
+            //         'feedback' => $attributes['feedback']
+            //     ]);
+            // }
+            $data->update($attributes->all());
+             return true;
+             
+         } catch (\Exception $e) {
+             return $e->getMessage();
+         }
+    
     }
 
 

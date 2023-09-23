@@ -50,10 +50,10 @@ class BazarController extends Controller
     public function storeUp(Request $request)
     {
         $data = $this->Repository->edit($request);
-        if (isset($data->errorInfo)) {
-            return $this->sendError($data->errorInfo, 'error', 404);
+        if ($data === true){
+            return $this->sendResponse($data, "تم التعديل ", 200);
         } else {
-            return $this->sendResponse('', "تم التعديل ", 200);
+            return $this->sendError($data, 'error', 404);
         }
     }
 

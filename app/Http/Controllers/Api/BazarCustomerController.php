@@ -30,9 +30,13 @@ class BazarCustomerController extends Controller
 
     public function store(BazarCustomerRequest $request)
     {
-        $this->Repository->store($request->validated());
-        return $this->sendResponse('', "تم التسجيل ", 200);
-    }
+       $data = $this->Repository->store($request->validated());
+        if ($data === true){
+            return $this->sendResponse($data, "تم", 200);
+        } else {
+            return $this->sendError($data, 'error', 404);
+        }  
+      }
     
 
   
@@ -44,8 +48,12 @@ class BazarCustomerController extends Controller
     
     public function update(Request $request,$id)
     {
-        return $this->sendResponse($this->Repository->edit($id , $request), " تم تعديل ", 200);
-
+        $data = $this->Repository->edit($id , $request);
+        if ($data === true){
+            return $this->sendResponse($data, "تم التعديل ", 200);
+        } else {
+            return $this->sendError($data, 'error', 404);
+        }
     }
   
   
