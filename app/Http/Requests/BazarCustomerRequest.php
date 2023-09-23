@@ -15,10 +15,10 @@ class BazarCustomerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name'       => 'required',
+            'name'         => 'required',
             'phone'        => 'required',
             'bazar_number' => 'required',
-            'feedback' =>'nullable',
+            'feedback'     =>'nullable',
 
         ];
     }
