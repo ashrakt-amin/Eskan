@@ -31,7 +31,7 @@ class BazarController extends Controller
     public function store(BazarRequest $request)
     {
         $data = $this->Repository->store($request->validated());
-        if (isset($data->id)) {
+        if ($data == true){
             return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
         } else {
             return $this->sendError($data, 'error', 404);
