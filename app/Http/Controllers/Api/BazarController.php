@@ -66,6 +66,34 @@ class BazarController extends Controller
 
 
 
+    
+    public function numbers()
+    {
+        
+        $numbers = Bazar::orderBy('number', 'asc')->get();
+        $unique_data = $numbers->unique('number')->pluck('number')
+            ->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique numbers!",
+            'data' => $unique_data
+        ], 200);
+    }
+    
+   
+    public function revenue()
+    {
+        
+        $revenue = Bazar::orderBy('revenue', 'asc')->get();
+        $unique_data = $revenue->unique('revenue')->pluck('revenue')
+            ->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique numbers!",
+            'data' => $unique_data
+        ], 200);
+    }
+
     public function space($meter_price = '')
     {
         if ($meter_price != null && $meter_price != 0) {

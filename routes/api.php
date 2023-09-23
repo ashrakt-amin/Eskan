@@ -63,6 +63,8 @@ Route::prefix("bazar")->group(function () {
     Route::controller(BazarController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
         Route::get('/meter_price/{space?}', 'meterPrice');
+        Route::get('/unique/numbers', 'numbers');
+        Route::get('/unique/revenue', 'revenue');
     });
 });
 
