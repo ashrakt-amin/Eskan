@@ -42,7 +42,7 @@ Route::resource('reservation', ReservationController::class)->only(['index', 'sh
 Route::resource('contact_us', ContactUsController::class)->only(['index', 'show']);
 Route::resource('wallet', WalletController::class)->only(['index', 'show']);
 Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show']);
-Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show']);
+Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show','store']);
 Route::resource('owners', OwnerController::class)->only(['index', 'show']);
 
 Route::get('unit/levels', [LevelController::class, 'index']);
@@ -104,7 +104,7 @@ Route::resource('reservation', ReservationController::class)->except(['index', '
 Route::resource('contact_us', ContactUsController::class)->except(['index', 'show']);
 Route::resource('wallet', WalletController::class)->except(['index', 'show']);
 Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show']);
-Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show']);
+Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show','store']);
 Route::resource('owners', OwnerController::class)->except(['index', 'show']);
 
 
