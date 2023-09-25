@@ -29,6 +29,7 @@ class JobController extends Controller
 
     public function store(JobRequest $request)
     {
+        return $request;
         $data = $this->Repository->store($request->validated());
         if ($data == true){
             return $this->sendResponse($data, "تم التسجيل  بنجاح", 200);
