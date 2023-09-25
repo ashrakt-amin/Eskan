@@ -33,14 +33,14 @@ class JobRepository implements JobInterface
             $cv_name = date('YmdHi') . $cv->getClientOriginalName();
             $cv->move(storage_path('app/public/images/' . Job::CV), $cv_name);
     
-            if ($request['person_img'] != NULL || isset($request['person_img'])) {
+            if (isset($request['person_img'])) {
                 $person_img =  $request['person_img'];
                 $person_img_name = date('YmdHi') . $person_img->getClientOriginalName();
                 $person_img->move(storage_path('app/public/images/' . Job::person), $person_img_name);
             } else {
                 $person_img_name = NULL;
             }
-            if ($request['last_project'] != NULL || isset($request['last_project'])) {
+            if (isset($request['last_project'])) {
                 $person_img =  $request['last_project'];
                 $last_project_name = date('YmdHi') . $person_img->getClientOriginalName();
                 $person_img->move(storage_path('app/public/images/' .Job::Project), $last_project_name);
