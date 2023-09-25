@@ -12,6 +12,7 @@ class JobResource extends JsonResource
     public function toArray(Request $request): array
     {
 
+        $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d H:i:s');
 
         return [
             'id'                 => $this->id,
@@ -22,7 +23,9 @@ class JobResource extends JsonResource
             'person_img'         => $this->person_img == null ? "null" : $this->person,
             'last_project'       => $this->last_project == null ? "null" : $this->project,
             'last_project_info'  => $this->last_project_info,
-            'feedback'           => $this->feedback
+            'feedback'           => $this->feedback,
+            'created_at'         => $formattedCreatedAt,
+
 
 
         ];
