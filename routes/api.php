@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\BazarCustomerController;
+use App\Http\Controllers\Api\JobController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -42,7 +43,8 @@ Route::resource('reservation', ReservationController::class)->only(['index', 'sh
 Route::resource('contact_us', ContactUsController::class)->only(['index', 'show']);
 Route::resource('wallet', WalletController::class)->only(['index', 'show']);
 Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show']);
-Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show','store']);
+Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show', 'store']);
+Route::resource('jobs', JobController::class)->only(['index', 'show', 'store']);
 Route::resource('owners', OwnerController::class)->only(['index', 'show']);
 
 Route::get('unit/levels', [LevelController::class, 'index']);
@@ -81,7 +83,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::resource('bazar', BazarController::class)->except(['index', 'show']);
-    Route::post('bazar/update',[BazarController::class,'storeUp']);
+    Route::post('bazar/update', [BazarController::class, 'storeUp']);
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
             Route::post('/update', 'storeUp');
@@ -90,7 +92,7 @@ Route::middleware('auth:sanctum')->group(function () {
         });
     });
     Route::resource('unit_images', UnitsImageController::class)->except(['index', 'show']);
-    Route::post('unit_images/update', [UnitsImageController::class,'storeUp']);
+    Route::post('unit_images/update', [UnitsImageController::class, 'storeUp']);
 
 
 
@@ -99,21 +101,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("update", [ImageController::class, "updateImage"]);
 
 
-  
-Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
-Route::resource('contact_us', ContactUsController::class)->except(['index', 'show']);
-Route::resource('wallet', WalletController::class)->except(['index', 'show']);
-Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show']);
-Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show','store']);
-Route::resource('owners', OwnerController::class)->except(['index', 'show']);
+
+    Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
+    Route::resource('contact_us', ContactUsController::class)->except(['index', 'show']);
+    Route::resource('wallet', WalletController::class)->except(['index', 'show']);
+    Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show']);
+    Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show', 'store']);
+    Route::resource('jobs', JobController::class)->except(['index', 'show', 'store']);
+    Route::resource('owners', OwnerController::class)->except(['index', 'show']);
 
 
-    Route::delete('seek_money/force_delete/{id}', [ SeekMoneyController::class,'forceDelete']);
-    Route::delete('reservation/force_delete/{id}', [ ReservationController::class,'forceDelete']);
-    Route::delete('contact_us/force_delete/{id}', [ ContactUsController::class,'forceDelete']);
-    Route::delete('CityCenter_users/force_delete/{id}', [ CityCenterUsersController::class,'forceDelete']);
-    Route::delete('owners/force_delete/{id}', [ OwnerController::class,'forceDelete']);
-
+    Route::delete('seek_money/force_delete/{id}', [SeekMoneyController::class, 'forceDelete']);
+    Route::delete('reservation/force_delete/{id}', [ReservationController::class, 'forceDelete']);
+    Route::delete('contact_us/force_delete/{id}', [ContactUsController::class, 'forceDelete']);
+    Route::delete('CityCenter_users/force_delete/{id}', [CityCenterUsersController::class, 'forceDelete']);
+    Route::delete('owners/force_delete/{id}', [OwnerController::class, 'forceDelete']);
 });
 
 // end auth
