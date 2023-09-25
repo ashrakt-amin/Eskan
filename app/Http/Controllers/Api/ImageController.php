@@ -33,11 +33,15 @@ class ImageController extends Controller
             'img'  => 'required'
         ]);
 
-        $img = $this->aspectForResize($request['img'], 'Eskan', 500, 600);
+        $img =  $request['img'];
+        $img_name = date('YmdHi') . $img->getClientOriginalName();
+        $img->move(storage_path('app/public/images/'. Image::IMAGE_PATH ), $img_name);
+
         $image = Image::create([
             'name' => $request->image_name,
-            'img'  => $img
+            'img'  => $img_name
         ]);
+        
         return $this->sendResponse($image, "success", 200);
     }
 

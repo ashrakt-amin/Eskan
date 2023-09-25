@@ -59,6 +59,7 @@ class JobRepository implements JobInterface
                 'last_project'       =>  $last_project_name ,
                 'last_project_info'  => $request['last_project_info'],
                 'feedback'           => $request['feedback'],
+                'facebook'           => $request['facebook'],
             ]);
     
             return true;

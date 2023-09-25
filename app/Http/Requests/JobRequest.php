@@ -26,6 +26,7 @@ class JobRequest extends FormRequest
             'last_project'       => 'nullable',
             'last_project_info'  => 'nullable',
             'feedback'           => 'nullable',
+            'facebook'           => 'nullable',
         ];
     }
 }

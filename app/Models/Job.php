@@ -17,7 +17,7 @@ class Job extends Model
     
     protected $fillable = [
         'job_title', 'name', 'phone', 'cv', 'person_img',
-        'last_project', 'last_project_info', 'feedback'
+        'last_project', 'last_project_info', 'feedback', 'facebook'
     ];
 
     public function getPathAttribute()

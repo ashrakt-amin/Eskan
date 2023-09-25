@@ -15,6 +15,7 @@ class JobResource extends JsonResource
         $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d H:i:s');
 
         return [
+
             'id'                 => $this->id,
             'job_title'          => $this->job_title,
             'name'               => $this->name,
@@ -24,9 +25,8 @@ class JobResource extends JsonResource
             'last_project'       => $this->last_project == null ? "null" : $this->project,
             'last_project_info'  => $this->last_project_info,
             'feedback'           => $this->feedback,
+            'facebook'           => $this->facebook,
             'created_at'         => $formattedCreatedAt,
-
-
 
         ];
     }
