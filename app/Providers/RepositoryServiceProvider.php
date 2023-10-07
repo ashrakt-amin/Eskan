@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Repository\Job\JobInterface;
 use App\Repository\Job\JobRepository;
+use App\Repository\User\UserInterface;
 use App\Repository\Units\UnitInterface;
+use App\Repository\User\UserRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repository\Bazar\BazarInterface;
 use App\Repository\Units\UnitRepository;
@@ -45,6 +47,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(seekMoneyInterface::class,seekMoneyRepository::class);
         $this->app->bind(WalletInterface::class,WalletRepository::class);
         $this->app->bind(JobInterface::class,JobRepository::class);
+        $this->app->bind(UserInterface::class,UserRepository::class);
+
 
       
     }

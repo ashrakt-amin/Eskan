@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\JobController;
 use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\UnitController;
 use App\Http\Controllers\Api\BazarController;
@@ -15,11 +17,10 @@ use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\UnitsImageController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
-use App\Http\Controllers\Api\BazarCustomerController;
-use App\Http\Controllers\Api\JobController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -39,13 +40,13 @@ Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 
-Route::resource('reservation', ReservationController::class)->only(['index', 'show']);
-Route::resource('contact_us', ContactUsController::class)->only(['index', 'show']);
-Route::resource('wallet', WalletController::class)->only(['index', 'show']);
-Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show']);
+Route::resource('reservation', ReservationController::class)->only(['index', 'show','store']);
+Route::resource('contact_us', ContactUsController::class)->only(['index', 'show', 'store']);
+Route::resource('wallet', WalletController::class)->only(['index', 'show', 'store']);
+Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show','store']);
 Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show', 'store']);
 Route::resource('jobs', JobController::class)->only(['index', 'show', 'store']);
-Route::resource('owners', OwnerController::class)->only(['index', 'show']);
+Route::resource('owners', OwnerController::class)->only(['index', 'show', 'store']);
 
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
@@ -75,6 +76,7 @@ Route::resource('image', ImageController::class)->only(['index', 'show']);
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::resource("user", UserController::class);
 
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
@@ -102,13 +104,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-    Route::resource('reservation', ReservationController::class)->except(['index', 'show']);
-    Route::resource('contact_us', ContactUsController::class)->except(['index', 'show']);
-    Route::resource('wallet', WalletController::class)->except(['index', 'show']);
-    Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show']);
+    Route::resource('reservation', ReservationController::class)->except(['index', 'show', 'store']);
+    Route::resource('contact_us', ContactUsController::class)->except(['index', 'show', 'store']);
+    Route::resource('wallet', WalletController::class)->except(['index', 'show', 'store']);
+    Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show', 'store']);
     Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show', 'store']);
     Route::resource('jobs', JobController::class)->except(['index', 'show', 'store']);
-    Route::resource('owners', OwnerController::class)->except(['index', 'show']);
+    Route::resource('owners', OwnerController::class)->except(['index', 'show','store']);
 
 
     Route::delete('seek_money/force_delete/{id}', [SeekMoneyController::class, 'forceDelete']);

@@ -1,21 +1,21 @@
 <?php
 
-namespace App\Repository\Job;
+namespace App\Repository\User;
 
 use Exception;
-use App\Models\Job;
+use App\Models\User;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
-class JobRepository implements JobInterface
+class UserRepository implements UserInterface
 {
     use TraitResponseTrait, TraitImageProccessingTrait;
     public $model;
 
     protected $resourceCollection;
 
-    public function __construct(Job $model)
+    public function __construct(User $model)
     {
         $this->model = $model;
     }
@@ -28,65 +28,36 @@ class JobRepository implements JobInterface
 
     public function store(array $request)
     {
-        try {
-            $cv =  $request['cv'];
-            $cv_name = date('YmdHi') . $cv->getClientOriginalName();
-            $cv->move(storage_path('app/public/images/' . Job::CV), $cv_name);
-    
-            if (isset($request['person_img'])) {
-                $person_img =  $request['person_img'];
-                $person_img_name = date('YmdHi') . $person_img->getClientOriginalName();
-                $person_img->move(storage_path('app/public/images/' . Job::person), $person_img_name);
-            } else {
-                $person_img_name = NULL;
-            }
-            if (isset($request['last_project'])) {
-                $person_img =  $request['last_project'];
-                $last_project_name = date('YmdHi') . $person_img->getClientOriginalName();
-                $person_img->move(storage_path('app/public/images/' .Job::Project), $last_project_name);
-            } else {
-                $last_project_name = NULL;
-            }
-    
-            
-    
-            Job::create([
-                'job_title'          => $request['job_title'],
-                'name'               => $request['name'],
-                'phone'              => $request['phone'],
-                'cv'                 => $cv_name,
-                'person_img'         => $person_img_name,
-                'last_project'       => $last_project_name ,
-                'last_project_info'  => $request['last_project_info'],
-                'feedback'           => $request['feedback'],
-                'facebook'           => $request['facebook'],
-            ]);
-    
-            return true;
-        } catch (\Exception $e) {
-            return $e->getMessage();
-        }
+        $data =  $this->model->create([
+            'name'      => $request['name'],
+            'phone'     => $request['phone'],
+            'password'  => bcrypt($request['password']),
+        ]);
+        
+        return $data;        
     }
 
 
-
-    public function find($id): ?Job
+    public function find($id)
     {
-        return $this->model->findOrFail($id);
+
     }
-
-
 
     public function edit($id,$request)
     {
         try {
-            $data = Job::findOrFail($id);
-            if ($request['feedback'] != null || $request['feedback'] == '') {
-                $data->update([
-                    'feedback'  => $request['feedback']
+            $data = User::findOrFail($id);
+            if (isset($request->password)) {
+                 $data->update([
+                    'password'  => bcrypt($request['password']),
                 ]);
+                return $data ;
+    
+            }else{
+              $data->update($request->all());
+              return $data ;
+
             }
-            return true;
         } catch (\Exception $e) {
 
             return $e->getMessage();
@@ -95,10 +66,7 @@ class JobRepository implements JobInterface
 
     public function delete($id)
     {
-        $data = Job::findOrFail($id);
-        $this->deleteImage(Job::CV, $data->cv);
-        $this->deleteImage(Job::person, $data->person_img);
-        $this->deleteImage(Job::Project, $data->last_project);
+        $data = User::findOrFail($id);
         $data->delete();
         return true;
     }
