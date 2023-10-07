@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\CityCenterUsers;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CityCenterUsersRequest;
 use App\Http\Resources\CityCenterUsersResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -23,8 +24,12 @@ class CityCenterUsersController extends Controller
 
     public function index(Request $request)
     {
-      
+        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
             return $this->Repository->forAllConditionsReturn($request->all(), CityCenterUsersResource::class);
+        }else{
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+      
     }
 
     

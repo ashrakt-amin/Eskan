@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ReservationRequest;
 use App\Http\Resources\ReservationResource;
 use App\Repository\Reservation\ReservationInterface;
@@ -22,7 +23,11 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), ReservationResource::class);
+        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+            return $this->Repository->forAllConditionsReturn($request->all(), ReservationResource::class);
+        }else{
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
     }
 
     public function store(ReservationRequest $request)

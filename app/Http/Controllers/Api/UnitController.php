@@ -7,6 +7,7 @@ use App\Models\Level;
 use Illuminate\Http\Request;
 use App\Http\Requests\UnitRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Repository\Units\UnitInterface;
 use App\Http\Resources\Unit\UnitResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -20,6 +21,13 @@ class UnitController extends Controller
     public function __construct(UnitInterface $Repository)
     {
         $this->Repository = $Repository;
+
+        // $this->middleware(function ($request, $next) {
+        //     if (Auth::check() && Auth::user()->name !== 'مدخل البيانات') {
+        //         abort(403, 'Unauthorized');
+        //     }
+        // });
+
     }
 
     public function index(Request $request)
@@ -31,11 +39,15 @@ class UnitController extends Controller
 
     public function store(UnitRequest $request)
     {
-        $data = $this->Repository->store($request->validated());
-        if (isset($data->errorInfo)) {
-            return $this->sendError($data->errorInfo, 'error', 404);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->store($request->validated());
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
+            }
         } else {
-            return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }
 
@@ -49,29 +61,62 @@ class UnitController extends Controller
 
     public function storeUp(Request $request)
     {
-        $data = $this->Repository->edit($request);
-        if (isset($data->errorInfo)) {
-            return $this->sendError($data->errorInfo, 'error', 404);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->edit($request);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse('', "تم التعديل ", 200);
+            }
         } else {
-            return $this->sendResponse('', "تم التعديل ", 200);
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }
 
 
     public function storeImages(Request $request)
     {
-        return $this->sendResponse($this->Repository->storeImages($request), "تم اضافه صور ", 200);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->storeImages($request);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse('', "تم اضافه صور ", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
     }
 
 
     public function destroy($id)
     {
-        return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->delete($id);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse(' ', " تم حذف الوحده ", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+
     }
 
     public function destroyImage($id)
     {
-        return $this->sendResponse($this->Repository->deleteImageUnit($id), " تم حذف الوحده ", 200);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->deleteImageUnit($id);
+            if (isset($data->errorInfo)) {
+                return $this->sendResponse(' ', " تم حذف الوحده ", 200);
+            } else {
+                return $this->sendResponse(' ', " تم حذف الوحده ", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+
     }
 
 

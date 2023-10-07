@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Models\BazarCustomer;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BazarCustomerRequest;
 use App\Http\Resources\BazarCustomerResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Repository\BazarCustomer\BazarCustomerInterface;
+
 class BazarCustomerController extends Controller
 {
     use TraitResponseTrait ;
@@ -22,8 +24,12 @@ class BazarCustomerController extends Controller
 
     public function index(Request $request)
     {
-      
+        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
             return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
+        }else{
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+      
     }
 
     

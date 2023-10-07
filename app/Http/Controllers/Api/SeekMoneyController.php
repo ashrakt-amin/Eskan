@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\SeekMoney;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SeekMoneyRequest;
 use App\Http\Resources\SeekMoneyResource;
 use App\Repository\Contact\ContactInterface;
@@ -27,7 +28,11 @@ class SeekMoneyController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), SeekMoneyResource::class);
+        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+            return $this->Repository->forAllConditionsReturn($request->all(), SeekMoneyResource::class);
+        }else{
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
     }
 
     public function store(SeekMoneyRequest $request)

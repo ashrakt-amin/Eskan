@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Unit\UnitImageResource;
 use App\Repository\UnitsImages\UnitImageInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
-
+ 
 class UnitsImageController extends Controller
 {
     use TraitResponseTrait;
@@ -16,6 +17,11 @@ class UnitsImageController extends Controller
     public function __construct(UnitImageInterface $Repository)
     {
         $this->Repository = $Repository;
+        // $this->middleware(function ($request, $next) {
+        //     if (Auth::check() && Auth::user()->name !== 'مدخل البيانات') {
+        //         abort(403, 'Unauthorized');
+        //     }
+        // });
     }
 
     public function index(Request $request)
@@ -27,12 +33,16 @@ class UnitsImageController extends Controller
 
     public function store(Request $request)
     {
-        $data = $this->Repository->store($request->all());
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->store($request->all());
 
-        if ($data !== true) {
-            return $this->sendError($data, 'error', 404);
+            if ($data !== true) {
+                return $this->sendError($data, 'error', 404);
+            } else {
+                return $this->sendResponse($data, "تم تسجيل بنجاح", 200);
+            }
         } else {
-            return $this->sendResponse($data, "تم تسجيل بنجاح", 200);
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }
 
@@ -46,11 +56,16 @@ class UnitsImageController extends Controller
 
     public function storeUp(Request $request)
     {
-        $data = $this->Repository->edit($request);
-        if (isset($data->errorInfo)) {
-            return $this->sendError($data->errorInfo, 'error', 404);
+
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data = $this->Repository->edit($request);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse($data, "تم التعديل ", 200);
+            }
         } else {
-            return $this->sendResponse($data, "تم التعديل ", 200);
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }
 
@@ -58,9 +73,16 @@ class UnitsImageController extends Controller
 
     public function destroy($id)
     {
-        return $this->sendResponse($this->Repository->delete($id), " تم حذف ", 200);
+        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+            $data =$this->Repository->delete($id);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse('', " تم حذف ", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+
     }
-
-
-  
 }

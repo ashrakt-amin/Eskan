@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\OwnerRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\OwnerResource;
 use App\Repository\Owners\OwnerInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
-use Illuminate\Http\Request;
 
 class OwnerController extends Controller
 {
@@ -21,7 +22,11 @@ class OwnerController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), OwnerResource::class);
+        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+            return $this->Repository->forAllConditionsReturn($request->all(), OwnerResource::class);
+        }else{
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
     }
 
     public function store(OwnerRequest $request)

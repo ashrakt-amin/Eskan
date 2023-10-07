@@ -34,25 +34,39 @@ Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 //end register
 
 Route::resource('text', TextController::class)->only(['index', 'show']);
-Route::resource('seek_money', SeekMoneyController::class);
+
+// projects 
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
+Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
+Route::prefix("bazar")->group(function () {
+    Route::controller(BazarController::class)->group(function () {
+        Route::get('/space/{meter_price?}', 'space');
+        Route::get('/meter_price/{space?}', 'meterPrice');
+        Route::get('/unique/numbers', 'numbers');
+        Route::get('/unique/revenue', 'revenue');
+    });
+});
 Route::resource('units_type', unitsTypeController::class)->only(['index', 'show']);
 
-Route::resource('reservation', ReservationController::class)->only(['index', 'show','store']);
-Route::resource('contact_us', ContactUsController::class)->only(['index', 'show', 'store']);
-Route::resource('wallet', WalletController::class)->only(['index', 'show', 'store']);
-Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show','store']);
-Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show', 'store']);
+
+
+//customer
+Route::resource('reservation', ReservationController::class)->only('store');
+Route::resource('contact_us', ContactUsController::class)->only('store');
+Route::resource('wallet', WalletController::class)->only('store');
+Route::resource('CityCenter_users', CityCenterUsersController::class)->only('store');
+Route::resource('bazar_customer', BazarCustomerController::class)->only('store');
 Route::resource('jobs', JobController::class)->only('store');
-Route::resource('owners', OwnerController::class)->only(['index', 'show', 'store']);
+Route::resource('owners', OwnerController::class)->only('store');
+Route::resource('seek_money', SeekMoneyController::class)->only('store');
+
+
+
 
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
-Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
-
-
 Route::get('unit/filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
@@ -62,22 +76,13 @@ Route::prefix("unit")->group(function () {
     });
 });
 
-Route::prefix("bazar")->group(function () {
-    Route::controller(BazarController::class)->group(function () {
-        Route::get('/space/{meter_price?}', 'space');
-        Route::get('/meter_price/{space?}', 'meterPrice');
-        Route::get('/unique/numbers', 'numbers');
-        Route::get('/unique/revenue', 'revenue');
-    });
-});
 
 Route::resource('image', ImageController::class)->only(['index', 'show']);
 
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource("user", UserController::class);
-
+    Route::resource("users", UserController::class);
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
@@ -104,13 +109,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
-    Route::resource('reservation', ReservationController::class)->except(['index', 'show', 'store']);
-    Route::resource('contact_us', ContactUsController::class)->except(['index', 'show', 'store']);
-    Route::resource('wallet', WalletController::class)->except(['index', 'show', 'store']);
-    Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show', 'store']);
-    Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show', 'store']);
+    Route::resource('reservation', ReservationController::class)->except('store');
+    Route::resource('contact_us', ContactUsController::class)->except('store');
+    Route::resource('wallet', WalletController::class)->except('store');
+    Route::resource('CityCenter_users', CityCenterUsersController::class)->except('store');
+    Route::resource('bazar_customer', BazarCustomerController::class)->except('store');
     Route::resource('jobs', JobController::class)->except('store');
-    Route::resource('owners', OwnerController::class)->except(['index', 'show','store']);
+    Route::resource('owners', OwnerController::class)->except('store');
 
 
     Route::delete('seek_money/force_delete/{id}', [SeekMoneyController::class, 'forceDelete']);
