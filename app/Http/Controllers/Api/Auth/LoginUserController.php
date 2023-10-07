@@ -19,7 +19,7 @@ class LoginUserController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-                $success['token']  = $user->createToken('admin')->plainTextToken;
+                $success['token']  = $user->createToken('token')->plainTextToken;
                 $success['name']      = $user;
             
 

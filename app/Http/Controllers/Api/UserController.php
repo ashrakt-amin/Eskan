@@ -47,9 +47,9 @@ class UserController extends Controller
     }
 
     
-    public function update(Request $request,$id)
+    public function update(UserRequest $request,$id)
     {
-      $data = $this->Repository->edit($id , $request);
+         $data = $this->Repository->edit($id , $request->validated());
         if (!isset($data->id)){
             return $this->sendError($data, 'error', 404);
         } else {

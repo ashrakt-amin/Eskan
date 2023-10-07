@@ -41,9 +41,9 @@ class JobRepository implements JobInterface
                 $person_img_name = NULL;
             }
             if (isset($request['last_project'])) {
-                $person_img =  $request['last_project'];
-                $last_project_name = date('YmdHi') . $person_img->getClientOriginalName();
-                $person_img->move(storage_path('app/public/images/' .Job::Project), $last_project_name);
+                $last_project =  $request['last_project'];
+                $last_project_name = date('YmdHi') . $last_project->getClientOriginalName();
+                $last_project->move(storage_path('app/public/images/' .Job::Project), $last_project_name);
             } else {
                 $last_project_name = NULL;
             }

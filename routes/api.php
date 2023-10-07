@@ -45,7 +45,7 @@ Route::resource('contact_us', ContactUsController::class)->only(['index', 'show'
 Route::resource('wallet', WalletController::class)->only(['index', 'show', 'store']);
 Route::resource('CityCenter_users', CityCenterUsersController::class)->only(['index', 'show','store']);
 Route::resource('bazar_customer', BazarCustomerController::class)->only(['index', 'show', 'store']);
-Route::resource('jobs', JobController::class)->only(['index', 'show', 'store']);
+Route::resource('jobs', JobController::class)->only('store');
 Route::resource('owners', OwnerController::class)->only(['index', 'show', 'store']);
 
 Route::get('unit/levels', [LevelController::class, 'index']);
@@ -109,7 +109,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('wallet', WalletController::class)->except(['index', 'show', 'store']);
     Route::resource('CityCenter_users', CityCenterUsersController::class)->except(['index', 'show', 'store']);
     Route::resource('bazar_customer', BazarCustomerController::class)->except(['index', 'show', 'store']);
-    Route::resource('jobs', JobController::class)->except(['index', 'show', 'store']);
+    Route::resource('jobs', JobController::class)->except('store');
     Route::resource('owners', OwnerController::class)->except(['index', 'show','store']);
 
 

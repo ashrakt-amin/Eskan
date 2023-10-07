@@ -8,6 +8,7 @@ use App\Http\Requests\JobRequest;
 use App\Http\Resources\JobResource;
 use App\Http\Controllers\Controller;
 use App\Repository\Job\JobInterface;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class JobController extends Controller
@@ -22,7 +23,11 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), JobResource::class);
+        if(Auth::user()->name == "موارد بشريه"){
+            return $this->Repository->forAllConditionsReturn($request->all(), JobResource::class);
+        }else{
+            return $this->sendResponse('sorry', "you don't have permission to access this", 404);
+        }
     }
 
 

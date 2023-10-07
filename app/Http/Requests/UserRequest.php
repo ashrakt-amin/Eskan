@@ -21,7 +21,7 @@ class UserRequest extends FormRequest
                 return [
                     'name'      => 'required',
                     'phone'     => 'required|unique:users,phone',
-                    'password'  => 'required|unique:users,password',
+                    'password'  => 'required',
 
                 ];
             case 'PUT':
@@ -29,7 +29,7 @@ class UserRequest extends FormRequest
                 return [
                     'name'      => 'nullable',
                     'phone'     => ['nullable',Rule::unique('users')->ignore($this->phone)],
-                    'password'  => 'nullable',Rule::unique('users')->ignore($this->phone),
+                    'password'  => 'nullable',
                    
                 ];
             default:

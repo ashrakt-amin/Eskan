@@ -54,7 +54,7 @@ class UserRepository implements UserInterface
                 return $data ;
     
             }else{
-              $data->update($request->all());
+              $data->update($request);
               return $data ;
 
             }
