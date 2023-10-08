@@ -47,9 +47,7 @@ class JobRepository implements JobInterface
             } else {
                 $last_project_name = NULL;
             }
-    
-            
-    
+        
             Job::create([
                 'job_title'          => $request['job_title'],
                 'name'               => $request['name'],
@@ -58,7 +56,6 @@ class JobRepository implements JobInterface
                 'person_img'         => $person_img_name,
                 'last_project'       => $last_project_name ,
                 'last_project_info'  => $request['last_project_info'],
-                'feedback'           => $request['feedback'],
                 'facebook'           => $request['facebook'],
             ]);
     

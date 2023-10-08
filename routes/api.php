@@ -115,7 +115,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('wallet', WalletController::class)->except('store');
     Route::resource('CityCenter_users', CityCenterUsersController::class)->except('store');
     Route::resource('bazar_customer', BazarCustomerController::class)->except('store');
-    Route::resource('jobs', JobController::class)->except('store');
+    Route::resource('jobs', JobController::class)->except(['store']);
     Route::resource('owners', OwnerController::class)->except('store');
 
 
