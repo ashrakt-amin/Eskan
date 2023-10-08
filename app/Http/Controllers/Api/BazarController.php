@@ -40,7 +40,8 @@ class BazarController extends Controller
 
     public function store(BazarRequest $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name ;
+        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
 
             $data = $this->Repository->store($request->validated());
             if ($data == true) {

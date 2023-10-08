@@ -23,9 +23,10 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), ReservationResource::class);
-        }else{
+        } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }

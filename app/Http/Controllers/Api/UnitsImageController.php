@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\Unit\UnitImageResource;
 use App\Repository\UnitsImages\UnitImageInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
- 
+
 class UnitsImageController extends Controller
 {
     use TraitResponseTrait;
@@ -33,7 +33,8 @@ class UnitsImageController extends Controller
 
     public function store(Request $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
             $data = $this->Repository->store($request->all());
 
             if ($data !== true) {
@@ -57,7 +58,8 @@ class UnitsImageController extends Controller
     public function storeUp(Request $request)
     {
 
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
             $data = $this->Repository->edit($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -73,8 +75,9 @@ class UnitsImageController extends Controller
 
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
-            $data =$this->Repository->delete($id);
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
+            $data = $this->Repository->delete($id);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
             } else {
@@ -83,6 +86,5 @@ class UnitsImageController extends Controller
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-
     }
 }

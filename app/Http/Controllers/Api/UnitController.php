@@ -39,7 +39,8 @@ class UnitController extends Controller
 
     public function store(UnitRequest $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
             $data = $this->Repository->store($request->validated());
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -61,7 +62,8 @@ class UnitController extends Controller
 
     public function storeUp(Request $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
             $data = $this->Repository->edit($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -76,7 +78,8 @@ class UnitController extends Controller
 
     public function storeImages(Request $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
             $data = $this->Repository->storeImages($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -91,7 +94,8 @@ class UnitController extends Controller
 
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
             $data = $this->Repository->delete($id);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -101,12 +105,12 @@ class UnitController extends Controller
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-
     }
 
     public function destroyImage($id)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
             $data = $this->Repository->deleteImageUnit($id);
             if (isset($data->errorInfo)) {
                 return $this->sendResponse(' ', " تم حذف الوحده ", 200);
@@ -116,7 +120,6 @@ class UnitController extends Controller
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-
     }
 
 

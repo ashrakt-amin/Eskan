@@ -23,12 +23,12 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        if(Auth::check() && Auth::user()->name == "موارد بشريه"){
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "موارد بشريه" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), JobResource::class);
-        }else{
+        } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-
     }
 
 
@@ -36,11 +36,10 @@ class JobController extends Controller
     public function store(JobRequest $request)
     {
         $data = $this->Repository->store($request->validated());
-        if ($data == true){
+        if ($data == true) {
             return $this->sendResponse($data, "تم التسجيل  بنجاح", 200);
         } else {
             return $this->sendError($data, 'error', 404);
-
         }
     }
 
@@ -52,10 +51,10 @@ class JobController extends Controller
     }
 
 
-    public function update($id,Request $request)
+    public function update($id, Request $request)
     {
-        $data = $this->Repository->edit($id,$request);
-        if ($data === true){
+        $data = $this->Repository->edit($id, $request);
+        if ($data === true) {
             return $this->sendResponse($data, "تم التعديل ", 200);
         } else {
             return $this->sendError($data, 'error', 404);
@@ -68,10 +67,4 @@ class JobController extends Controller
     {
         return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
     }
-
-
-
 }
-
-
-

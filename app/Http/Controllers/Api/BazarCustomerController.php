@@ -13,9 +13,9 @@ use App\Repository\BazarCustomer\BazarCustomerInterface;
 
 class BazarCustomerController extends Controller
 {
-    use TraitResponseTrait ;
-    protected $Repository ;  
-    
+    use TraitResponseTrait;
+    protected $Repository;
+
 
     public function __construct(BazarCustomerInterface $Repository)
     {
@@ -24,55 +24,53 @@ class BazarCustomerController extends Controller
 
     public function index(Request $request)
     {
-        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
-        }else{
+        } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-      
     }
 
-    
+
 
     public function store(BazarCustomerRequest $request)
     {
-       $data = $this->Repository->store($request->validated());
-        if ($data === true){
+        $data = $this->Repository->store($request->validated());
+        if ($data === true) {
             return $this->sendResponse($data, "تم", 200);
         } else {
             return $this->sendError($data, 'error', 404);
-        }  
-      }
-    
+        }
+    }
 
-  
+
+
     public function show($id)
     {
         return $this->sendResponse($this->Repository->find($id), " ", 200);
     }
 
-    
-    public function update(Request $request,$id)
+
+    public function update(Request $request, $id)
     {
-        $data = $this->Repository->edit($id , $request);
-        if ($data === true){
+        $data = $this->Repository->edit($id, $request);
+        if ($data === true) {
             return $this->sendResponse($data, "تم التعديل ", 200);
         } else {
             return $this->sendError($data, 'error', 404);
         }
     }
-  
-  
+
+
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم الحذف  ", 200);
-
     }
 
-    
+
     public function forceDelete($id)
     {
         return $this->sendResponse($this->Repository->forceDelete($id), "force delete ", 200);
-
     }
 }

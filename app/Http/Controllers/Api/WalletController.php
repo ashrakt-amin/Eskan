@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WalletRequest;
@@ -22,9 +23,10 @@ class WalletController extends Controller
 
     public function index(Request $request)
     {
-        if(Auth::check() && Auth::user()->name == "متابعه عملاء"){
+        $name = Auth::user()->name;
+        if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), WalletResource::class);
-        }else{
+        } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
     }
