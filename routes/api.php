@@ -91,6 +91,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('units', UnitController::class)->except(['index', 'show']);
     Route::resource('bazar', BazarController::class)->except(['index', 'show']);
     Route::post('bazar/update', [BazarController::class, 'storeUp']);
+    Route::resource('seek_money', SeekMoneyController::class)->except('store');
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
             Route::post('/update', 'storeUp');
@@ -123,6 +124,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('contact_us/force_delete/{id}', [ContactUsController::class, 'forceDelete']);
     Route::delete('CityCenter_users/force_delete/{id}', [CityCenterUsersController::class, 'forceDelete']);
     Route::delete('owners/force_delete/{id}', [OwnerController::class, 'forceDelete']);
+
 });
 
 // end auth
