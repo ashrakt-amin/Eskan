@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Auth;
 use App\Repository\User\UserInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
@@ -19,6 +20,15 @@ class UserController extends Controller
     public function __construct(UserInterface $Repository)
     {
         $this->Repository = $Repository;
+         $this->middleware(function ($request, $next) {
+            if (Auth::check() && Auth::user()->name !== 'admin') {
+                abort(403, 'Unauthorized');
+            }else{
+                return $next($request);
+
+            }
+        });
+
     }
  
     public function index(Request $request)

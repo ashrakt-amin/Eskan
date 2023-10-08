@@ -82,7 +82,7 @@ Route::resource('image', ImageController::class)->only(['index', 'show']);
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource("users", UserController::class);
+    Route::resource("user/admins", UserController::class);
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
