@@ -25,12 +25,12 @@ use App\Http\Controllers\Api\Auth\RegisterUserController;
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
     Route::post("users",  [RegisterUserController::class, "register"])->name("register.users");
+
 });
 
 Route::prefix("login")->group(function () {
     Route::post("users", [LoginUserController::class, "login"])->name("users.login");
 });
-Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 //end register
 
 Route::resource('text', TextController::class)->only(['index', 'show']);
@@ -82,6 +82,7 @@ Route::resource('image', ImageController::class)->only(['index', 'show']);
 // start auth
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::post("logout", [LogoutController::class, "logout"])->name("logout");
     Route::resource("user/admins", UserController::class);
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
