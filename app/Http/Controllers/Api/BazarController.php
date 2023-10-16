@@ -41,7 +41,7 @@ class BazarController extends Controller
     public function store(BazarRequest $request)
     {
         $name = Auth::user()->name ;
-        if (Auth::check() &&  $name == "مدخل البيانات " || $name == "admin") {
+            if (Auth::check() && $name == "مدخل البيانات " || $name == "admin") {
 
             $data = $this->Repository->store($request->validated());
             if ($data == true) {
@@ -52,6 +52,7 @@ class BazarController extends Controller
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
+    
     }
 
 
@@ -64,7 +65,8 @@ class BazarController extends Controller
 
     public function storeUp(Request $request)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name ;
+        if (Auth::check() && $name == "مدخل البيانات " || $name == "admin") {
             $data = $this->Repository->edit($request);
             if ($data === true) {
                 return $this->sendResponse($data, "تم التعديل ", 200);
@@ -80,7 +82,8 @@ class BazarController extends Controller
 
     public function destroy($id)
     {
-        if (Auth::check() && Auth::user()->name == "مدخل البيانات ") {
+        $name = Auth::user()->name ;
+        if (Auth::check() && $name == "مدخل البيانات " || $name == "admin") {
             return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
