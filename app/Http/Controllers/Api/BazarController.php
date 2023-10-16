@@ -67,6 +67,7 @@ class BazarController extends Controller
     {
         $name = Auth::user()->name ;
         if (Auth::check() && $name == "مدخل البيانات " || $name == "admin") {
+            return $this->sendResponse($request, "  ", 200);
             $data = $this->Repository->edit($request);
             if ($data === true) {
                 return $this->sendResponse($data, "تم التعديل ", 200);
