@@ -10,7 +10,7 @@ class Bazar extends Model
     use HasFactory;
     const IMAGE_PATH = 'Bazar';
     protected $appends = ['path'];
-    protected $fillable = ['number','space','meter_price','advance','installment','img','revenue'];
+    protected $fillable = ['number','space','meter_price','advance','installment','img','revenue','contract'];
 
     public function getPathAttribute()
     {

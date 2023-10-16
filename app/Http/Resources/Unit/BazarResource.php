@@ -18,6 +18,7 @@ class BazarResource extends JsonResource
             'installment' => is_int($this->installment) ? (int)$this->installment : (float)$this->installment,
             'img'         => $this->path,
             'revenue'     => $this->revenue,
+            'contract'    => $this->contract
 
               
         ];
