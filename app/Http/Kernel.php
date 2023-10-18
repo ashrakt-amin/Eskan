@@ -45,9 +45,15 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
              \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
+             \App\Http\Middleware\OptionalAuthMiddleware::class,
+
         ],
     ];
 
+    protected $routeMiddleware = [
+        // ...
+        'optional-auth' => \App\Http\Middleware\OptionalAuthMiddleware::class,
+    ];
     /**
      * The application's middleware aliases.
      *
@@ -57,6 +63,7 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
+        'optional-auth' => \App\Http\Middleware\OptionalAuthMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,

@@ -21,6 +21,10 @@ use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
+use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\CommentController;
+
+
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -78,6 +82,19 @@ Route::prefix("unit")->group(function () {
 
 
 Route::resource('image', ImageController::class)->only(['index', 'show']);
+Route::resource('post', PostController::class)->only(['index', 'show']);
+Route::resource('comment', CommentController::class);
+
+Route::prefix("comment")->group(function () {
+    Route::controller(CommentController::class)->group(function () {
+        Route::post('/store', 'store');
+        Route::put('/update', 'update');
+    });
+});
+
+// Route::post('/post/comment', [CommentController::class, 'store'])
+//     ->middleware(['auth:sanctum', 'optional-auth']);
+//     ->name('comments.store');
 
 // start auth
 
@@ -125,6 +142,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('contact_us/force_delete/{id}', [ContactUsController::class, 'forceDelete']);
     Route::delete('CityCenter_users/force_delete/{id}', [CityCenterUsersController::class, 'forceDelete']);
     Route::delete('owners/force_delete/{id}', [OwnerController::class, 'forceDelete']);
+
+    Route::resource('post', PostController::class)->except(['index', 'show']);
+    Route::post('post/update/{id}',[PostController::class ,'postUpdate']);
+
 
 });
 

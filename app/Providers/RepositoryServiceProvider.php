@@ -29,6 +29,10 @@ use App\Repository\BazarCustomer\BazarCustomerInterface;
 use App\Repository\BazarCustomer\BazarCustomerRepository;
 use App\Repository\CityCenterUsers\CityCenterUsersInterface;
 use App\Repository\CityCenterUsers\CityCenterUsersRepository;
+use App\Repository\Social\Post\PostInterface;
+use App\Repository\Social\Post\PostRepository;
+use App\Repository\Social\Comment\CommentInterface;
+use App\Repository\Social\Comment\CommentRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -48,9 +52,9 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(WalletInterface::class,WalletRepository::class);
         $this->app->bind(JobInterface::class,JobRepository::class);
         $this->app->bind(UserInterface::class,UserRepository::class);
+        $this->app->bind(PostInterface::class,PostRepository::class);
+        $this->app->bind(CommentInterface::class,CommentRepository::class);     
 
-
-      
     }
     
 
