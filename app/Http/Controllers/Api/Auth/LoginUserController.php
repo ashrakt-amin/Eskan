@@ -30,6 +30,8 @@ class LoginUserController extends Controller
 
     public function show()
     {
+        // $id = Auth::user()->id;
+        // return $id ;
 
         if (Auth::user()) {
             return response()->json([

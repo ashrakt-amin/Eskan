@@ -6,13 +6,7 @@ use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
-    /**
-     * The application's global HTTP middleware stack.
-     *
-     * These middleware are run during every request to your application.
-     *
-     * @var array<int, class-string|string>
-     */
+  
     protected $middleware = [
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\TrustProxies::class,
@@ -25,11 +19,6 @@ class Kernel extends HttpKernel
 
     ];
 
-    /**
-     * The application's route middleware groups.
-     *
-     * @var array<string, array<int, class-string|string>>
-     */
     protected $middlewareGroups = [
         'web' => [
             \App\Http\Middleware\EncryptCookies::class,
@@ -45,15 +34,11 @@ class Kernel extends HttpKernel
             'throttle:api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
              \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
-             \App\Http\Middleware\OptionalAuthMiddleware::class,
 
         ],
     ];
 
-    protected $routeMiddleware = [
-        // ...
-        'optional-auth' => \App\Http\Middleware\OptionalAuthMiddleware::class,
-    ];
+
     /**
      * The application's middleware aliases.
      *
@@ -63,7 +48,6 @@ class Kernel extends HttpKernel
      */
     protected $middlewareAliases = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'optional-auth' => \App\Http\Middleware\OptionalAuthMiddleware::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'auth.session' => \Illuminate\Session\Middleware\AuthenticateSession::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
