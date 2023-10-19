@@ -76,10 +76,8 @@ class PostRepository implements PostInterface
                 $data->update([
                     'img'  => $img
                 ]);
-            } elseif (isset($request['text']) && $request['text'] != "") {
-                $data->update([
-                    'text'  => $request['text']
-                ]);
+            } else{
+                $data->update($request->all());
             }
             return $data;
         } catch (Exception $e) {

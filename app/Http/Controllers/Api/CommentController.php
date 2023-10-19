@@ -24,7 +24,6 @@ class CommentController extends Controller
 
     public function index(Request $request)
     {
-      
         return $this->Repository->forAllConditionsReturn($request->all(), CommentResource::class);
     }
 

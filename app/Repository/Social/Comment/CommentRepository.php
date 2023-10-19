@@ -33,8 +33,8 @@ class CommentRepository implements CommentInterface
     {
        
         $data = new Comment();
-        if ($request->number) {
-            $token = \Laravel\Sanctum\PersonalAccessToken::findToken($request->number);
+        if ($request['number']) {
+            $token = \Laravel\Sanctum\PersonalAccessToken::findToken($request['number']);
             $user = $token->tokenable;
             $data->user_id = $user->id;
         }else{
