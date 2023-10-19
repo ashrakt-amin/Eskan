@@ -88,7 +88,7 @@ Route::resource('comment', CommentController::class);
 Route::prefix("comment")->group(function () {
     Route::controller(CommentController::class)->group(function () {
         Route::post('/store', 'store');
-        Route::put('/update', 'update');
+    // Route::put('/update', 'update');
     });
 });
 
