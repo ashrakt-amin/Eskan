@@ -14,6 +14,7 @@ class LoginUserController extends Controller
 
     public function login(Request $request)
     {
+        return $request ;
 
         $credentials = $request->only(['password', 'phone']);
 

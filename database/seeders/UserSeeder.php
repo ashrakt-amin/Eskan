@@ -14,9 +14,10 @@ class UserSeeder extends Seeder
     {
         DB::table('users')->delete();
         User::create([
-            'name' => 'admin',
-            'phone'=>'01025248183',
-            'password' =>bcrypt('marwa123'),
+            'name'     => 'admin',
+            'phone'    => '01025248183',
+            'password' => bcrypt('marwa123')
         ]);
     }
+    
 }
