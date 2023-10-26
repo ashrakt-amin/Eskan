@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\PortfolioProjectRequest;
 use App\Models\RealEstateProject;
 use App\Models\Projectfile;
+use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Project\projectWallet;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
@@ -27,8 +28,8 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
   
     public function store(PortfolioProjectRequest $request)
     {
+        DB::beginTransaction();
         try {
-
             $data = new RealEstateProject();
             $img = $this->aspectForResize($request->img , RealEstateProject::IMAGE_PATH, 500, 600);
             $project = $data->create([
@@ -45,9 +46,11 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
             if($request->file){
             $project->files()->createMany($this->setImages($request->file,Projectfile::File_PATH,'file' , 500, 600));
             }
+            DB::commit();
             return $this->sendResponse($project, "تم الحفظ" ,200);
             
         } catch (\Exception $e) {
+            
             return $this->sendError($e->getMessage(), "error " ,404);
 
         }
