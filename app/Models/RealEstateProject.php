@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class RealEstateProject extends Model
+{
+    use HasFactory;
+    const IMAGE_PATH = 'Project';
+    protected $appends = ['path'];
+    protected $fillable = ['name','img','address','resale','link', 'description', 'detalis','features'];
+   
+   
+
+    public function getPathAttribute()
+    {
+        if (env('APP_URL') == "http://localhost") {
+            return asset('storage/images/Project') . "/" . $this->img;
+        } else {
+            return asset('storage/app/public/images/Project') . "/" . $this->img;
+        }
+    }
+}

@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\OwnerController;
 use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\RealEstateProjectController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
@@ -41,6 +42,7 @@ Route::resource('text', TextController::class)->only(['index', 'show']);
 
 // projects 
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+Route::resource('projects-wallet', RealEstateProjectController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
@@ -104,6 +106,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
+    Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);
