@@ -20,6 +20,8 @@ class projectWallet extends JsonResource
             'description'     => $this->description,
             'detalis'         => $this->detalis,
             'features'        => $this->features,
+            'files'           => $this->files == null ? "null" :projectFile::collection($this->files),
+
 
         ];  
       }

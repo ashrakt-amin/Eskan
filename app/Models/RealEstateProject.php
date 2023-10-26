@@ -10,9 +10,12 @@ class RealEstateProject extends Model
     use HasFactory;
     const IMAGE_PATH = 'Project';
     protected $appends = ['path'];
-    protected $fillable = ['name','img','address','resale','link', 'description', 'detalis','features'];
+    protected $fillable = ['id','name','img','address','resale','link', 'description', 'detalis','features'];
    
-   
+    public function files()
+    {
+        return $this->hasMany(Projectfile::class );
+    }
 
     public function getPathAttribute()
     {

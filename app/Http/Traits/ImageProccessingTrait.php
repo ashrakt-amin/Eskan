@@ -82,6 +82,14 @@ trait ImageProccessingTrait
 
     }
 
+    public function setImages($images, $path, $column, $width = null, $height = null)
+    {
+        $imagesName = [];
+        foreach($images as $image){
+            array_push($imagesName, [ $column => $this->setImage($image, $path, $width, $height)]);
+        }
+        return $imagesName;
+    }
     /**
      * update image width and height
      */
