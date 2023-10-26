@@ -107,6 +107,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
+    Route::prefix("wallet")->group(function () {
+        Route::controller(RealEstateProjectController::class)->group(function () {
+            Route::post('/file', 'addFile');
+            Route::post('/project/update/{id}', 'updateProject');
+            Route::delete('/file/delete/{id}', 'destroyFile');
+        });
+    });
     Route::patch('project/update/{id}', [ProjectController::class, 'update']);
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);

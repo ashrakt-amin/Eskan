@@ -48,7 +48,7 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
             return $this->sendResponse($project, "تم الحفظ" ,200);
             
         } catch (\Exception $e) {
-            return $this->sendError($e, "error " ,404);
+            return $this->sendError($e->getMessage(), "error " ,404);
 
         }
 
@@ -60,17 +60,62 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
         return $this->sendResponse(new projectWallet(RealEstateProject::findOrFail($id)) , " " ,200);
     }
 
-    public function update(Request $request, string $id)
+    public function updateProject(Request $request,$id)
     {
-        //
+        $data = RealEstateProject::findOrFail($id);
+        if(isset($request->img)){
+            $this->deleteImage(RealEstateProject::IMAGE_PATH , $data->img);
+            $img = $this->aspectForResize($request->img , RealEstateProject::IMAGE_PATH, 500, 600);
+            $data->update([
+                'img' => $img 
+            ]);
+
+        }else{
+            $data->update($request->all());
+        }
+        return $this->sendResponse($data, "تم التعديل" ,200);
+
+        
     }
 
     public function destroy($id)
     {
         $data = RealEstateProject::findOrFail($id);
         $this->deleteImage(RealEstateProject::IMAGE_PATH , $data->img);
+        $files = $data->files ;
+          if($files){
+            foreach($files as $file){
+                $this->deleteImage( projectFile::File_PATH , $file->file);
+            }
+            }
         $data->delete();
         return $this->sendResponse("success", "تم الحذف" ,200);
 
     }
+
+    
+    public function addFile(Request $request)
+    {
+        $data = RealEstateProject::findOrFail($request->id);
+            if($request->file){
+            $data->files()->createMany($this->setImages($request->file,Projectfile::File_PATH,'file' , 500, 600));
+            }
+            return $this->sendResponse($data, "تم الحفظ" ,200);
+       
+
+    }
+
+
+    // destroy some file in project 
+
+    public function destroyFile($id)
+    {
+        $data = projectFile::findOrFail($id);
+        $this->deleteImage(projectFile::File_PATH , $data->file);
+        $data->delete();
+        return $this->sendResponse("success", "تم الحذف" , 200);
+
+    }
+
+    
 }
