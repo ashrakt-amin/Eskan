@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Projectfile extends Model
 {
     use HasFactory;
-    const File_PATH = 'ProjectWallet/File';
+    const File_PATH = 'images/ProjectWallet/File';
     protected $appends = ['path'];
     protected $fillable = ['file','real_estate_project_id','name'];
 

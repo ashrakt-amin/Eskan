@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\PortfolioProjectRequest;
 use App\Models\RealEstateProject;
+use Illuminate\Support\Str;
 use App\Models\Projectfile;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\Project\projectWallet;
@@ -45,15 +46,15 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
 
             if($request->file){
                 foreach ($request->file as $file){
-                    $path = $this->aspectForResize($file ,Projectfile::File_PATH, 500, 600);
-
+                    $fileName = Str::random(8) . '_' . $file->getClientOriginalName();
                     $file_title = $file->getClientOriginalName();
                     $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);
                     
                     $project->files()->create([
-                        'file' => $path,
+                        'file' => $fileName,
                         'name' => $fileWithoutExtension,
                     ]);
+                    $file->storeAs(Projectfile::File_PATH, $fileName, 'public');                                  
                 }
             }
             DB::commit();
@@ -112,15 +113,15 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
         $data = RealEstateProject::findOrFail($request->id);
         if($request->file){
             foreach ($request->file as $file){
-                $path = $this->aspectForResize($file ,Projectfile::File_PATH, 500, 600);
-
+                $fileName = Str::random(8) . '_' . $file->getClientOriginalName();
                 $file_title = $file->getClientOriginalName();
                 $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);
                 
-                $data->files()->create([
-                    'file' => $path,
+                $project->files()->create([
+                    'file' => $fileName,
                     'name' => $fileWithoutExtension,
                 ]);
+                $file->storeAs(Projectfile::File_PATH, $fileName, 'public');                                  
             }
         }
             return $this->sendResponse($data, "تم الحفظ" ,200);
