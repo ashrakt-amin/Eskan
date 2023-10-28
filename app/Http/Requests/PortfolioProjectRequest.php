@@ -23,7 +23,7 @@ class PortfolioProjectRequest extends FormRequest
             'description'  => 'required',
             'detalis'      => 'required',
             'features'     => 'nullable',
-            'files'        => 'nullable'
+            'file'         => 'nullable',
         ];
     }
 

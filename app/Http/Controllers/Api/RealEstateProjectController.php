@@ -44,7 +44,17 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
             ]);                
 
             if($request->file){
-            $project->files()->createMany($this->setImages($request->file,Projectfile::File_PATH,'file' , 500, 600));
+                foreach ($request->file as $file){
+                    $path = $this->aspectForResize($file ,Projectfile::File_PATH, 500, 600);
+
+                    $file_title = $file->getClientOriginalName();
+                    $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);
+                    
+                    $project->files()->create([
+                        'file' => $path,
+                        'name' => $fileWithoutExtension,
+                    ]);
+                }
             }
             DB::commit();
             return $this->sendResponse($project, "تم الحفظ" ,200);
@@ -100,9 +110,19 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
     public function addFile(Request $request)
     {
         $data = RealEstateProject::findOrFail($request->id);
-            if($request->file){
-            $data->files()->createMany($this->setImages($request->file,Projectfile::File_PATH,'file' , 500, 600));
+        if($request->file){
+            foreach ($request->file as $file){
+                $path = $this->aspectForResize($file ,Projectfile::File_PATH, 500, 600);
+
+                $file_title = $file->getClientOriginalName();
+                $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);
+                
+                $data->files()->create([
+                    'file' => $path,
+                    'name' => $fileWithoutExtension,
+                ]);
             }
+        }
             return $this->sendResponse($data, "تم الحفظ" ,200);
        
 

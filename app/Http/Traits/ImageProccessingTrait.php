@@ -108,7 +108,7 @@ trait ImageProccessingTrait
             File::makeDirectory($thepath, 0755, true, true);
         }
         $img->save($thepath . '/' . $imgPath);
-        return $imgPath;
+        return $imgPath ;
     }
 
 

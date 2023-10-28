@@ -12,6 +12,7 @@ class projectFile extends JsonResource
         return [
             
             'id'              => $this->id,
+            'name'           => $this->name,
             'file'           => $this->path
 
         ];  

@@ -10,7 +10,7 @@ class Projectfile extends Model
     use HasFactory;
     const File_PATH = 'ProjectWallet/File';
     protected $appends = ['path'];
-    protected $fillable = ['file','real_estate_project_id'];
+    protected $fillable = ['file','real_estate_project_id','name'];
 
 
     public function ProjectWallet()
