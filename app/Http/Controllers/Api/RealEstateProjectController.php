@@ -115,9 +115,8 @@ use TraitImageProccessingTrait , TraitResponseTrait ;
             foreach ($request->file as $file){
                 $fileName = Str::random(8) . '_' . $file->getClientOriginalName();
                 $file_title = $file->getClientOriginalName();
-                $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);
-                
-                $project->files()->create([
+                $fileWithoutExtension = pathinfo($file_title, PATHINFO_FILENAME);               
+                $data->files()->create([
                     'file' => $fileName,
                     'name' => $fileWithoutExtension,
                 ]);
