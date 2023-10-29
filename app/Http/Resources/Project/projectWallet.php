@@ -16,7 +16,7 @@ class projectWallet extends JsonResource
             'img'             => $this->path,
             'address'         => $this->address,
             'resale'          => $this->resale,
-            'detalis'         => $this->detalis
+            'description'     => $this->description,
             
         ];  
       }

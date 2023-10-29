@@ -17,7 +17,7 @@ class projectWalletShow extends JsonResource
             'address'         => $this->address,
             'resale'          => $this->resale,
             'link'            => $this->link,
-            'description'     => $this->description,
+            'detalis'         => $this->detalis,
             'detalis'         => $this->detalis,
             'features'        => $this->features,
             'files'           => $this->files == null ? "null" :projectFile::collection($this->files),
