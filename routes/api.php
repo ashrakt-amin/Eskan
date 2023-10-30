@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
+use App\Http\Controllers\Api\WalletUnitController;
 
 
 
@@ -43,6 +44,7 @@ Route::resource('text', TextController::class)->only(['index', 'show']);
 // projects 
 Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 Route::resource('projects-wallet', RealEstateProjectController::class)->only(['index', 'show']);
+Route::resource('wallet_units', WalletUnitController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
@@ -107,6 +109,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
+    Route::resource('wallet_units', WalletUnitController::class)->except(['index', 'show']);
     Route::prefix("wallet")->group(function () {
         Route::controller(RealEstateProjectController::class)->group(function () {
             Route::post('/file', 'addFile');

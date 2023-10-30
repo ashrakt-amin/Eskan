@@ -17,6 +17,11 @@ class RealEstateProject extends Model
         return $this->hasMany(Projectfile::class );
     }
 
+    public function walletUnits()
+    {
+        return $this->hasMany(Walletunit::class );
+    }
+
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {
