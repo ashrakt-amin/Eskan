@@ -46,23 +46,22 @@ class WalletUnitRepository implements WalletUnitInterface
 
 
 
-    public function edit($attributes)
+    public function edit($id,$attributes)
     {
         try {
-            $unit = $this->model->findOrFail($attributes->id);
-            if ($attributes['advance_rate']) {
-                $advance = $unit->space * $unit->meter_price * ($attributes['advance_rate'] / 100);
-                $attributes['advance'] = $advance;
-            } elseif ($attributes['space']) {
-                $advance = $attributes['space'] * $unit->meter_price * ($unit->advance_rate / 100);
-                $attributes['advance'] = $advance;
-            } elseif ($attributes['meter_price']) {
-                $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
-                $attributes['advance'] = $advance;
-            }
+            $unit = $this->model->findOrFail($id);
+            if ($attributes['img']) {
+                $this->deleteImage(Walletunit::IMAGE_PATH, $unit->img);
+                $img = $this->aspectForResize($attributes['img'],Walletunit::IMAGE_PATH, 500, 600);
+                $unit->update([
+                    'img'=>$img
+                ]);
+                return $unit;
 
+            } else{
             $unit->update($attributes->all());
             return $unit;
+            }
         } catch (\Exception $e) {
 
             return $e->getMessage();
@@ -72,32 +71,8 @@ class WalletUnitRepository implements WalletUnitInterface
     public function delete($id)
     {
         $unit = $this->model->findOrFail($id);
-        // if ($unit->unitImages != null) {
-        //     foreach ($unit->unitImages as $img) {
-        //         $this->deleteImage('Units', $img->img);
-        //     }
-        //     $unit->unitImages()->delete();
-        // }
+        $this->deleteImage(Walletunit::IMAGE_PATH, $unit->img);
         $unit->delete();
-        return true;
-    }
-
-
-
-    public function deleteImageUnit($id)
-    {
-        $image = Walletunit::find($id);
-        $this->deleteImage('Units', $image->img);
-        $image->delete();
-        return true;
-    }
-
-
-    public function storeImages($attributes)
-    {
-
-        $unit = $this->model->findOrFail($attributes->id);
-        $unit->unitImages()->createMany($this->aspectForResizeImages($attributes['img'], 'Units', 'img', 600, 600));
         return true;
     }
 

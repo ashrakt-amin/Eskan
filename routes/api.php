@@ -110,6 +110,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
     Route::resource('wallet_units', WalletUnitController::class)->except(['index', 'show']);
+    Route::post('wallet_units/update/{id}', [WalletUnitController::class,'unit_update']);
+
     Route::prefix("wallet")->group(function () {
         Route::controller(RealEstateProjectController::class)->group(function () {
             Route::post('/file', 'addFile');

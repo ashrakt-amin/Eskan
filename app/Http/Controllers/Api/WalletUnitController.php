@@ -42,13 +42,13 @@ class WalletUnitController extends Controller
   
     public function show($id)
     {
-        return $this->sendResponse($this->Repository->find($id), " ", 200);
-    }
+        $data = Walletunit::findOrFail($id);
+        return $this->sendResponse(new WalletunitResource($data), " ", 200);    }
 
     
-    public function update(Request $request,$id)
+    public function unit_update(Request $request,$id)
     {
-         $data = $this->Repository->edit($id , $request->validated());
+         $data = $this->Repository->edit($id , $request);
         if (!isset($data->id)){
             return $this->sendError($data, 'error', 404);
         } else {

@@ -14,11 +14,7 @@ interface WalletUnitInterface
 
     public function find($id):?Walletunit;
 
-    public function edit($attributes);
-
-    public function storeImages($attributes);
-
-    public function deleteImageUnit($id);
+    public function edit($id,$attributes);
 
     public function delete($id);
 
