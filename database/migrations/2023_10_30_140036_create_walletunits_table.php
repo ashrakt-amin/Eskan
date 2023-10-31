@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('walletunits', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id')->constrained('real_estate_projects')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('real_estate_project_id')->constrained('real_estate_projects')->cascadeOnDelete()->cascadeOnUpdate();
             $table->String('img');  
             $table->String('num'); 
             $table->integer('shares_num');

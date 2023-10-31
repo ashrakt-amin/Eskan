@@ -16,7 +16,7 @@ class WalletUnitRequest extends FormRequest
     {
         
         return [
-            'project_id'        => 'required',
+            'real_estate_project_id' => 'required',
             'img'               => 'required',
             'num'               => 'required',
             'shares_num'        => 'required',

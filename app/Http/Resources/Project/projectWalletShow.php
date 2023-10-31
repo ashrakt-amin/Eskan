@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Project;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Unit\WalletunitResource;
 
 class projectWalletShow extends JsonResource
 {
@@ -21,6 +22,7 @@ class projectWalletShow extends JsonResource
             'description'     => $this->description,
             'features'        => $this->features,
             'files'           => $this->files == null ? "null" :projectFile::collection($this->files),
+            'units'           => $this->walletUnits == null ? "null" :WalletunitResource::collection($this->walletUnits),
 
 
         ];  
