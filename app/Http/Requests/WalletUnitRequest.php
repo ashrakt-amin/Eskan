@@ -19,7 +19,6 @@ class WalletUnitRequest extends FormRequest
             'project_id'        => 'required',
             'img'               => 'required',
             'num'               => 'required',
-            'level'             => 'required',
             'shares_num'        => 'required',
             'contracted_shares' => 'nullable',
             'share_price'       => 'required',

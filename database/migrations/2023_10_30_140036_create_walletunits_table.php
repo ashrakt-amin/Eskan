@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id')->constrained('real_estate_projects')->cascadeOnDelete()->cascadeOnUpdate();
             $table->String('img');  
-            $table->integer('num'); 
-            $table->String('level');  
+            $table->String('num'); 
             $table->integer('shares_num');
             $table->integer('contracted_shares')->nullable(); 
             $table->integer('share_price');  

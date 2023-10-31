@@ -10,7 +10,7 @@ class Walletunit extends Model
     use HasFactory;
     const IMAGE_PATH = 'walletUnits';
     protected $appends = ['path'];
-    protected $fillable = ['project_id','img','num','level','shares_num',
+    protected $fillable = ['project_id','img','num','shares_num',
                           'contracted_shares','share_price','share_meter_num','return'];
     public function unit()
     {
