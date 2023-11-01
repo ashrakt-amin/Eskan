@@ -48,8 +48,7 @@ class UserWalletRepository implements UserWalletInterface
         try {
             $data = $this->model->findOrFail($id);
             $data->update($attributes->all());
-             return true;
-             
+             return $data;
          } catch (\Exception $e) {
              return $e->getMessage();
          }

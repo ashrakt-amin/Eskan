@@ -56,10 +56,10 @@ class UserWalletController extends Controller
     public function update(Request $request, $id)
     {
         $data = $this->Repository->edit($id, $request);
-        if ($data === true) {
-            return $this->sendResponse($data, "تم التعديل ", 200);
-        } else {
+        if (!isset($data->id)){      
             return $this->sendError($data, 'error', 404);
+           } else {
+            return $this->sendResponse($data, "تم التعديل ", 200);
         }
     }
 
