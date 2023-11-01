@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\HttpException;
+
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -18,9 +20,15 @@ class Handler extends ExceptionHandler
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     */
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof HttpException && $exception->getStatusCode() === 503) {
+            return response(['message' => 'We are performing maintenance. Please check back shortly.'], 503);
+        }
+
+        return parent::render($request, $exception);
+    }
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {

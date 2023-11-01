@@ -17,6 +17,11 @@ class Walletunit extends Model
         return $this->hasOne(Unit::class);
     }
 
+    public function userswalltunit()
+    {
+        return $this->hasMany(Userwallet::class);
+    }
+
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {

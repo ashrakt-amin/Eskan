@@ -35,6 +35,9 @@ use App\Repository\Social\Comment\CommentInterface;
 use App\Repository\Social\Comment\CommentRepository;
 use App\Repository\WalletUnits\WalletUnitRepository;
 use App\Repository\WalletUnits\WalletUnitInterface;
+use App\Repository\UserWallet\UserWalletRepository;
+use App\Repository\UserWallet\UserWalletInterface;
+
 
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -58,6 +61,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PostInterface::class,PostRepository::class);
         $this->app->bind(CommentInterface::class,CommentRepository::class);
         $this->app->bind(WalletUnitInterface::class,WalletUnitRepository::class);     
+        $this->app->bind(UserWalletInterface::class,UserWalletRepository::class);     
+
      
 
     }
