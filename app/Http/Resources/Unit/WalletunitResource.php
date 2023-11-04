@@ -15,7 +15,7 @@ class WalletunitResource extends JsonResource
             'num'    => $this->num,
             'shares_num'          => $this->shares_num,
             'contracted_shares'   =>$this->contracted_shares == null ? "null" :$this->contracted_shares ,
-            'share_price'         =>$this->share_price,
+            'share_price'         =>floatval($this->share_price),
             'share_meter_num'     => $this->share_meter_num,
             'return'              => $this->return,
            

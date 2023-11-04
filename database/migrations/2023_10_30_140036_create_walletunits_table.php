@@ -18,7 +18,7 @@ return new class extends Migration
             $table->String('num'); 
             $table->integer('shares_num');
             $table->integer('contracted_shares')->nullable(); 
-            $table->decimal('share_price');  
+            $table->decimal('share_price',8,3);  
             $table->float('share_meter_num');  
             $table->integer('return'); 
             $table->timestamps();
