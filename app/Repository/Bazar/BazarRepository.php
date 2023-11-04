@@ -29,9 +29,9 @@ class BazarRepository implements BazarInterface
     public function store(array $attributes)
     {
         try {
-           // $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
-           $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
-           $data = $this->model->create($attributes);
+            // $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
+            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
+            $data = $this->model->create($attributes);
             return true;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -55,8 +55,8 @@ class BazarRepository implements BazarInterface
                 $this->deleteImage(Bazar::IMAGE_PATH, $data->img);
                 $img = $this->aspectForResize($attributes['img'], Bazar::IMAGE_PATH, 500, 600);
                 $data->update(['img' => $img]);
-            } else{
-            $data->update($attributes->all());
+            } else {
+                $data->update($attributes->all());
             }
 
             return true;
@@ -78,7 +78,7 @@ class BazarRepository implements BazarInterface
     {
         return function ($q) use ($attributes) {
 
-            !array_key_exists('number', $attributes) || $attributes['number'] == 0   ?: $q
+            !array_key_exists('number', $attributes) || $attributes['number'] == 0 ?: $q
                 ->where(['number' => $attributes['number']]);
 
             !array_key_exists('space', $attributes) || $attributes['space'] == 0   ?: $q
@@ -90,7 +90,8 @@ class BazarRepository implements BazarInterface
             !array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0   ?: $q
                 ->where(['revenue' => $attributes['revenue']]);
 
-
+            !array_key_exists('contract', $attributes) || $attributes['contract'] == null ?: $q
+                ->where(['contract' => $attributes['contract']]);
         };
     }
 
@@ -108,8 +109,9 @@ class BazarRepository implements BazarInterface
     {
         return $this->model
             ->where($this->theLatest($attributes))
-            ->where($this->filter($attributes));
-            }
+            ->where($this->filter($attributes))
+            ->orderByRaw('(contract)ASC');
+    }
 
 
     public function forAllConditionsPaginate(array $attributes, $resourceCollection)

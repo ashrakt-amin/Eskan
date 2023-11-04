@@ -14,8 +14,8 @@ class WalletunitResource extends JsonResource
             'img'    => $this->path,
             'num'    => $this->num,
             'shares_num'          => $this->shares_num,
-            'contracted_shares'   =>$this->contracted_shares == null ? "null" :$this->contracted_shares ,
-            'share_price'         => $this->share_price,
+            'contracted_shares'   => $this->contracted_shares == null ? "null" :$this->contracted_shares ,
+            'share_price'         => $this->share_price, 'decimal',
             'share_meter_num'     => $this->share_meter_num,
             'return'              => $this->return,
            
