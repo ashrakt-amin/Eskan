@@ -19,6 +19,7 @@ class UseWalletResource extends JsonResource
             'phone'           => $this->phone,
             'shares_num'      => $this->shares_num,
             'walletunit_num'  => $this->unit->num,
+            'walletunit_project'  => $this->unit->project->name,
             'created_at'      => $formattedCreatedAt,
             'feedback'        => $this->feedback
             

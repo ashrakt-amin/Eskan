@@ -12,9 +12,9 @@ class Walletunit extends Model
     protected $appends = ['path'];
     protected $fillable = ['real_estate_project_id','img','num','shares_num',
                           'contracted_shares','share_price','share_meter_num','return'];
-    public function unit()
+    public function Project()
     {
-        return $this->hasOne(Unit::class);
+        return $this->belongsto(RealEstateProject::class,'real_estate_project_id');
     }
 
     public function userswalltunit()
