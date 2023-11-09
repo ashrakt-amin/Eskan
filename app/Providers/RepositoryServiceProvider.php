@@ -37,6 +37,8 @@ use App\Repository\WalletUnits\WalletUnitRepository;
 use App\Repository\WalletUnits\WalletUnitInterface;
 use App\Repository\UserWallet\UserWalletRepository;
 use App\Repository\UserWallet\UserWalletInterface;
+use App\Repository\ParkUser\ParkUserRepository;
+use App\Repository\ParkUser\ParkUserInterface;
 
 
 
@@ -62,6 +64,8 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(CommentInterface::class,CommentRepository::class);
         $this->app->bind(WalletUnitInterface::class,WalletUnitRepository::class);     
         $this->app->bind(UserWalletInterface::class,UserWalletRepository::class);     
+        $this->app->bind(ParkUserInterface::class,ParkUserRepository::class);     
+
 
      
 

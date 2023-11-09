@@ -26,6 +26,8 @@ use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\WalletUnitController;
 use App\Http\Controllers\Api\UserWalletController;
+use App\Http\Controllers\Api\ParkUsersController;
+
 
 
 
@@ -72,6 +74,8 @@ Route::resource('jobs', JobController::class)->only('store');
 Route::resource('owners', OwnerController::class)->only('store');
 Route::resource('seek_money', SeekMoneyController::class)->only('store');
 Route::resource('user/wallet_unit', UserWalletController::class)->only('store');
+Route::resource('park_user', ParkUsersController::class)->only('store');
+
 
 
 
@@ -156,6 +160,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('jobs', JobController::class)->except(['store']);
     Route::resource('owners', OwnerController::class)->except('store');
     Route::resource('user/wallet_unit', UserWalletController::class)->except('store');
+    Route::resource('park_user', ParkUsersController::class)->except('store');
+
 
 
 
@@ -165,6 +171,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('CityCenter_users/force_delete/{id}', [CityCenterUsersController::class, 'forceDelete']);
     Route::delete('owners/force_delete/{id}', [OwnerController::class, 'forceDelete']);
     Route::delete('user/wallet_unit/force_delete/{id}', [UserWalletController::class, 'forceDelete']);
+
+    Route::get('park_user/restore/{id}', [ParkUsersController::class, 'restore']);
+    Route::delete('park_user/force_delete/{id}', [ParkUsersController::class, 'forceDelete']);
+
 
 
     Route::resource('post', PostController::class)->except(['index', 'show']);
