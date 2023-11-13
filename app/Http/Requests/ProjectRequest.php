@@ -16,6 +16,8 @@ class ProjectRequest extends FormRequest
     {
         return [
             'name'    => 'required',
+            'img'     => 'nullable',
+
         ];
     }
 }
