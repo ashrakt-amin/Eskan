@@ -3,6 +3,7 @@
 namespace App\Repository\Project;
 
 use App\Models\Project;
+use App\Models\Projectimages;
 use Illuminate\Support\Collection;
 use App\Repository\Project\ProjectInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -11,29 +12,29 @@ use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
 class ProjectRepository implements ProjectInterface
 {
-    use TraitResponseTrait ,TraitImageProccessingTrait;
+    use TraitResponseTrait, TraitImageProccessingTrait;
     public $model;
 
     protected $resourceCollection;
 
     public function __construct(Project $model)
     {
-        $this->model = $model  ;
-      }
+        $this->model = $model;
+    }
 
     public function all(): Collection
     {
-       return $this->model->all();
-
+        return $this->model->all();
     }
 
 
     public function store(array $attributes)
     {
-        $attributes['img']= $this->aspectForResize($attributes['img'], Project::IMAGE_PATH, 500, 600);
-
         $project = $this->model->create($attributes);
-        return $project ;
+        $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img', 500, 500));
+
+        // $project = Projectimages::create($attributes);
+        return $project;
     }
 
 
@@ -47,27 +48,36 @@ class ProjectRepository implements ProjectInterface
 
     public function edit($id,  $attributes): ?Project
     {
-
-        $project =$this->model->findOrFail($id);
+        $project = $this->model->findOrFail($id);
         $data = $attributes->all();
-    if ($attributes['img']) {
-        $this->deleteImage( Project::IMAGE_PATH, $project->img);
-        $img = $this->aspectForResize($attributes['img'], Project::IMAGE_PATH, 500, 600);
-        $project->update(['img' => $img]);
-    }else{
         $project->update($data);
 
+        return $project;
     }
-       
+
+    public function editImage($id,  $attributes)
+    {
+
+        $project = Projectimages::findOrFail($id);
+        $data = $attributes->all();
+        $this->deleteImage(Projectimages::IMAGE_PATH, $project->img);
+        $img = $this->aspectForResize($attributes['img'], Projectimages::IMAGE_PATH, 500, 600);
+        $project->update(['img' => $img]);
         return $project;
     }
 
 
     public function delete($id)
     {
-      $data =  $this->model::findOrFail($id);
-        $this->deleteImage( Project::IMAGE_PATH, $data->img);
-       return $data->delete();
-       
+        $data =  $this->model::findOrFail($id);
+        $this->deleteImage(Projectimages::IMAGE_PATH, $data->img);
+        return $data->delete();
+    }
+
+    public function deleteImage($id)
+    {
+        $data = Projectimages::findOrFail($id);
+        $this->deleteImage(Projectimages::IMAGE_PATH, $data->img);
+        return $data->delete();
     }
 }

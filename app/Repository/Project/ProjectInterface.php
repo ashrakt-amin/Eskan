@@ -16,8 +16,13 @@ interface ProjectInterface
 
     public function edit($id, $attributes):?Project;
 
+    public function editImage($id, $attributes);
+
     public function delete($id);
 
+    public function deleteImage($id);
+
+    
     
 
 

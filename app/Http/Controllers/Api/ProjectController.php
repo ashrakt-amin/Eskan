@@ -13,8 +13,8 @@ use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class ProjectController extends Controller
 {
-    use TraitResponseTrait ;
-    protected $Repository ;  
+    use TraitResponseTrait;
+    protected $Repository;
 
     public function __construct(ProjectInterface $Repository)
     {
@@ -23,9 +23,8 @@ class ProjectController extends Controller
 
     public function index()
     {
-                $data = $this->Repository->all();
-        return $this->sendResponse(ProjectResource::collection($data) , " " ,200);
-
+        $data = $this->Repository->all();
+        return $this->sendResponse(ProjectResource::collection($data), " ", 200);
     }
 
     public function store(ProjectRequest $request)
@@ -33,25 +32,35 @@ class ProjectController extends Controller
         $this->Repository->store($request->validated());
         return $this->sendResponse('', "تم تسجيل مشروعا جديدا", 200);
     }
-    
 
-  
+
+
     public function show($id)
     {
         return $this->sendResponse($this->Repository->find($id), " ", 200);
     }
 
-  
-    public function update(Request $request,$id)
-    {
-        return $this->sendResponse($this->Repository->edit($id , $request), " تم تعديل المشروع", 200);
 
+    public function update(Request $request, $id)
+    {
+        return $this->sendResponse($this->Repository->edit($id, $request), " تم تعديل المشروع", 200);
     }
 
-  
+    
+    public function updateImag(Request $request, $id)
+    {
+        return $this->sendResponse($this->Repository->editImage($id, $request), " تم تعديل ", 200);
+    }
+
+
+    public function deleteImage(Request $request, $id)
+    {
+        return $this->sendResponse($this->Repository->deleteImage($id, $request), " تم حذف ", 200);
+    }
+
+
     public function destroy($id)
     {
         return $this->sendResponse($this->Repository->delete($id), " تم حذف المشروع ", 200);
-
     }
 }

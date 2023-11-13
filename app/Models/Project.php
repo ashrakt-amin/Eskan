@@ -8,16 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
-    const IMAGE_PATH = 'project';
-    protected $appends = ['path'];
-    protected $fillable = ['name','img'];
+    protected $fillable = ['name'];
 
-    public function getPathAttribute()
+    public function projectimages()
     {
-        if (env('APP_URL') == "http://localhost") {
-            return asset('storage/images/Eskan/project') . "/" . $this->img;
-        } else {
-            return asset('storage/app/public/images/Eskan/project') . "/" . $this->img;
-        }
+        return $this->hasMany(Projectimages::class);
     }
+   
 }
