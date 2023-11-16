@@ -27,6 +27,8 @@ use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\WalletUnitController;
 use App\Http\Controllers\Api\UserWalletController;
 use App\Http\Controllers\Api\ParkUsersController;
+use App\Http\Controllers\Api\BlockController;
+
 
 
 
@@ -117,6 +119,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
+    Route::resource('block', BlockController::class);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
     Route::resource('wallet_units', WalletUnitController::class)->except(['index', 'show']);
     Route::post('wallet_units/update/{id}', [WalletUnitController::class,'unit_update']);

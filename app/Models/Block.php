@@ -14,15 +14,15 @@ class Block extends Model
    
     public function project()
     {
-        return $this->hasOne(Project::class);
+        return $this->belongsTo(Project::class);
     }
 
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {
-            return asset('storage/images/project/') . $this->project->name . "/" . $this->img;
+            return asset('storage/images/project'). "/"  . $this->project->name . "/" . $this->img;
         } else {
-            return asset('storage/app/public/images/project') . $this->project->name . "/" . $this->img;
+            return asset('storage/app/public/images/project') . "/" . $this->project->name . "/" . $this->img;
         }
     }
 }
