@@ -128,7 +128,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/file/delete/{id}', 'destroyFile');
         });
     });
-    Route::post('project/update/{id}', [ProjectController::class, 'updateImag']);
+    Route::post('project/update/{id}', [ProjectController::class, 'updateImage']);
     Route::delete('project/delete/{id}', [ProjectController::class, 'deleteImage']);
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);

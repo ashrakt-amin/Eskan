@@ -37,7 +37,8 @@ class ProjectController extends Controller
 
     public function show($id)
     {
-        return $this->sendResponse($this->Repository->find($id), " ", 200);
+        $data = $this->Repository->find($id);
+        return $this->sendResponse(new ProjectResource($data), " ", 200);
     }
 
 
@@ -47,7 +48,7 @@ class ProjectController extends Controller
     }
 
     
-    public function updateImag(Request $request, $id)
+    public function updateImage(Request $request, $id)
     {
         return $this->sendResponse($this->Repository->editImage($id, $request), " تم تعديل ", 200);
     }

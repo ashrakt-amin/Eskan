@@ -50,9 +50,12 @@ class ProjectRepository implements ProjectInterface
     {
         $project = $this->model->findOrFail($id);
         $data = $attributes->all();
+        if($attributes['img']){
+            $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img', 500, 500));
+        }
         $project->update($data);
-
         return $project;
+        
     }
 
     public function editImage($id,  $attributes)

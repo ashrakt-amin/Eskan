@@ -12,7 +12,7 @@ class ProjectResource extends JsonResource
         return [
             'id'              => $this->id,
             'name'            => $this->name,
-            'images'          => $this->projectimages == NULL ? "null" : ProjectImageResource::collection($this->projectimages )
+            'imgs'          => $this->projectimages == NULL ? "null" : ProjectImageResource::collection($this->projectimages )
             
 
         ];  
