@@ -62,7 +62,6 @@ class ProjectRepository implements ProjectInterface
     {
 
         $project = Projectimages::findOrFail($id);
-        $data = $attributes->all();
         $this->deleteImage(Projectimages::IMAGE_PATH, $project->img);
         $img = $this->aspectForResize($attributes['img'], Projectimages::IMAGE_PATH, 500, 600);
         $project->update(['img' => $img]);
@@ -77,7 +76,7 @@ class ProjectRepository implements ProjectInterface
         return $data->delete();
     }
 
-    public function deleteImage($id)
+    public function delete_Image($id)
     {
         $data = Projectimages::findOrFail($id);
         $this->deleteImage(Projectimages::IMAGE_PATH, $data->img);

@@ -20,7 +20,7 @@ interface ProjectInterface
 
     public function delete($id);
 
-    public function deleteImage($id);
+    public function delete_Image($id);
 
     
     
