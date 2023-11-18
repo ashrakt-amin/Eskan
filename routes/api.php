@@ -89,7 +89,13 @@ Route::prefix("unit")->group(function () {
         Route::get('/space/{meter_price?}', 'space');
         Route::get('/meter_price/{space?}', 'meterPrice');
         Route::get('/numbers/{level}/{number}', 'numbers');
-        Route::get('/block/{meter_price}/{block_id}', 'block');
+
+        Route::get('/block/space/{block_id}/{meter_price}', 'block_space');
+        Route::get('/block/meter_price/{block_id}/{space}', 'block_meter_price');
+        Route::get('/block/level/{block_id}/{space}/{meter_price}', 'block_levels');
+        Route::get('/block/number/{block_id}/{number}', 'block_number');
+
+
 
     });
 });
