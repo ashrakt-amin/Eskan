@@ -261,6 +261,7 @@ class UnitController extends Controller
         }
 
         $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
+        if(count($unit_levels) > 0){
         $levels = Level::all();
         foreach ($unit_levels as $unit_level) {
             foreach ($levels as $level) {
@@ -274,6 +275,14 @@ class UnitController extends Controller
             'message' => "unique level",
             'data' => $data
         ], 200);
+    }else{
+        return response()->json([
+            'status' => true,
+            'message' => "error data",
+            'data' => ''
+        ], 404);
+    }
+       
     }
 
 
