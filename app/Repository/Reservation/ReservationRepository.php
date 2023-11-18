@@ -5,6 +5,8 @@ namespace App\Repository\Reservation;
 use App\Models\Reservation;
 use Illuminate\Support\Collection;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+use App\Jobs\SendEmailJob;
+
 
 class ReservationRepository implements ReservationInterface
 {
@@ -27,6 +29,15 @@ class ReservationRepository implements ReservationInterface
     public function store(array $attributes)
     {
         $data = $this->model->create($attributes);
+        $mailData = [
+            'title' => 'Dear ziad',
+            'name' => 'new reservation from ' . $attributes['name'],
+            'phone' => ' phone : ' . $attributes['phone'],
+            'job' => 'job : ' . $attributes['job'],
+            'unit' => 'unit numer : ' . $data->unit->number,
+            'project' => 'project name : ' . $data->project->name,
+        ];
+        SendEmailJob::dispatch($mailData);
         return $data;
     }
 
@@ -55,14 +66,14 @@ class ReservationRepository implements ReservationInterface
     }
 
 
-    
+
     public function forceDelete($id)
     {
         $data = $this->model->onlyTrashed()->findOrFail($id);
         $data->forceDelete();
         return true;
     }
-    
+
 
     public function filter(array $attributes)
     {
@@ -73,7 +84,6 @@ class ReservationRepository implements ReservationInterface
 
             !array_key_exists('unit_id', $attributes) || $attributes['unit_id'] == 0   ?: $q
                 ->where(['unit_id' => $attributes['unit_id']]);
-
         };
     }
 

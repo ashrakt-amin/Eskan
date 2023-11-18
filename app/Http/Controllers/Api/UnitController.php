@@ -209,4 +209,22 @@ class UnitController extends Controller
         }
         //$numbers =$units->unique('number')->pluck('number')->values()->all();
     }
+
+    public function block($meter_price = 0, $block_id = 0)
+    {
+        if ($meter_price != 0 && $block_id != 0) {
+            $units = Unit::where('meter_price', $meter_price)->Where('block_id', $block_id)
+            ->orderBy('space', 'asc')->get();             
+        } elseif ($meter_price == 0 && $block_id != 0) {  
+            $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();    
+        } else {
+            $units = Unit::all();
+        }
+        $unique_data = $units->unique('space')->pluck('space')->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique spaces!",
+            'data' => $unique_data
+        ], 200);
+    }
 }
