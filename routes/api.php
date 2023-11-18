@@ -54,7 +54,7 @@ Route::resource('wallet_units', WalletUnitController::class)->only(['index', 'sh
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
 Route::resource('bazar', BazarController::class)->only(['index', 'show']);
-Route::resource('bbock', BlockController::class)->only(['index', 'show']);
+Route::resource('block', BlockController::class)->only(['index', 'show']);
 Route::prefix("bazar")->group(function () {
     Route::controller(BazarController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
