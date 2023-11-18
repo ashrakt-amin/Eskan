@@ -28,7 +28,8 @@ class UnitRequest extends FormRequest
             'type_id'     => 'required',
             'project_id'  => 'required',
             'level_id'    => 'required',
-            'unit_image_id'    => 'nullable',
+            'unit_image_id' => 'nullable',
+            'block_id'    =>'required'
 
 
         ];

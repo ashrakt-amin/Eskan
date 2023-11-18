@@ -10,7 +10,7 @@ class Unit extends Model
     use HasFactory;
 
     protected $fillable = ['number','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
-                           'advance_rate' , 'advance', 'installment', 'type_id', 'project_id' ,'unit_image_id'];
+                           'advance_rate' , 'advance', 'installment', 'type_id', 'project_id' ,'unit_image_id','block_id'];
 
     public function type()
     {
@@ -35,6 +35,10 @@ class Unit extends Model
         return $this->belongsTo(Project::class, 'project_id');
     }
 
+    public function block()
+    {
+        return $this->belongsTo(Project::class, 'block_id');
+    }
     
 
    

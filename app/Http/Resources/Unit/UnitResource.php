@@ -29,7 +29,11 @@ class UnitResource extends JsonResource
             'images'                  =>$this->unitImage == null ? "null" : [
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
-            ]
+            ],
+            'block_id'                  => [
+                'id'     => $this->block_id,
+                'name'   => $this->block->name,
+            ],
 
         ];
     }

@@ -42,8 +42,8 @@ class UnitController extends Controller
         $name = Auth::user()->name;
         if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
             $data = $this->Repository->store($request->validated());
-            if (isset($data->errorInfo)) {
-                return $this->sendError($data->errorInfo, 'error', 404);
+            if (!isset($data->id)){
+                return $this->sendError($data, 'error', 404);
             } else {
                 return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
             }
