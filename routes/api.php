@@ -120,6 +120,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('block', BlockController::class);
+    Route::post('block/update/{id}', [BlockController::class ,'update']);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
     Route::resource('wallet_units', WalletUnitController::class)->except(['index', 'show']);
     Route::post('wallet_units/update/{id}', [WalletUnitController::class,'unit_update']);
