@@ -207,6 +207,14 @@ class UnitController extends Controller
         //$numbers =$units->unique('number')->pluck('number')->values()->all();
     }
 
+
+
+
+
+
+
+
+
     public function block_space($block_id = 0 , $meter_price = 0)
     {
         if ($meter_price != 0 && $block_id != 0) {
@@ -214,6 +222,8 @@ class UnitController extends Controller
             ->orderBy('space', 'asc')->get();             
         } elseif ($meter_price == 0 && $block_id != 0) {  
             $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();    
+        } elseif ($meter_price != 0 && $block_id == 0) {  
+            $units = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();    
         } else {
             $units = Unit::all();
         }
@@ -232,6 +242,8 @@ class UnitController extends Controller
             ->orderBy('meter_price', 'asc')->get();             
         } elseif ($space == 0 && $block_id != 0) {  
             $units = Unit::where('block_id', $block_id)->orderBy('meter_price', 'asc')->get();    
+        }elseif ($space != 0 && $block_id == 0) {  
+            $units = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();    
         } else {
             $units = Unit::all();
         }
@@ -247,7 +259,7 @@ class UnitController extends Controller
 
     public function block_levels($block_id = 0 , $space = 0 ,$meter_price = 0)
     {
-        if ($meter_price != 0 && $space != 0) {
+        if ($meter_price != 0 && $space != 0 && $block_id != 0) {
             $unit = Unit::where('block_id', $block_id)->where('space', $space)->where('meter_price', $meter_price)
                 ->orderBy('level_id', 'asc')->get();
         } elseif ($meter_price != 0 && $space == 0) {
@@ -255,6 +267,12 @@ class UnitController extends Controller
                 ->orderBy('level_id', 'asc')->get();
         } elseif ($meter_price == 0 && $space != 0) {
             $unit = Unit::where('block_id', $block_id)->where('space', $space)
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($block_id == 0 && $space != 0 && $meter_price != 0) {
+            $unit = Unit::where('space', $space)->where('meter_price', $meter_price)
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($block_id != 0 && $space == 0 && $meter_price == 0) {
+            $unit = Unit::where('block_id', $block_id)
                 ->orderBy('level_id', 'asc')->get();
         } else {
             $unit = Unit::all();
