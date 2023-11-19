@@ -24,6 +24,9 @@ interface UnitInterface
 
     public function forAllConditionsReturn(array $attributes, $resourceCollection);
 
+    public function forFilterlevel(array $attributes);
+
+
 
 
 

@@ -212,4 +212,11 @@ class UnitRepository implements UnitInterface
             : (array_key_exists('latest', $attributes) ? $this->forAllConditionsLatest($attributes, $resourceCollection)
                 : $this->forAllConditionsRandom($attributes, $resourceCollection));
     }
+
+    public function forFilterlevel(array $attributes)
+    {
+       // $this->resourceCollection = $resourceCollection;
+
+        return array_key_exists('paginate', $attributes) ? $this->forAllConditions($attributes): NULL;
+    }
 }
