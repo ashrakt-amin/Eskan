@@ -37,7 +37,7 @@ class Unit extends Model
 
     public function block()
     {
-        return $this->belongsTo(Project::class, 'block_id');
+        return $this->belongsTo(Block::class, 'block_id');
     }
     
 
