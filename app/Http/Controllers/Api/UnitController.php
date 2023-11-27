@@ -168,8 +168,8 @@ class UnitController extends Controller
 
         $attributes = $request->all();
 
-        if (array_key_exists('space', $attributes) && $attributes['meter_price'] != 0) {
-            $q->where(['meter_price' => $attributes['meter_price']]);
+        if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
+            $q->where(['space' => $attributes['space']]);
         }
 
         if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
