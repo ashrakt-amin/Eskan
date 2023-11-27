@@ -180,6 +180,16 @@ class UnitController extends Controller
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
+        if ($attributes['space'] == 0 && $attributes['block_id'] == 0 && $attributes['level_id'] == 0) {
+            $unit = Unit::all();
+            $unique_data = $unit->unique('meter_price')->pluck('meter_price')->values()->all();
+            return response()->json([
+                'status' => true,
+                'message' => "unique meter_price!",
+                'data' => $unique_data
+            ], 200);
+        }
+
         $meter_price = $q->orderBy('meter_price', 'asc')->pluck('meter_price')->values()->unique()->all();
 
         return response()->json([
@@ -300,6 +310,15 @@ class UnitController extends Controller
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
+        if ($attributes['meter_price'] == 0 && $attributes['block_id'] == 0 && $attributes['level_id'] == 0) {
+            $unit = Unit::all();
+            $unique_data = $unit->unique('space')->pluck('space')->values()->all();
+            return response()->json([
+                'status' => true,
+                'message' => "unique space!",
+                'data' => $unique_data
+            ], 200);
+        }
         $spaces = $q->orderBy('space', 'asc')->pluck('space')->values()->unique()->all();
 
         return response()->json([
