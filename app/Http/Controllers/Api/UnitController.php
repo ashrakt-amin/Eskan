@@ -142,27 +142,52 @@ class UnitController extends Controller
     }
 
 
-    public function meterPrice($space = '')
-    {
-        if ($space != null && $space != 0) {
-            $unit = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
-        } else {
-            $unit = Unit::orderBy('meter_price', 'asc')->get();
-        }
-        // $level = $unit->unique('level_id')
-        // ->pluck('level_id')->values()->all();
+    // public function meterPrice($space = '')
+    // {
+    //     if ($space != null && $space != 0) {
+    //         $unit = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
+    //     } else {
+    //         $unit = Unit::orderBy('meter_price', 'asc')->get();
+    //     }
+    //     // $level = $unit->unique('level_id')
+    //     // ->pluck('level_id')->values()->all();
 
-        $unique_data = $unit->unique('meter_price')
-            ->pluck('meter_price')->values()->all();
+    //     $unique_data = $unit->unique('meter_price')
+    //         ->pluck('meter_price')->values()->all();
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'message' => "unique meter price!",
+    //         'data' => $unique_data,
+    //     ], 200);
+    // }
+
+    public function meterPrice(Request $request)
+    {
+        $q = Unit::query();
+
+        $attributes = $request->all();
+
+        if (array_key_exists('space', $attributes) && $attributes['meter_price'] != 0) {
+            $q->where(['meter_price' => $attributes['meter_price']]);
+        }
+
+        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
+            $q->where(['block_id' => $attributes['block_id']]);
+        }
+
+        if (array_key_exists('level_id', $attributes)&& $attributes['level_id'] != 0) {
+            $q->where(['level_id' => $attributes['level_id']]);
+        }
+
+        $meter_price = $q->orderBy('meter_price', 'asc')->pluck('meter_price')->values()->unique()->all();
 
         return response()->json([
             'status' => true,
-            'message' => "unique meter price!",
-            'data' => $unique_data,
+            'message' => "unique meter_price!",
+            'data' => $meter_price
         ], 200);
     }
-
-
 
 
     public function levels($meter_price = 0, $space = 0)

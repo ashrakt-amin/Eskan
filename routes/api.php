@@ -87,7 +87,7 @@ Route::get('unit/filter/levels/{meter_price?}/{space?}', [UnitController::class,
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
         Route::get('/space', 'space');
-        Route::get('/meter_price/{space?}', 'meterPrice');
+        Route::get('/meter_price', 'meterPrice');
         Route::get('/numbers/{level}/{number}', 'numbers');
 
         Route::get('/block/space/{block_id}/{meter_price}', 'block_space');
