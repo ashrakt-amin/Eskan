@@ -42,7 +42,7 @@ class UnitController extends Controller
         $name = Auth::user()->name;
         if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
             $data = $this->Repository->store($request->validated());
-            if (!isset($data->id)){
+            if (!isset($data->id)) {
                 return $this->sendError($data, 'error', 404);
             } else {
                 return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
@@ -124,8 +124,9 @@ class UnitController extends Controller
 
 
 
-    public function space($meter_price = '')
+    public function spaces($meter_price = 0)
     {
+
         if ($meter_price != null && $meter_price != 0) {
             $spaces = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
         } else {
@@ -215,15 +216,15 @@ class UnitController extends Controller
 
 
 
-    public function block_space($block_id = 0 , $meter_price = 0)
+    public function block_space($block_id = 0, $meter_price = 0)
     {
         if ($meter_price != 0 && $block_id != 0) {
             $units = Unit::where('meter_price', $meter_price)->Where('block_id', $block_id)
-            ->orderBy('space', 'asc')->get();             
-        } elseif ($meter_price == 0 && $block_id != 0) {  
-            $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();    
-        } elseif ($meter_price != 0 && $block_id == 0) {  
-            $units = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();    
+                ->orderBy('space', 'asc')->get();
+        } elseif ($meter_price == 0 && $block_id != 0) {
+            $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();
+        } elseif ($meter_price != 0 && $block_id == 0) {
+            $units = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
         } else {
             $units = Unit::all();
         }
@@ -235,15 +236,15 @@ class UnitController extends Controller
         ], 200);
     }
 
-    public function block_meter_price($block_id = 0 , $space = 0)
+    public function block_meter_price($block_id = 0, $space = 0)
     {
         if ($space != 0 && $block_id != 0) {
             $units = Unit::where('space', $space)->Where('block_id', $block_id)
-            ->orderBy('meter_price', 'asc')->get();             
-        } elseif ($space == 0 && $block_id != 0) {  
-            $units = Unit::where('block_id', $block_id)->orderBy('meter_price', 'asc')->get();    
-        }elseif ($space != 0 && $block_id == 0) {  
-            $units = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();    
+                ->orderBy('meter_price', 'asc')->get();
+        } elseif ($space == 0 && $block_id != 0) {
+            $units = Unit::where('block_id', $block_id)->orderBy('meter_price', 'asc')->get();
+        } elseif ($space != 0 && $block_id == 0) {
+            $units = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
         } else {
             $units = Unit::all();
         }
@@ -255,68 +256,78 @@ class UnitController extends Controller
         ], 200);
     }
 
-    
-    public function block_levels(Request $request)
+
+    public function space(Request $request)
     {
         $q = Unit::query();
 
         $attributes = $request->all();
-    
-        if (array_key_exists('meter_price', $attributes)) {
+
+        if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
             $q->where(['meter_price' => $attributes['meter_price']]);
         }
-    
-        if (array_key_exists('space', $attributes)) {
-            $q->where('space', $attributes['space']);
-        }
-        if (array_key_exists('block_id', $attributes)) {
+
+        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
             $q->where(['block_id' => $attributes['block_id']]);
         }
-    
-    
-        $units = $q->orderBy('level_id', 'asc')->pluck('level_id')->values()->unique()->all();
-            if(count($units) > 0){
-            $levels = Level::all();
-            foreach ($units as $unit) {
-                foreach ($levels as $level) {
-                    if ($level->id == $unit) {
-                        $data[] = $level;
-                    }
-                }
-            }
-                return response()->json([
-                            'status' => true,
-                            'message' => "unique level",
-                            'data' => $data
-                        ], 200);
-                    }
 
+        if (array_key_exists('level_id', $attributes)&& $attributes['level_id'] != 0) {
+            $q->where(['level_id' => $attributes['level_id']]);
+        }
+
+        $spaces = $q->orderBy('space', 'asc')->pluck('space')->values()->unique()->all();
+
+        return response()->json([
+            'status' => true,
+            'message' => "unique spaces!",
+            'data' => $spaces
+        ], 200);
     }
+
+
+
+    // if(count($units) > 0){
+    // $levels = Level::all();
+    // foreach ($units as $unit) {
+    //     foreach ($levels as $level) {
+    //         if ($level->id == $unit) {
+    //             $data[] = $level;
+    //         }
+    //     }
+    // }
+    //     return response()->json([
+    //                 'status' => true,
+    //                 'message' => "unique level",
+    //                 'data' => $data
+    //             ], 200);
+    //         }
+
+
     // public function block_levels($block_id = 0 , $space = 0 ,$meter_price = 0)
     // {
-        // if ($meter_price != 0 && $space != 0 && $block_id != 0) {
-        //     $unit = Unit::where('block_id', $block_id)->where('space', $space)->where('meter_price', $meter_price)
-        //         ->orderBy('level_id', 'asc')->get();
-        // } elseif ($block_id == 0 && $space == 0 && $meter_price != 0) {
-        //     $unit = Unit::where('block_id', $block_id)->where('meter_price', $meter_price)
-        //         ->orderBy('level_id', 'asc')->get();
-        // } elseif ($meter_price == 0 && $space != 0) {
-        //     $unit = Unit::where('block_id', $block_id)->where('space', $space)
-        //         ->orderBy('level_id', 'asc')->get();
-        // } elseif ($block_id == 0 && $space != 0 && $meter_price != 0) {
-        //     $unit = Unit::where('space', $space)->where('meter_price', $meter_price)
-        //         ->orderBy('level_id', 'asc')->get();
-        // } elseif ($block_id != 0 && $space == 0 && $meter_price == 0) {
-        //     $unit = Unit::where('block_id', $block_id)
-        //         ->orderBy('level_id', 'asc')->get();
-        // } else {
-        //     $unit = Unit::all();
-        // }
+    // if ($meter_price != 0 && $space != 0 && $block_id != 0) {
+    //     $unit = Unit::where('block_id', $block_id)->where('space', $space)->where('meter_price', $meter_price)
+    //         ->orderBy('level_id', 'asc')->get();
+    // } elseif ($block_id == 0 && $space == 0 && $meter_price != 0) {
+    //     $unit = Unit::where('block_id', $block_id)->where('meter_price', $meter_price)
+    //         ->orderBy('level_id', 'asc')->get();
+    // } elseif ($meter_price == 0 && $space != 0) {
+    //     $unit = Unit::where('block_id', $block_id)->where('space', $space)
+    //         ->orderBy('level_id', 'asc')->get();
+    // } elseif ($block_id == 0 && $space != 0 && $meter_price != 0) {
+    //     $unit = Unit::where('space', $space)->where('meter_price', $meter_price)
+    //         ->orderBy('level_id', 'asc')->get();
+    // } elseif ($block_id != 0 && $space == 0 && $meter_price == 0) {
+    //     $unit = Unit::where('block_id', $block_id)
+    //         ->orderBy('level_id', 'asc')->get();
+    // } else {
+    //     $unit = Unit::all();
+    // }
 
-        
+
     //         $unit = Unit::where('block_id', $block_id)->where('space', $space)->where('meter_price', $meter_price)
     //             ->orderBy('level_id', 'asc')->get();
-        
+
 
     //     $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
     //     if(count($unit_levels) > 0){
@@ -340,7 +351,7 @@ class UnitController extends Controller
     //         'data' => ''
     //     ], 404);
     // }
-       
+
     // }
 
 
@@ -354,10 +365,4 @@ class UnitController extends Controller
         }
         //$numbers =$units->unique('number')->pluck('number')->values()->all();
     }
-
-    
-
-
-
-
 }
