@@ -202,7 +202,7 @@ class UnitController extends Controller
             ], 200);
         }
         $response = $q->orderBy('space', 'asc')->pluck('space')->values()->unique()->all();
-        $spaces[] = $response;
+        $spaces = $response;
         return response()->json([
             'status' => true,
             'message' => "unique spaces!",
