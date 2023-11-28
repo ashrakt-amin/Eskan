@@ -200,7 +200,7 @@ class UnitController extends Controller
     }
 
 
-    public function levels($meter_price = 0, $space = 0)
+    public function level($meter_price = 0, $space = 0)
     {
         if ($meter_price != 0 && $space != 0) {
             $unit = Unit::where('meter_price', $meter_price)->where('space', $space)
@@ -327,6 +327,69 @@ class UnitController extends Controller
             'data' => $spaces
         ], 200);
     }
+
+
+    public function levels(Request $request)
+    {
+        $q = Unit::query();
+
+        $attributes = $request->all();
+
+        if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
+            $q->where(['meter_price' => $attributes['meter_price']]);
+        }
+
+        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
+            $q->where(['block_id' => $attributes['block_id']]);
+        }
+
+        if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
+            $q->where(['space' => $attributes['space']]);
+        }
+
+        if ((!array_key_exists('meter_price', $attributes)||$attributes['meter_price'] == 0 ) &&
+         (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0 )&& 
+        (!array_key_exists('space', $attributes) ||$attributes['space'] == 0) ){
+
+            $unit = Unit::all();
+            $response= $unit->unique('level_id')->pluck('level_id')->values()->all();
+           // $unit_levels = sort($unit_level);
+
+           $unit_levels = collect($response)->sortBy(function ($item) {
+            return $item;
+        })->values()->all();
+        
+            $levels = Level::all();
+            foreach ($unit_levels as $unit_level) {
+                foreach ($levels as $level) {
+                    if ($level->id == $unit_level) {
+                        $data[] = $level;
+                    }
+                }
+            }
+            return response()->json([
+                'status' => true,
+                'message' => "unique level",
+                'data' => $data
+            ], 200);
+        }
+
+        $unit_levels = $q->orderBy('level_id', 'asc')->pluck('level_id')->values()->unique()->all();
+        $levels = Level::all();
+        foreach ($unit_levels as $unit_level) {
+            foreach ($levels as $level) {
+                if ($level->id == $unit_level) {
+                    $data[] = $level;
+                }
+            }
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "unique level",
+            'data' => $data
+        ], 200);
+    }
+
 
 
 

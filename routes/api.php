@@ -83,11 +83,11 @@ Route::resource('park_user', ParkUsersController::class)->only('store');
 
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
-Route::get('unit/filter/levels/{meter_price?}/{space?}', [UnitController::class, 'levels']);
 Route::prefix("unit")->group(function () {
     Route::controller(UnitController::class)->group(function () {
         Route::get('/space', 'space');
         Route::get('/meter_price', 'meterPrice');
+        Route::get('/level', 'levels');
         Route::get('/numbers/{level}/{number}', 'numbers');
 
         Route::get('/block/space/{block_id}/{meter_price}', 'block_space');
