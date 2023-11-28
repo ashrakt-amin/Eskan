@@ -172,15 +172,17 @@ class UnitController extends Controller
             $q->where(['space' => $attributes['space']]);
         }
 
-        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
+        if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
             $q->where(['block_id' => $attributes['block_id']]);
         }
 
-        if (array_key_exists('level_id', $attributes)&& $attributes['level_id'] != 0) {
+        if (array_key_exists('level_id', $attributes) && $attributes['level_id'] != 0) {
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
-        if ($attributes['space'] == 0 && $attributes['block_id'] == 0 && $attributes['level_id'] == 0) {
+            if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
+            (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
             $unit = Unit::all();
             $unique_data = $unit->unique('meter_price')->pluck('meter_price')->values()->all();
             return response()->json([
@@ -302,15 +304,18 @@ class UnitController extends Controller
             $q->where(['meter_price' => $attributes['meter_price']]);
         }
 
-        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
+        if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
             $q->where(['block_id' => $attributes['block_id']]);
         }
 
-        if (array_key_exists('level_id', $attributes)&& $attributes['level_id'] != 0) {
+        if (array_key_exists('level_id', $attributes) && $attributes['level_id'] != 0) {
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
-        if ($attributes['meter_price'] == 0 && $attributes['block_id'] == 0 && $attributes['level_id'] == 0) {
+        if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
+            (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
+
             $unit = Unit::all();
             $unique_data = $unit->unique('space')->pluck('space')->values()->all();
             return response()->json([
@@ -339,7 +344,7 @@ class UnitController extends Controller
             $q->where(['meter_price' => $attributes['meter_price']]);
         }
 
-        if (array_key_exists('block_id', $attributes)&& $attributes['block_id'] != 0) {
+        if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
             $q->where(['block_id' => $attributes['block_id']]);
         }
 
@@ -347,18 +352,19 @@ class UnitController extends Controller
             $q->where(['space' => $attributes['space']]);
         }
 
-        if ((!array_key_exists('meter_price', $attributes)||$attributes['meter_price'] == 0 ) &&
-         (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0 )&& 
-        (!array_key_exists('space', $attributes) ||$attributes['space'] == 0) ){
+        if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
+            (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
+            (!array_key_exists('space', $attributes) || $attributes['space'] == 0)
+        ) {
 
             $unit = Unit::all();
-            $response= $unit->unique('level_id')->pluck('level_id')->values()->all();
-           // $unit_levels = sort($unit_level);
+            $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
+            // $unit_levels = sort($unit_level);
 
-           $unit_levels = collect($response)->sortBy(function ($item) {
-            return $item;
-        })->values()->all();
-        
+            $unit_levels = collect($response)->sortBy(function ($item) {
+                return $item;
+            })->values()->all();
+
             $levels = Level::all();
             foreach ($unit_levels as $unit_level) {
                 foreach ($levels as $level) {
