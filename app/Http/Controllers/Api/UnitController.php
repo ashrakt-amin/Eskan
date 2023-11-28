@@ -122,45 +122,7 @@ class UnitController extends Controller
         }
     }
 
-
-
-    public function spaces($meter_price = 0)
-    {
-
-        if ($meter_price != null && $meter_price != 0) {
-            $spaces = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
-        } else {
-            $spaces = Unit::orderBy('space', 'asc')->get();
-        }
-        $unique_data = $spaces->unique('space')->pluck('space')
-            ->values()->all();
-        return response()->json([
-            'status' => true,
-            'message' => "unique spaces!",
-            'data' => $unique_data
-        ], 200);
-    }
-
-
-    // public function meterPrice($space = '')
-    // {
-    //     if ($space != null && $space != 0) {
-    //         $unit = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
-    //     } else {
-    //         $unit = Unit::orderBy('meter_price', 'asc')->get();
-    //     }
-    //     // $level = $unit->unique('level_id')
-    //     // ->pluck('level_id')->values()->all();
-
-    //     $unique_data = $unit->unique('meter_price')
-    //         ->pluck('meter_price')->values()->all();
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'message' => "unique meter price!",
-    //         'data' => $unique_data,
-    //     ], 200);
-    // }
+    //start filter method ------------------------
 
     public function meterPrice(Request $request)
     {
@@ -180,9 +142,10 @@ class UnitController extends Controller
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
-            if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
+        if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+        ) {
             $unit = Unit::all();
             $response = $unit->unique('meter_price')->pluck('meter_price')->values()->all();
             $unique_data = collect($response)->sortBy(function ($item) {
@@ -194,9 +157,7 @@ class UnitController extends Controller
                 'data' => $unique_data
             ], 200);
         }
-
-       // $meter_price = $q->orderBy('meter_price', 'asc')->pluck('meter_price')->values()->unique()->all();
-        $response = $q->orderBy('meter_price', 'asc')->unique('meter_price')->pluck('meter_price')->values()->all();      
+        $response = $q->orderBy('meter_price', 'asc')->pluck('meter_price')->unique()->values()->all();
         $meter_price = (array)$response;
 
 
@@ -206,99 +167,6 @@ class UnitController extends Controller
             'data' => $meter_price
         ], 200);
     }
-
-
-    public function level($meter_price = 0, $space = 0)
-    {
-        if ($meter_price != 0 && $space != 0) {
-            $unit = Unit::where('meter_price', $meter_price)->where('space', $space)
-                ->orderBy('level_id', 'asc')->get();
-        } elseif ($meter_price != 0 && $space == 0) {
-            $unit = Unit::where('meter_price', $meter_price)
-                ->orderBy('level_id', 'asc')->get();
-        } elseif ($meter_price == 0 && $space != 0) {
-            $unit = Unit::where('space', $space)
-                ->orderBy('level_id', 'asc')->get();
-        } else {
-            $unit = Unit::all();
-        }
-        $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
-        $levels = Level::all();
-        foreach ($unit_levels as $unit_level) {
-            foreach ($levels as $level) {
-                if ($level->id == $unit_level) {
-                    $data[] = $level;
-                }
-            }
-        }
-        return response()->json([
-            'status' => true,
-            'message' => "unique level",
-            'data' => $data
-        ], 200);
-    }
-
-
-
-    public function numbers($level, $number)
-    {
-        $unit = Unit::where('level_id', $level)->where('number', $number)->first();
-        if (isset($unit)) {
-            return $this->sendResponse(new UnitResource($unit), " ", 200);
-        } else {
-            return $this->sendError("error", "unit not found ", 404);
-        }
-        //$numbers =$units->unique('number')->pluck('number')->values()->all();
-    }
-
-
-
-
-
-
-
-
-
-    public function block_space($block_id = 0, $meter_price = 0)
-    {
-        if ($meter_price != 0 && $block_id != 0) {
-            $units = Unit::where('meter_price', $meter_price)->Where('block_id', $block_id)
-                ->orderBy('space', 'asc')->get();
-        } elseif ($meter_price == 0 && $block_id != 0) {
-            $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();
-        } elseif ($meter_price != 0 && $block_id == 0) {
-            $units = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
-        } else {
-            $units = Unit::all();
-        }
-        $unique_data = $units->unique('space')->pluck('space')->values()->all();
-        return response()->json([
-            'status' => true,
-            'message' => "unique spaces!",
-            'data' => $unique_data
-        ], 200);
-    }
-
-    public function block_meter_price($block_id = 0, $space = 0)
-    {
-        if ($space != 0 && $block_id != 0) {
-            $units = Unit::where('space', $space)->Where('block_id', $block_id)
-                ->orderBy('meter_price', 'asc')->get();
-        } elseif ($space == 0 && $block_id != 0) {
-            $units = Unit::where('block_id', $block_id)->orderBy('meter_price', 'asc')->get();
-        } elseif ($space != 0 && $block_id == 0) {
-            $units = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
-        } else {
-            $units = Unit::all();
-        }
-        $unique_data = $units->unique('meter_price')->pluck('meter_price')->values()->all();
-        return response()->json([
-            'status' => true,
-            'message' => "unique meter_price!",
-            'data' => $unique_data
-        ], 200);
-    }
-
 
     public function space(Request $request)
     {
@@ -320,7 +188,8 @@ class UnitController extends Controller
 
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+        ) {
 
             $unit = Unit::all();
             $response = $unit->unique('space')->pluck('space')->values()->all();
@@ -363,7 +232,8 @@ class UnitController extends Controller
 
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('space', $attributes) || $attributes['space'] == 0) ) {
+            (!array_key_exists('space', $attributes) || $attributes['space'] == 0)
+        ) {
 
             $unit = Unit::all();
             $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
@@ -404,6 +274,109 @@ class UnitController extends Controller
         ], 200);
     }
 
+
+    //end filter ------------------------------------
+
+
+    public function spaces($meter_price = 0)
+    {
+
+        if ($meter_price != null && $meter_price != 0) {
+            $spaces = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
+        } else {
+            $spaces = Unit::orderBy('space', 'asc')->get();
+        }
+        $unique_data = $spaces->unique('space')->pluck('space')
+            ->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique spaces!",
+            'data' => $unique_data
+        ], 200);
+    }
+    public function level($meter_price = 0, $space = 0)
+    {
+        if ($meter_price != 0 && $space != 0) {
+            $unit = Unit::where('meter_price', $meter_price)->where('space', $space)
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($meter_price != 0 && $space == 0) {
+            $unit = Unit::where('meter_price', $meter_price)
+                ->orderBy('level_id', 'asc')->get();
+        } elseif ($meter_price == 0 && $space != 0) {
+            $unit = Unit::where('space', $space)
+                ->orderBy('level_id', 'asc')->get();
+        } else {
+            $unit = Unit::all();
+        }
+        $unit_levels = $unit->unique('level_id')->pluck('level_id')->values()->all();
+        $levels = Level::all();
+        foreach ($unit_levels as $unit_level) {
+            foreach ($levels as $level) {
+                if ($level->id == $unit_level) {
+                    $data[] = $level;
+                }
+            }
+        }
+        return response()->json([
+            'status' => true,
+            'message' => "unique level",
+            'data' => $data
+        ], 200);
+    }
+
+    public function numbers($level, $number)
+    {
+        $unit = Unit::where('level_id', $level)->where('number', $number)->first();
+        if (isset($unit)) {
+            return $this->sendResponse(new UnitResource($unit), " ", 200);
+        } else {
+            return $this->sendError("error", "unit not found ", 404);
+        }
+        //$numbers =$units->unique('number')->pluck('number')->values()->all();
+    }
+
+    public function block_space($block_id = 0, $meter_price = 0)
+    {
+        if ($meter_price != 0 && $block_id != 0) {
+            $units = Unit::where('meter_price', $meter_price)->Where('block_id', $block_id)
+                ->orderBy('space', 'asc')->get();
+        } elseif ($meter_price == 0 && $block_id != 0) {
+            $units = Unit::where('block_id', $block_id)->orderBy('space', 'asc')->get();
+        } elseif ($meter_price != 0 && $block_id == 0) {
+            $units = Unit::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
+        } else {
+            $units = Unit::all();
+        }
+        $unique_data = $units->unique('space')->pluck('space')->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique spaces!",
+            'data' => $unique_data
+        ], 200);
+    }
+
+    public function block_meter_price($block_id = 0, $space = 0)
+    {
+        if ($space != 0 && $block_id != 0) {
+            $units = Unit::where('space', $space)->Where('block_id', $block_id)
+                ->orderBy('meter_price', 'asc')->get();
+        } elseif ($space == 0 && $block_id != 0) {
+            $units = Unit::where('block_id', $block_id)->orderBy('meter_price', 'asc')->get();
+        } elseif ($space != 0 && $block_id == 0) {
+            $units = Unit::where('space', $space)->orderBy('meter_price', 'asc')->get();
+        } else {
+            $units = Unit::all();
+        }
+        $unique_data = $units->unique('meter_price')->pluck('meter_price')->values()->all();
+        return response()->json([
+            'status' => true,
+            'message' => "unique meter_price!",
+            'data' => $unique_data
+        ], 200);
+    }
+
+
+   
 
 
 
