@@ -158,9 +158,11 @@ class UnitController extends Controller
             ], 200);
         }
         $response = $q->orderBy('meter_price', 'asc')->pluck('meter_price')->unique()->values()->all();
-        $meter_price = (array)$response;
 
-
+        $meter_price = collect($response)->sortBy(function ($item) {
+            return $item;
+        })->values()->all();
+    
         return response()->json([
             'status' => true,
             'message' => "unique meter_price!",
