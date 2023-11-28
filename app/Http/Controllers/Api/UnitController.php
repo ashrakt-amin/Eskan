@@ -188,8 +188,7 @@ class UnitController extends Controller
 
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
-        ) {
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
 
             $unit = Unit::all();
             $response = $unit->unique('space')->pluck('space')->values()->all();
@@ -203,7 +202,7 @@ class UnitController extends Controller
             ], 200);
         }
         $response = $q->orderBy('space', 'asc')->pluck('space')->values()->unique()->all();
-        $spaces = (array)$response;
+        $spaces[] = $response;
         return response()->json([
             'status' => true,
             'message' => "unique spaces!",
@@ -251,6 +250,7 @@ class UnitController extends Controller
                     }
                 }
             }
+
             return response()->json([
                 'status' => true,
                 'message' => "unique level",
