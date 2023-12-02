@@ -6,6 +6,8 @@ use Exception;
 use App\Models\Unit;
 use App\Models\UnitImage;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
@@ -74,6 +76,7 @@ class UnitRepository implements UnitInterface
 
     public function delete($id)
     {
+        $user = Auth::user();
         $unit = $this->model->findOrFail($id);
         // if ($unit->unitImages != null) {
         //     foreach ($unit->unitImages as $img) {
@@ -81,6 +84,12 @@ class UnitRepository implements UnitInterface
         //     }
         //     $unit->unitImages()->delete();
         // }
+
+        $user = ['name' => $user->name, 'phone' => $user->phone];
+        $data = ['unit number' => $unit->number];
+        $log_data = ['The user who deleted the unit' => $user, 'The unit ' => $data];
+        Log::channel('unit')->info('unit', $log_data);
+
         $unit->delete();
         return true;
     }

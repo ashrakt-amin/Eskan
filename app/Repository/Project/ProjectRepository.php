@@ -5,6 +5,8 @@ namespace App\Repository\Project;
 use App\Models\Project;
 use App\Models\Projectimages;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 use App\Repository\Project\ProjectInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
@@ -71,8 +73,15 @@ class ProjectRepository implements ProjectInterface
 
     public function delete($id)
     {
+        $user = Auth::user();
         $data =  $this->model::findOrFail($id);
         $this->deleteImage(Projectimages::IMAGE_PATH, $data->img);
+
+        $user = ['name' => $user->name, 'phone' => $user->phone];
+        $project = ['project name' => $data->name];
+        $log_data = ['The user who deleted the project' => $user, 'The project ' => $project];
+        Log::channel('project')->info('project', $log_data);
+
         return $data->delete();
     }
 
