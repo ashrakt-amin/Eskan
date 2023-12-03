@@ -13,13 +13,13 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('users')->delete();
+      //  DB::table('users')->delete();
 
         $users = [
         [
             'name'     => 'admin',
             'phone'    => '01025248183',
-            'password' => bcrypt('marwa123')   
+            'password' => bcrypt('marwa ahmed123')   
            ]
         ];
 
