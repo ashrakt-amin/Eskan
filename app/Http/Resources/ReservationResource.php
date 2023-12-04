@@ -30,9 +30,10 @@ class ReservationResource extends JsonResource
                 'advance'     => $this->unit->advance,
                 'installment' => $this->unit->installment,
                 'type'        => $this->unit->type->name,
-                'level'       =>$this->unit->level->name
+                'level'       => $this->unit->level->name,
+                'block'       => $this->unit->block->name
             ],
-            'created_at'             =>  $formattedCreatedAt,
+            'created_at'      =>  $formattedCreatedAt,
             'feedback'        => $this->feedback
 
 
