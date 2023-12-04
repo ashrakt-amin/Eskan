@@ -18,14 +18,13 @@ class RegisterUserController extends Controller
     public function register(Request $request)
     {
         $admin = Auth::user();
-        if ($admin->name == 'admin' && $admin->phone == '01095425446') {
-
-
+        if ($admin->name == 'admin' && $admin->phone == '01025248183') {
         $validatedData = $request->validate([
             'name' => 'required|unique:users|max:255',
             'password' => 'required|unique:users|min:6',
             'phone'    => 'required|unique:users'
         ]);
+
 
         $user = new User();
         $user->name = $validatedData['name'];
