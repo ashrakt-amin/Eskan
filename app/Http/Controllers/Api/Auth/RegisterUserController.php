@@ -20,7 +20,7 @@ class RegisterUserController extends Controller
         $admin = Auth::user();
         if ($admin->name == 'admin' && $admin->phone == '01025248183') {
         $validatedData = $request->validate([
-            'name' => 'required|unique:users|max:255',
+            'name'     => 'required|max:255',
             'password' => 'required|unique:users|min:6',
             'phone'    => 'required|unique:users'
         ]);
