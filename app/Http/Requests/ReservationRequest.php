@@ -22,7 +22,7 @@ class ReservationRequest extends FormRequest
             'job'       => 'required',
             'project_id'=> 'required',
             'unit_id'   => 'nullable',
-            'feedback' =>'nullable',
+            'feedback'  =>'nullable',
 
 
 

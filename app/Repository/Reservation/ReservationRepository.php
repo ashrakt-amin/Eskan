@@ -29,13 +29,20 @@ class ReservationRepository implements ReservationInterface
     public function store(array $attributes)
     {
         $data = $this->model->create($attributes);
+
+        if($data->unit_id != NULL ){
+            $unit_number = $data->unit->number;
+        }else{
+            $unit_number = NULL;
+        }
+
         $mailData = [
             'title' => 'Dear ziad',
             'name' => 'new reservation from ' . $attributes['name'],
             'phone' => ' phone : ' . $attributes['phone'],
             'job' => 'job : ' . $attributes['job'],
-            'unit' => 'unit numer : ' . $data->unit->number,
             'project' => 'project name : ' . $data->project->name,
+            'unit' => 'unit numer : ' . $unit_number,
         ];
         SendEmailJob::dispatch($mailData);
         return $data;
