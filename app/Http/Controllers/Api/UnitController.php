@@ -68,7 +68,7 @@ class UnitController extends Controller
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
             } else {
-                return $this->sendResponse('', "تم التعديل ", 200);
+                return $this->sendResponse($data, "تم التعديل ", 200);
             }
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);

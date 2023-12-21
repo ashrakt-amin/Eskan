@@ -34,6 +34,7 @@ class UnitResource extends JsonResource
                 'id'     => $this->block_id,
                 'name'   => $this->block->name,
             ],
+            'appear'     =>$this->appear
 
         ];
     }

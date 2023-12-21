@@ -29,7 +29,8 @@ class UnitRequest extends FormRequest
             'project_id'  => 'required',
             'level_id'    => 'required',
             'unit_image_id' => 'nullable',
-            'block_id'    =>'required'
+            'block_id'      =>'required' ,
+            'appear'        => 'nullable',    
 
 
         ];

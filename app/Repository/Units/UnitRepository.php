@@ -160,7 +160,7 @@ class UnitRepository implements UnitInterface
         return $this->model
             ->where($this->theLatest($attributes))
             ->where($this->filter($attributes))
-            ->orderByRaw('(contract)ASC');
+            ->orderByRaw('(contract)ASC')->where('appear',true);
     }
 
 
