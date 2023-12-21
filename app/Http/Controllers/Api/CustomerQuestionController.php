@@ -18,7 +18,7 @@ class CustomerQuestionController extends Controller
     public function index()
     {
         $name = Auth::user()->name;
-        if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
+        if (Auth::check() &&  $name == "سكرتارية" || $name == "admin") {
             $data = CustomerQuestion::all();
             return $this->sendResponse(CustomerQuestionResource::collection($data), " ", 200);
         } else {
