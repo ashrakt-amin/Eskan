@@ -17,8 +17,7 @@ class ProjectImageResource extends JsonResource
             $image_path = $this->path;
         } else{
             $img = "img";
-            $image_path = NULL;
-
+            $image_path = $this->path;
         }
 
         return [
