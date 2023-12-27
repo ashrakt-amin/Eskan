@@ -9,11 +9,17 @@ class ProjectImageResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
+        if (preg_match('/pcImage/i', $this->img)) {
+            $img = "pcImage";
+            $image_path = $this->path;
+        } elseif (preg_match('/mobileImage/i', $this->img)) {
+            $img = "mobileImage";
+            $image_path = $this->path;
+        }
 
         return [
-            'id'          => $this->id,
-            'img'      => $this->path,
-
+            'id'        => $this->id,
+            $img        => $image_path,
         ];
     }
 }

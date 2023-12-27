@@ -53,9 +53,8 @@ trait ImageProccessingTrait
     public function setImage($image, $path)
     {
         Image::make($image);
-
-        $image->store($this->path . '/' . $path, 'public');
-        return   $image->hashName();
+       $data = $image->store($this->path . '/' . $path, 'public');
+        return   $data;
     }
 
     /**
@@ -86,7 +85,7 @@ trait ImageProccessingTrait
     {
         $imagesName = [];
         foreach($images as $image){
-            array_push($imagesName, [ $column => $this->setImage($image, $path, $width, $height)]);
+            array_push($imagesName, [ $column => $this->aspectForResize($image, $path, $width, $height)]);
         }
         return $imagesName;
     }

@@ -29,8 +29,8 @@ class ProjectController extends Controller
 
     public function store(ProjectRequest $request)
     {
-        $this->Repository->store($request->validated());
-        return $this->sendResponse('', "تم تسجيل مشروعا جديدا", 200);
+       $data = $this->Repository->store($request->validated());
+        return $this->sendResponse($data , "تم تسجيل مشروعا جديدا", 200);
     }
 
 
