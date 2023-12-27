@@ -15,6 +15,10 @@ class ProjectImageResource extends JsonResource
         } elseif (preg_match('/mobileImage/i', $this->img)) {
             $img = "mobileImage";
             $image_path = $this->path;
+        } else{
+            $img = "img";
+            $image_path = NULL;
+
         }
 
         return [
