@@ -22,7 +22,7 @@ class BazarRequest extends FormRequest
             'advance'     => 'required',
             'installment' => 'required',
             'img'         => 'required',
-            'revenue'     => 'required',
+            'revenue'     => 'nullable',
             'contract'    => 'nullable'
 
 

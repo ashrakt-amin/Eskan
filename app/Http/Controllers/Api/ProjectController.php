@@ -54,9 +54,9 @@ class ProjectController extends Controller
     }
 
 
-    public function deleteImage(Request $request, $id)
+    public function deleteImage($id)
     {
-        return $this->sendResponse($this->Repository->delete_Image($id, $request), " تم حذف ", 200);
+        return $this->sendResponse($this->Repository->delete_Image($id), " تم حذف ", 200);
     }
 
 

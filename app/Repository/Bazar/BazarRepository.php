@@ -29,7 +29,9 @@ class BazarRepository implements BazarInterface
     public function store(array $attributes)
     {
         try {
-            // $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
+            $percentage = 25;
+            $numberOfMonths = 12;
+            $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
             $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
             $data = $this->model->create($attributes);
             return true;
@@ -51,10 +53,23 @@ class BazarRepository implements BazarInterface
     {
         try {
             $data = $this->model->findOrFail($attributes->id);
+            $percentage = 25;
+            $numberOfMonths = 12;
             if ($attributes['img']) {
                 $this->deleteImage(Bazar::IMAGE_PATH, $data->img);
                 $img = $this->aspectForResize($attributes['img'], Bazar::IMAGE_PATH, 500, 600);
                 $data->update(['img' => $img]);
+            } elseif ($attributes['space']) {
+                $revenue = number_format(($attributes['space'] * $data->meter_price * ($percentage / 100)) / $numberOfMonths);
+                $data->update([
+                    'revenue' => $revenue ,
+                    'space' => $attributes['space']
+                ]);
+            } elseif ($attributes['meter_price']) {
+                $revenue = number_format(($data->space * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
+                $data->update(['revenue' => $revenue,
+                'meter_price' => $attributes['meter_price']
+            ]);
             } else {
                 $data->update($attributes->all());
             }
