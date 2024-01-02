@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
-use App\Models\CustomerQuestion;
 use App\Http\Controllers\Controller;
+use App\Models\CustomerQuestion;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerQuestionRequest;
 use App\Http\Resources\CustomerQuestionResource;
