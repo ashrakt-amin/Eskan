@@ -1,34 +1,34 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\UnitController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\BazarController;
+use App\Http\Controllers\Api\BlockController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\OwnerController;
 use App\Http\Controllers\Api\WalletController;
+use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
-use App\Http\Controllers\Api\RealEstateProjectController;
 use App\Http\Controllers\Api\ContactUsController;
+use App\Http\Controllers\Api\ParkUsersController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
 use App\Http\Controllers\Api\UnitsImageController;
+use App\Http\Controllers\Api\UserWalletController;
+use App\Http\Controllers\Api\WalletUnitController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
-use App\Http\Controllers\Api\Auth\RegisterUserController;
-use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\CommentController;
-use App\Http\Controllers\Api\WalletUnitController;
-use App\Http\Controllers\Api\UserWalletController;
-use App\Http\Controllers\Api\ParkUsersController;
-use App\Http\Controllers\Api\BlockController;
 use App\Http\Controllers\api\CustomerQuestionController;
+use App\Http\Controllers\Api\Auth\RegisterUserController;
+use App\Http\Controllers\Api\RealEstateProjectController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
