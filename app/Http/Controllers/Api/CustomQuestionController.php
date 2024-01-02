@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\CustomerQuestion;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerQuestionRequest;
 use App\Http\Resources\CustomerQuestionResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+
 
 class CustomerQuestionController extends Controller
 {
