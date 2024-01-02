@@ -18,7 +18,7 @@ class BazarCustomerRequest extends FormRequest
             'name'         => 'required',
             'phone'        => 'required',
             'bazar_number' => 'required',
-            'feedback'     =>'nullable',
+            'feedback'     => 'nullable',
 
         ];
     }
