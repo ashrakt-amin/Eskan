@@ -24,6 +24,8 @@ class BazarCustomerController extends Controller
     public function index(Request $request)
     {
         $name = Auth::user()->name;
+        return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
+
         if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
         } else {
