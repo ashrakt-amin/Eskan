@@ -74,7 +74,7 @@ Route::resource('owners', OwnerController::class)->only('store');
 Route::resource('seek_money', SeekMoneyController::class)->only('store');
 Route::resource('user/wallet_unit', UserWalletController::class)->only('store');
 Route::resource('park_user', ParkUsersController::class)->only('store');
-Route::resource('customer/question', CustomerQuestionController::class)->only('store');
+Route::post('customer/question',[CustomerQuestionController::class , "store"]);
 
 
 
@@ -173,7 +173,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('owners', OwnerController::class)->except('store');
     Route::resource('user/wallet_unit', UserWalletController::class)->except('store');
     Route::resource('park_user', ParkUsersController::class)->except('store');
-    Route::resource('customer/question', CustomerQuestionController::class)->except('store');
+    // Route::resource('customer/question', CustomerQuestionController::class)->except('store');
 
 
 
