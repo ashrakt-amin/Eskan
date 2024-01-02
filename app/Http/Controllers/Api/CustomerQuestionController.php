@@ -5,9 +5,9 @@ namespace App\Http\Controllers\api;
 use Illuminate\Http\Request;
 use App\Models\CustomerQuestion;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CustomerQuestionRequest;
 use App\Http\Resources\CustomerQuestionResource;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 

@@ -29,7 +29,6 @@ use App\Http\Controllers\Api\UserWalletController;
 use App\Http\Controllers\Api\ParkUsersController;
 use App\Http\Controllers\Api\BlockController;
 use App\Http\Controllers\api\CustomerQuestionController;
-use App\Models\CustomerQuestion;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
