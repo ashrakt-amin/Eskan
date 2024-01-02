@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use App\Models\BazarCustomer;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\BazarCustomerRequest;
@@ -24,8 +25,6 @@ class BazarCustomerController extends Controller
     public function index(Request $request)
     {
         $name = Auth::user()->name;
-        return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
-
         if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), BazarCustomerResource::class);
         } else {
