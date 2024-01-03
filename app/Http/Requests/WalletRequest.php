@@ -19,7 +19,7 @@ class WalletRequest extends FormRequest
             'name'          => 'required',
             'job'           => 'required',
             'address'       => 'required',
-            'phone'         => 'required',
+            'phone'         => ['required', 'regex:/^\d{7,}$/'],
             'whats'         => 'nullable',
             'join_reason'   => 'required',
             'average_money' => 'required',

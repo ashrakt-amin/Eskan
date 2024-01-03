@@ -16,7 +16,7 @@ class ContactRequest extends FormRequest
     {
         return [
             'name'        => 'required',
-            'phone'       => 'required|unique:contact_us,phone',
+            'phone'       => 'required|unique:contact_us,phone|regex:/^\d{7,}$/',
             'unit_type'   => 'required',
             'feedback'    => 'nullable',
             'space'       => 'required', 

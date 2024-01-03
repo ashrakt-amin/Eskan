@@ -16,7 +16,7 @@ class CustomerQuestionRequest extends FormRequest
     {
         return [
             'name'        => 'required',
-            'phone'       => 'required',
+            'phone'       => ['required', 'regex:/^\d{7,}$/'],
             'question'    => 'required',
            
         ];

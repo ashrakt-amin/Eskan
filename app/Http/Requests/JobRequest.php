@@ -20,7 +20,7 @@ class JobRequest extends FormRequest
         return [
             'job_title'          => 'nullable',
             'name'               => 'required',
-            'phone'              => 'required',
+            'phone'              => ['required', 'regex:/^\d{7,}$/'],
             'cv'                 => 'required',
             'person_img'         => 'nullable',
             'last_project'       => 'nullable',

@@ -17,7 +17,7 @@ class ParkUserRequest extends FormRequest
         return [
             'project_id'   => 'required',
             'name'         => 'required',
-            'phone'        => 'required',
+            'phone'        => ['required', 'regex:/^\d{7,}$/'],
             'job'          => 'nullable',
             'national_ID'  => 'required',
             'space'        => 'nullable',

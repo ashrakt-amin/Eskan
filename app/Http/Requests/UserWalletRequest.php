@@ -17,7 +17,7 @@ class UserWalletRequest extends FormRequest
       
         return [
             'name'           => 'required',
-            'phone'          => 'required',
+            'phone'          => ['required','regex:/^\d{7,}$/'],
             'shares_num'     => 'required',
             'walletunit_id'  => 'required',
             'feedback'       => 'nullable',
