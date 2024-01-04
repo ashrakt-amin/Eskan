@@ -13,7 +13,6 @@ class UserRequest extends FormRequest
     }
 
 
-
     public function rules(): array
     {
         switch ($this->method()) {
@@ -21,16 +20,7 @@ class UserRequest extends FormRequest
                 return [
                     'name'      => 'required',
                     'phone'     => 'required|unique:users,phone',
-                    'password'  => 'required',
-
-                ];
-            case 'PUT':
-            case 'PATCH':
-                return [
-                    'name'      => 'nullable',
-                    'phone'     => ['nullable',Rule::unique('users')->ignore($this->phone)],
-                    'password'  => 'nullable',
-                   
+                    'password'  => 'required',              
                 ];
             default:
                 return [];

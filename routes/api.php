@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\UnitsImageController;
 use App\Http\Controllers\Api\UserWalletController;
 use App\Http\Controllers\Api\WalletUnitController;
 use App\Http\Controllers\Api\Auth\LogoutController;
+use App\Http\Controllers\Api\Auth\UpdateController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
@@ -158,7 +159,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
 
+    //user 
     Route::get("user", [LoginUserController::class, "show"]);
+    Route::patch("user/update", [UpdateController::class, "update"]);
+
+
     Route::resource('image', ImageController::class)->except(['index', 'show']);
     Route::post("update", [ImageController::class, "updateImage"]);
 
