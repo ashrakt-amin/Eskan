@@ -21,6 +21,7 @@ class UpdateController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         } else {
+            return $request;
             if ($request['password'] ) {
                 $user->update([
                     'password' => bcrypt($request['password']),

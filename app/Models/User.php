@@ -20,6 +20,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function projects()
+    {
+        return $this->belongsToMany(Project::class);
+    }
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {
