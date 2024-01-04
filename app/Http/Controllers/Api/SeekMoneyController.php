@@ -28,8 +28,8 @@ class SeekMoneyController extends Controller
 
     public function index(Request $request)
     {
-        $name = Auth::user()->name;
-        if (Auth::check() &&  $name == "متابعه عملاء" || $name == "admin") {
+        $role = Auth::user()->role;
+        if (Auth::check() &&  $role == "متابعه عملاء" || $role == "admin") {
             return $this->Repository->forAllConditionsReturn($request->all(), SeekMoneyResource::class);
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);

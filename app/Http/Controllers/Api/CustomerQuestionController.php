@@ -16,8 +16,8 @@ class CustomerQuestionController extends Controller
 
     public function index()
     {
-        $name = Auth::user()->name;
-        if (Auth::check() && ($name == "سكرتارية" || $name == "admin")) {
+        $role = Auth::user()->role;
+        if (Auth::check() && ($role == "سكرتارية" || $role == "admin")) {
             $data = CustomerQuestion::all();
             return $this->sendResponse(CustomerQuestionResource::collection($data), " ", 200);
         } else {
@@ -35,8 +35,8 @@ class CustomerQuestionController extends Controller
 
     public function destroy($id)
     {
-        $name = Auth::user()->name;
-        if (Auth::check() && $name == "admin") {
+        $role = Auth::user()->role;
+        if (Auth::check() && $role == "admin") {
             CustomerQuestion::findOrFail($id)->delete();
             return $this->sendResponse("success", "تم المسح ", 200);
         } else {

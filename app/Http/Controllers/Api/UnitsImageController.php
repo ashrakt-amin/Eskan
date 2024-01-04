@@ -33,8 +33,8 @@ class UnitsImageController extends Controller
 
     public function store(Request $request)
     {
-        $name = Auth::user()->name;
-        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
+        $role = Auth::user()->role;
+        if (Auth::check() &&  $role == "مدخل البيانات" || $role == "admin") {
             $data = $this->Repository->store($request->all());
 
             if ($data !== true) {
@@ -58,8 +58,8 @@ class UnitsImageController extends Controller
     public function storeUp(Request $request)
     {
 
-        $name = Auth::user()->name;
-        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
+        $role = Auth::user()->role;
+        if (Auth::check() &&  $role == "مدخل البيانات" || $role == "admin") {
             $data = $this->Repository->edit($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -75,8 +75,8 @@ class UnitsImageController extends Controller
 
     public function destroy($id)
     {
-        $name = Auth::user()->name;
-        if (Auth::check() &&  $name == "مدخل البيانات" || $name == "admin") {
+        $role = Auth::user()->role;
+        if (Auth::check() &&  $role == "مدخل البيانات" || $role == "admin") {
             $data = $this->Repository->delete($id);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
