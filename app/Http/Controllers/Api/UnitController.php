@@ -40,7 +40,7 @@ class UnitController extends Controller
     public function store(UnitRequest $request)
     {
         $role = Auth::user()->role;
-        if (Auth::check() &&  $role == "مدخل البيانات" || $role == "admin") {
+        if (Auth::check() && ($role == "مدخل البيانات" || $role == "admin")) {
             $data = $this->Repository->store($request->validated());
             if (!isset($data->id)) {
                 return $this->sendError($data, 'error', 404);
@@ -63,7 +63,7 @@ class UnitController extends Controller
     public function storeUp(Request $request)
     {
         $role = Auth::user()->role;
-        if (Auth::check() &&  $role == "مدخل البيانات " || $role == "admin") {
+        if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             $data = $this->Repository->edit($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -79,7 +79,7 @@ class UnitController extends Controller
     public function storeImages(Request $request)
     {
         $role = Auth::user()->role;
-        if (Auth::check() &&  $role == "مدخل البيانات " || $role == "admin") {
+        if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             $data = $this->Repository->storeImages($request);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);
@@ -95,7 +95,7 @@ class UnitController extends Controller
     public function destroy($id)
     {
         $role = Auth::user()->role;
-        if (Auth::check() &&  $role == "مدخل البيانات " || $role == "admin") {
+        if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             $data = $this->Repository->delete($id);
             if (isset($data->errorInfo)) {
                 return $this->sendError($data->errorInfo, 'error', 404);

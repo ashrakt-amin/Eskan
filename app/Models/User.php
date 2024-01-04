@@ -20,9 +20,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    public function projects()
+    public function Sellprojects()
     {
-        return $this->belongsToMany(Project::class);
+        return $this->belongsToMany(Sellproject::class);
     }
     public function getPathAttribute()
     {

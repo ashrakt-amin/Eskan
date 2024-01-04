@@ -5,14 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Project extends Model
+class Sellproject extends Model
 {
     use HasFactory;
-    protected $fillable = ['name'];
-
- 
-    public function projectimages()
+    
+    public function users()
     {
-        return $this->hasMany(Projectimages::class);
+        return $this->belongsToMany(User::class);
     }
 }

@@ -24,7 +24,7 @@ class JobController extends Controller
     public function index(Request $request)
     {
         $role = Auth::user()->role;
-        if (Auth::check() && $role == "موارد بشريه" || $role == "admin") {
+        if (Auth::check() && ($role == "موارد بشريه" || $role == "admin")) {
             return $this->Repository->forAllConditionsReturn($request->all(), JobResource::class);
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
