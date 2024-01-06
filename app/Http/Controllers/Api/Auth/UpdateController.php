@@ -17,10 +17,10 @@ class UpdateController extends Controller
     use TraitResponseTrait, TraitImageProccessingTrait;
     public function update(Request $request)
     {
-        $user_auth = Auth::user()->role;
+        $auth= Auth::user();
         $user = User::findOrFail($request->user_id);
-        if ($user_auth !== "admin" ) {
-            return response()->json(['message' => 'you must be admin'], 404);
+        if (!$auth) {
+            return response()->json(['message' => 'you must be in users'], 404);
         } else {
             if ($request['password'] ) {
                 $user->update([
@@ -39,6 +39,14 @@ class UpdateController extends Controller
                 $user->update([
                     'phone' => $request['phone'],
                 ]);
+            }elseif ($request['role']) {
+                if($auth->role == "admin"){
+                $user->update([
+                    'role' => $request['role'],
+                ]);
+            }else{
+                return response()->json(['message' => 'you must be admin'], 404);
+            }
             }else {
                 $user->update($request->all());
             }
