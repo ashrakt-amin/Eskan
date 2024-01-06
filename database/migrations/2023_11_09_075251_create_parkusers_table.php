@@ -17,7 +17,7 @@ return new class extends Migration
             $table->String('name');
             $table->String('phone');
             $table->String('job')->nullable();
-            $table->String('national_ID')->unique();
+            $table->String('national_ID')->nullable();
             $table->String('space')->nullable();
             $table->String('products_type')->nullable();
             $table->String('feedback')->nullable();

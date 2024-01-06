@@ -162,7 +162,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     //user 
     Route::get("user", [LoginUserController::class, "show"]);
-    Route::patch("user/update", [UpdateController::class, "update"]);
+    Route::post("user/update", [UpdateController::class, "update"]);
 
 
     Route::resource('image', ImageController::class)->except(['index', 'show']);
