@@ -19,7 +19,7 @@ class ParkUserRequest extends FormRequest
             'name'         => 'required',
             'phone'        => ['required', 'regex:/^\d{7,}$/'],
             'job'          => 'nullable',
-            'national_ID'  => 'required',
+            'national_ID'  => 'nullable',
             'space'        => 'nullable',
             'products_type' => 'nullable',
             'type'          => 'required',
