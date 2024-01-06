@@ -18,11 +18,13 @@ class RegisterUserController extends Controller
     public function register(Request $request)
     {
         $admin = Auth::user();
-        if ($admin->name == 'admin' && $admin->phone == '01025248183') {
+        if ($admin->name == 'admin') {
         $validatedData = $request->validate([
             'name'     => 'required|max:255',
             'password' => 'required|unique:users|min:6',
-            'phone'    => 'required|unique:users'
+            'phone'    => 'required|unique:users',
+            'role'    => 'required'
+
         ]);
 
 
@@ -30,6 +32,8 @@ class RegisterUserController extends Controller
         $user->name = $validatedData['name'];
         $user->password = Hash::make($validatedData['password']);
         $user->phone = $validatedData['phone'];
+        $user->role = $validatedData['role'];
+
 
         $user->save();
 
