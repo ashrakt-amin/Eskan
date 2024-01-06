@@ -140,8 +140,11 @@ class UnitRepository implements UnitInterface
             !array_key_exists('contract', $attributes) ?: $q
                 ->where('contract', '<>', null);
 
-           !array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0   ?: $q
+            !array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0   ?: $q
                 ->where(['block_id' => $attributes['block_id']]);
+
+            !array_key_exists('appear', $attributes) || $attributes['appear'] == 0   ?: $q
+                ->where(['appear' => $attributes['appear']]);
         };
     }
 
@@ -224,8 +227,8 @@ class UnitRepository implements UnitInterface
 
     public function forFilterlevel(array $attributes)
     {
-       // $this->resourceCollection = $resourceCollection;
+        // $this->resourceCollection = $resourceCollection;
 
-        return array_key_exists('paginate', $attributes) ? $this->forAllConditions($attributes): NULL;
+        return array_key_exists('paginate', $attributes) ? $this->forAllConditions($attributes) : NULL;
     }
 }
