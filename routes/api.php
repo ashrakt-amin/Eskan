@@ -24,6 +24,7 @@ use App\Http\Controllers\Api\WalletUnitController;
 use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\UpdateController;
 use App\Http\Controllers\Api\ReservationController;
+use App\Http\Controllers\Api\SellProjectController;
 use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
@@ -198,6 +199,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('post', PostController::class)->except(['index', 'show']);
     Route::post('post/update/{id}',[PostController::class ,'postUpdate']);
+
+
+    //sells project 
+    Route::resource('sells/project', SellProjectController::class);
+    Route::post('sells/project/update', [SellProjectController::class , "updateProject"]);
+
+
 
 
 });
