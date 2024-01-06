@@ -19,7 +19,6 @@ class RegisterUserController extends Controller
     {
         $admin = Auth::user();
         if ($admin->role == 'admin') {
-            return $request ;
         $validatedData = $request->validate([
             'name'     => 'required|max:255',
             'password' => 'required|unique:users|min:6',
