@@ -12,7 +12,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     const IMAGE_PATH = 'users';
     protected $appends = ['path'];
-    protected $fillable = ['name', 'password', 'phone', 'role', 'img'];
+    protected $fillable = ['name', 'password', 'phone', 'role', 'img' , 'parent_id'];
 
 
     protected $hidden = [
@@ -31,5 +31,15 @@ class User extends Authenticatable
         } else {
             return asset('storage/app/public/images/users') . "/" . $this->img;
         }
+    }
+
+    public function children()
+    {
+        return $this->hasMany(User::class, 'parent_id');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(User::class, 'parent_id');
     }
 }

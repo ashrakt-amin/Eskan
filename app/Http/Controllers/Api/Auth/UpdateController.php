@@ -17,12 +17,12 @@ class UpdateController extends Controller
     use TraitResponseTrait, TraitImageProccessingTrait;
     public function update(Request $request)
     {
-        $auth= Auth::user();
+        $auth = Auth::user();
         $user = User::findOrFail($request->user_id);
         if (!$auth) {
             return response()->json(['message' => 'you must be in users'], 404);
         } else {
-            if ($request['password'] ) {
+            if ($request['password']) {
                 $user->update([
                     'password' => bcrypt($request['password']),
                 ]);
@@ -32,27 +32,29 @@ class UpdateController extends Controller
                 }
                 $user_img = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);
                 $user->update(['img' => $user_img]);
-            }elseif ($request['phone']) {
+            } elseif ($request['phone']) {
                 $request->validate([
-                    'phone'     => ['required','regex:/^\d{7,}$/',Rule::unique('users')->ignore($user->phone)],
+                    'phone'     => ['required', 'regex:/^\d{7,}$/', Rule::unique('users')->ignore($user->phone)],
                 ]);
                 $user->update([
                     'phone' => $request['phone'],
                 ]);
-            }elseif ($request['role']) {
-                if($auth->role == "admin"){
-                $user->update([
-                    'role' => $request['role'],
-                ]);
-            }else{
-                return response()->json(['message' => 'you must be admin'], 404);
-            }
-            }else {
+            } elseif ($request['role']) {
+                if ($auth->role == "admin") {
+                    $user->update([
+                        'role' => $request['role'],
+                    ]);
+                } else {
+                    return response()->json(['message' => 'you must be admin'], 404);
+                }
+            } elseif ($request['project_id']) {
+                $user->Sellprojects()->sync($request->project_id);
+            } else {
                 $user->update($request->all());
             }
         }
         $success['token']  = $user->createToken('token')->plainTextToken;
 
-    return $this->sendResponse(new UserResource($user),"user data updated", 200 ,$success);
+        return $this->sendResponse(new UserResource($user), "user data updated", 200, $success);
     }
 }
