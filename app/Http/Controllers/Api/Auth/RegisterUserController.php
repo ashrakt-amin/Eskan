@@ -14,7 +14,6 @@ use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
 
-
 class RegisterUserController extends Controller
 {
     use TraitResponseTrait, TraitImageProccessingTrait;

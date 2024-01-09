@@ -18,7 +18,7 @@ class UserRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name'      => 'required|max:255',
+                    'name'      => 'required|unique:users|max:255',
                     'password'  => 'required|unique:users|min:6',
                     'phone'     => 'required|unique:users',
                     'role'      => 'required',

@@ -33,30 +33,27 @@ class UserRepository implements UserInterface
             'phone'     => $request['phone'],
             'password'  => bcrypt($request['password']),
         ]);
-        
-        return $data;        
+
+        return $data;
     }
 
 
     public function find($id)
     {
-
     }
 
-    public function edit($id,$request)
+    public function edit($id, $request)
     {
         try {
             $data = User::findOrFail($id);
             if (isset($request->password)) {
-                 $data->update([
+                $data->update([
                     'password'  => bcrypt($request['password']),
                 ]);
-                return $data ;
-    
-            }else{
-              $data->update($request);
-              return $data ;
-
+                return $data;
+            } else {
+                $data->update($request);
+                return $data;
             }
         } catch (\Exception $e) {
 
@@ -70,8 +67,15 @@ class UserRepository implements UserInterface
         $data->delete();
         return true;
     }
+    public function filter(array $attributes)
+    {
+        return function ($q) use ($attributes) {
+            !array_key_exists('sells', $attributes) ?: $q
+                ->where(['role' => 'مسؤل مبيعات']);
+        };
+    }
 
-   
+
 
     public function theLatest(array $attributes)
     {
@@ -87,8 +91,8 @@ class UserRepository implements UserInterface
     {
         return $this->model
             ->where($this->theLatest($attributes))
-;
-            }
+            ->where($this->filter($attributes));
+    }
 
 
     public function forAllConditionsPaginate(array $attributes, $resourceCollection)

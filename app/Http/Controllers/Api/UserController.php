@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\User\UserInterface;
+use App\Http\Resources\UserAdminsResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class UserController extends Controller
@@ -32,6 +33,17 @@ class UserController extends Controller
     }
  
     public function index(Request $request)
+    {
+            return $this->Repository->forAllConditionsReturn($request->all(),UserResource::class);
+    }
+
+    public function get_admins()
+    {
+        $data = User::where('parent_id',NULL)->get();
+        return $this->sendResponse(UserAdminsResource::collection($data),"Users in company", 200);
+    }
+
+    public function get_sells(Request $request)
     {
             return $this->Repository->forAllConditionsReturn($request->all(),UserResource::class);
     }

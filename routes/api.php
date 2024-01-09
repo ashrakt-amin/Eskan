@@ -122,7 +122,15 @@ Route::prefix("comment")->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post("logout", [LogoutController::class, "logout"])->name("logout");
-    Route::resource("user/admins", UserController::class);
+
+    Route::resource("users", UserController::class);
+    Route::prefix("user")->group(function () {
+        Route::controller(UserController::class)->group(function () {
+            Route::get('/all', 'get_sells');
+            Route::get('/admins', 'get_admins');
+        });
+    });
+
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
