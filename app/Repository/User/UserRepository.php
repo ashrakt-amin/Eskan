@@ -64,9 +64,12 @@ class UserRepository implements UserInterface
     public function delete($id)
     {
         $data = User::findOrFail($id);
+        $data->Sellprojects()->detach();
         $data->delete();
         return true;
     }
+
+
     public function filter(array $attributes)
     {
         return function ($q) use ($attributes) {
