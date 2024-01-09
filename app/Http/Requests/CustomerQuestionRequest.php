@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class CustomerQuestionRequest extends FormRequest
 {
-   
+
     public function authorize(): bool
     {
         return true;
@@ -14,11 +14,21 @@ class CustomerQuestionRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'name'        => 'required',
-            'phone'       => ['required', 'regex:/^\d{7,}$/'],
-            'question'    => 'required',
-           
-        ];
+        switch ($this->method()) {
+            case 'POST':
+                return [
+                    'name'        => 'required',
+                    'phone'       => ['required', 'regex:/^\d{7,}$/'],
+                    'question'    => 'required',
+                ];
+
+            case 'PUT':
+                return [
+                    'phone'       => ['regex:/^\d{7,}$/'],
+                ];
+
+            default:
+                return [];
+        }
     }
 }

@@ -14,15 +14,22 @@ class CustomerQuestionController extends Controller
 {
     use TraitResponseTrait;
 
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (Auth::check() && (Auth::user()->role == 'سكرتاريه' || Auth::user()->role == 'admin')) {
+                return $next($request);
+            }
+            abort(403, 'Unauthorized');
+        });
+    }
+
+
     public function index()
     {
         $role = Auth::user()->role;
-        if (Auth::check() && ($role == "سكرتارية" || $role == "admin")) {
-            $data = CustomerQuestion::all();
-            return $this->sendResponse(CustomerQuestionResource::collection($data), " ", 200);
-        } else {
-            return $this->sendError('sorry', "you don't have permission to access this", 404);
-        }
+        $data = CustomerQuestion::all();
+        return $this->sendResponse(CustomerQuestionResource::collection($data), " ", 200);
     }
 
 
@@ -32,15 +39,17 @@ class CustomerQuestionController extends Controller
         return $this->sendResponse($data, "تم التسجيل ", 200);
     }
 
+    public function update(CustomerQuestionRequest $request, $id)
+    {
+        $data = CustomerQuestion::findOrFail($id);
+        $data->update($request->all());
+        return $this->sendResponse($data, "تم التعديل ", 200);
+    }
 
     public function destroy($id)
     {
         $role = Auth::user()->role;
-        if (Auth::check() && $role == "admin") {
-            CustomerQuestion::findOrFail($id)->delete();
-            return $this->sendResponse("success", "تم المسح ", 200);
-        } else {
-            return $this->sendError('sorry', "you don't have permission to access this", 404);
-        }
+        CustomerQuestion::findOrFail($id)->delete();
+        return $this->sendResponse("success", "تم المسح ", 200);
     }
 }

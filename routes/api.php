@@ -76,10 +76,6 @@ Route::resource('owners', OwnerController::class)->only('store');
 Route::resource('seek_money', SeekMoneyController::class)->only('store');
 Route::resource('user/wallet_unit', UserWalletController::class)->only('store');
 Route::resource('park_user', ParkUsersController::class)->only('store');
-Route::resource('customer/question', CustomerQuestionController::class)->only('store');
-
-
-
 
 Route::get('unit/levels', [LevelController::class, 'index']);
 Route::get('levels/{id}', [LevelController::class, 'show']);
@@ -147,6 +143,7 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/file/delete/{id}', 'destroyFile');
         });
     });
+
     Route::post('project/update/{id}', [ProjectController::class, 'updateImage']);
     Route::post('update/project/{id}', [ProjectController::class, 'update']);
     Route::delete('project/delete/{id}', [ProjectController::class, 'deleteImage']);
@@ -187,10 +184,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('owners', OwnerController::class)->except('store');
     Route::resource('user/wallet_unit', UserWalletController::class)->except('store');
     Route::resource('park_user', ParkUsersController::class)->except('store');
-    Route::resource('customer/question', CustomerQuestionController::class)->except('store');
-
-
-
+    Route::resource('customer/question', CustomerQuestionController::class);
 
 
     Route::delete('seek_money/force_delete/{id}', [SeekMoneyController::class, 'forceDelete']);

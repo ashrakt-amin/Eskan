@@ -22,6 +22,11 @@ class UpdateController extends Controller
         if (!$auth) {
             return response()->json(['message' => 'you must be in users'], 404);
         } else {
+            $request->validate([
+                'phone'     => ['nullable', 'regex:/^\d{7,}$/', Rule::unique('users')->ignore($user->phone)],
+                'name'      => ['nullable',Rule::unique('users')->ignore($user->name)],
+
+            ]);
             if ($request['password']) {
                 $user->update([
                     'password' => bcrypt($request['password']),
@@ -33,9 +38,6 @@ class UpdateController extends Controller
                 $user_img = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);
                 $user->update(['img' => $user_img]);
             } elseif ($request['phone']) {
-                $request->validate([
-                    'phone'     => ['required', 'regex:/^\d{7,}$/', Rule::unique('users')->ignore($user->phone)],
-                ]);
                 $user->update([
                     'phone' => $request['phone'],
                 ]);
