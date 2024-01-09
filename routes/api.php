@@ -110,6 +110,15 @@ Route::prefix("comment")->group(function () {
     });
 });
 
+Route::prefix("user")->group(function () {
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/all', 'get_sells');
+        Route::get('/admins', 'get_admins');
+    });
+});
+Route::resource('sells/project', SellProjectController::class)->only(['index', 'show']);
+
+
 // Route::post('/post/comment', [CommentController::class, 'store'])
 //     ->middleware(['auth:sanctum', 'optional-auth']);
 //     ->name('comments.store');
@@ -120,12 +129,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 
     Route::resource("users", UserController::class);
-    Route::prefix("user")->group(function () {
-        Route::controller(UserController::class)->group(function () {
-            Route::get('/all', 'get_sells');
-            Route::get('/admins', 'get_admins');
-        });
-    });
+  
 
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
@@ -204,7 +208,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     //sells project 
-    Route::resource('sells/project', SellProjectController::class);
+    Route::resource('sells/project', SellProjectController::class)->except(['index', 'show']);
     Route::post('sells/project/update', [SellProjectController::class , "updateProject"]);
 
 
