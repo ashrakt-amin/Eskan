@@ -2,46 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Sellproject;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\sellsProfile\ProjectResource;
+use App\Http\Resources\sellsProfile\SellerdashResource;
+use App\Http\Resources\sellsProfile\ShowProjectResource;
+use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class SellerProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+   use TraitResponseTrait;
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+   
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         //
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function show_user()
     {
-        //
+        $user = Auth::user();
+        //  return $user ;
+        if($user->role == "مسؤل مبيعات"){
+            return $this->sendResponse(new SellerdashResource($user), "sells user", 200);
+        }        
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    public function show_project($id)
+    {
+        $user = Auth::user();
+        if($user->role == "مسؤل مبيعات"){
+        $project = Sellproject::with('users')->findOrFail($id);
+        // return $project ;
+            return $this->sendResponse(new ShowProjectResource($project), "sells user", 200);
+        }        
+    }
+
     public function edit(string $id)
     {
         //

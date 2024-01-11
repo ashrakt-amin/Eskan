@@ -15,6 +15,7 @@ use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
 use App\Http\Controllers\Api\ContactUsController;
+use App\Http\Controllers\Api\FormsellsController;
 use App\Http\Controllers\Api\ParkUsersController;
 use App\Http\Controllers\Api\SeekMoneyController;
 use App\Http\Controllers\Api\unitsTypeController;
@@ -26,6 +27,7 @@ use App\Http\Controllers\Api\Auth\UpdateController;
 use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\SellProjectController;
 use App\Http\Controllers\Api\BazarCustomerController;
+use App\Http\Controllers\Api\SellerProfileController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\CustomerQuestionController;
@@ -35,7 +37,6 @@ use App\Http\Controllers\Api\RealEstateProjectController;
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
     Route::post("users",  [RegisterUserController::class, "register"])->name("register.users");
-
 });
 
 Route::prefix("login")->group(function () {
@@ -92,9 +93,6 @@ Route::prefix("unit")->group(function () {
 
         // Route::get('/block/level/{block_id}/{space}/{meter_price}', 'block_levels');
         Route::get('/block/number/{block_id}/{number}', 'block_number');
-
-
-
     });
 });
 
@@ -106,7 +104,7 @@ Route::resource('comment', CommentController::class);
 Route::prefix("comment")->group(function () {
     Route::controller(CommentController::class)->group(function () {
         Route::post('/store', 'store');
-    // Route::put('/update', 'update');
+        // Route::put('/update', 'update');
     });
 });
 
@@ -117,6 +115,9 @@ Route::prefix("user")->group(function () {
     });
 });
 Route::resource('sells/project', SellProjectController::class)->only(['index', 'show']);
+Route::resource('sells/project/client', FormsellsController::class)->only(['store']);
+
+
 
 
 // Route::post('/post/comment', [CommentController::class, 'store'])
@@ -129,16 +130,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post("logout", [LogoutController::class, "logout"])->name("logout");
 
     Route::resource("users", UserController::class);
-  
+
 
     Route::resource('text', TextController::class)->except(['index', 'show']);
     Route::post('text/update', [TextController::class, 'update']);
     Route::resource('projects', ProjectController::class)->except(['index', 'show']);
     Route::resource('block', BlockController::class)->except(['index', 'show']);
-    Route::post('block/update/{id}', [BlockController::class ,'update']);
+    Route::post('block/update/{id}', [BlockController::class, 'update']);
     Route::resource('projects-wallet', RealEstateProjectController::class)->except(['index', 'show']);
     Route::resource('wallet_units', WalletUnitController::class)->except(['index', 'show']);
-    Route::post('wallet_units/update/{id}', [WalletUnitController::class,'unit_update']);
+    Route::post('wallet_units/update/{id}', [WalletUnitController::class, 'unit_update']);
 
     Route::prefix("wallet")->group(function () {
         Route::controller(RealEstateProjectController::class)->group(function () {
@@ -204,16 +205,17 @@ Route::middleware('auth:sanctum')->group(function () {
 
 
     Route::resource('post', PostController::class)->except(['index', 'show']);
-    Route::post('post/update/{id}',[PostController::class ,'postUpdate']);
+    Route::post('post/update/{id}', [PostController::class, 'postUpdate']);
 
 
     //sells project 
-    Route::resource('sells/project', SellProjectController::class)->except(['index', 'show']);
-    Route::post('sells/project/update', [SellProjectController::class , "updateProject"]);
-
-
-
-
+    Route::prefix("sells")->group(function () {
+        Route::resource('/project', SellProjectController::class)->except(['index', 'show']);
+        Route::controller(SellerProfileController::class)->group(function () {
+            Route::get('/profile/dash', 'show_user');
+            Route::get('/profile/project/dash/{id}', 'show_project');
+        });
+    });
 });
 
 // end auth

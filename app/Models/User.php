@@ -24,6 +24,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Sellproject::class);
     }
+
+    public function projectUsers()
+    {
+        return $this->hasManyThrough(Sellproject::class , User::class);
+    }
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {
