@@ -23,7 +23,7 @@ class UpdateController extends Controller
         if (!$auth) {
             return response()->json(['message' => 'you must be in users'], 404);
         } else {
-            if ($request['img']) {
+            if ($request['img'] != "null") {
                 $this->deleteImage(User::IMAGE_PATH, $user->img);
                 $user_img = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);
                 $user->update(['img' => $user_img]);
