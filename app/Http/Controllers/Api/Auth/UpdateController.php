@@ -49,9 +49,13 @@ class UpdateController extends Controller
                 } else {
                     return response()->json(['message' => 'you must be admin'], 404);
                 }
-            } elseif ($request['project_id'] !== [null]){
+            } elseif ($request['parent_id']) {
+                $user->update([
+                    'parent_id' => $request['parent_id'],
+                ]);
+            } elseif ($request['project_id'] !== [null]) {
                 $user->Sellprojects()->sync($request->project_id);
-            } elseif ($request['project_id'] == null && $request->has('project_id') ){
+            } elseif ($request['project_id'] == null && $request->has('project_id')) {
                 $user->Sellprojects()->detach();
             } else {
                 $user->update($request->all());
