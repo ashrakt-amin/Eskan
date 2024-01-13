@@ -22,7 +22,7 @@ class RegisterUserController extends Controller
         DB::beginTransaction();
         try {
         $admin = Auth::user();
-        return $request->project_id ;
+        // return $request->project_id ;
         if ($admin->role == 'admin') {
             $data =  $request->validated();
             if ($request->img != NULL) {
