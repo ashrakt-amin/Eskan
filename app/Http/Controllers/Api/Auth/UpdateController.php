@@ -55,7 +55,7 @@ class UpdateController extends Controller
                 ]);
             } elseif ($request['project_id'] !== [null]) {
                 $user->Sellprojects()->sync($request->project_id);
-            } elseif ($request['project_id'] == null && $request->has('project_id')) {
+            } elseif ($request['project_id'] == null) {
                 $user->Sellprojects()->detach();
             } else {
                 $user->update($request->all());
