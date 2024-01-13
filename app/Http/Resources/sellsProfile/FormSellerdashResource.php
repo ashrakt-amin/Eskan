@@ -18,10 +18,7 @@ class FormSellerdashResource extends JsonResource
             'seller'          =>[
                 'user_id'         => $this->user_id,
                 'name'         => $this->user->name,
-
             ]
-
-
         ];
     }
 }

@@ -24,7 +24,7 @@ class UpdateController extends Controller
         } else {
             $request->validate([
                 'phone'     => ['nullable', 'regex:/^\d{7,}$/', Rule::unique('users')->ignore($user->phone)],
-                'name'      => ['nullable',Rule::unique('users')->ignore($user->name)],
+                'name'      => ['nullable', Rule::unique('users')->ignore($user->name)],
 
             ]);
             if ($request['password']) {
@@ -41,7 +41,7 @@ class UpdateController extends Controller
                 $user->update([
                     'phone' => $request['phone'],
                 ]);
-            } elseif ($request['role']) {
+            } elseif ($request['role'] == NULL) {
                 if ($auth->role == "admin") {
                     $user->update([
                         'role' => $request['role'],
@@ -49,8 +49,10 @@ class UpdateController extends Controller
                 } else {
                     return response()->json(['message' => 'you must be admin'], 404);
                 }
-            } elseif ($request['project_id']) {
+            } elseif ($request['project_id'] != NULL) {
                 $user->Sellprojects()->sync($request->project_id);
+            } elseif ($request['project_id'] == NULL) {
+                $user->Sellprojects()->detach();
             } else {
                 $user->update($request->all());
             }
