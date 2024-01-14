@@ -116,6 +116,8 @@ Route::prefix("user")->group(function () {
 });
 Route::resource('sells/project', SellProjectController::class)->only(['index', 'show']);
 Route::resource('sells/project/client', FormsellsController::class)->only(['store']);
+Route::get('sells/site', [SellerProfileController::class ,'sells_site']);
+
 
 
 

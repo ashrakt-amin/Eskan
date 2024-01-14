@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Sellproject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -13,13 +14,13 @@ use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 class SellerProfileController extends Controller
 {
-   use TraitResponseTrait;
+    use TraitResponseTrait;
     public function index()
     {
         //
     }
 
-   
+
     public function create()
     {
         //
@@ -34,39 +35,39 @@ class SellerProfileController extends Controller
     {
         $user = Auth::user();
         //  return $user ;
-        if($user->role == "مسؤل مبيعات"){
+        if ($user->role == "مسؤل مبيعات") {
             return $this->sendResponse(new SellerdashResource($user), "sells user", 200);
-        }        
+        }
     }
 
     public function show_project($id)
     {
         $user = Auth::user();
-        if($user->role == "مسؤل مبيعات"){
-        $project = Sellproject::with('users')->findOrFail($id);
-        // return $project ;
+        if ($user->role == "مسؤل مبيعات") {
+            $project = Sellproject::with('users')->findOrFail($id);
+            // return $project ;
             return $this->sendResponse(new ShowProjectResource($project), "sells user", 200);
-        }        
+        }
     }
 
-    public function edit(string $id)
+    public function sells_site(Request $request)
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $projectId = $request->query('project_id');
+        $userId = $request->query('user_id');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // $user = User::with('Sellprojects')->get();
+
+        $user = User::with(['Sellprojects' => function ($query) use ($projectId) {
+                $query->where('sellprojects.id', $projectId);
+        }])->where('id', $userId )->get();
+        return $user ;
+
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $projects = $user->Sellprojects;
+
+        return response()->json(['user' => $user]);
     }
 }

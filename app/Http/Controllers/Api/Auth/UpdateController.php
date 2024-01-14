@@ -27,15 +27,12 @@ class UpdateController extends Controller
                 $this->deleteImage(User::IMAGE_PATH, $user->img);
                 $user_img = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);
                 $user->update(['img' => $user_img]);
-            }else{
+            } else {
                 $this->deleteImage(User::IMAGE_PATH, $user->img);
-                $user->update(['img' =>null]);
-
-
+                $user->update(['img' => null]);
             }
         }
-        $success['token']  = $user->createToken('token')->plainTextToken;
-        return $this->sendResponse(new UserResource($user), "user data updated", 200, $success);
+        return $this->sendResponse(new UserResource($user), "user data updated", 200);
     }
 
 
@@ -55,8 +52,8 @@ class UpdateController extends Controller
             $user->update($request->all());
             $user->Sellprojects()->sync($request['project_id']);
         }
-        $success['token']  = $user->createToken('token')->plainTextToken;
+        // $success['token']  = $user->createToken('token')->plainTextToken;
 
-        return $this->sendResponse(new UserResource($user), "user data updated", 200, $success);
+        return $this->sendResponse(new UserResource($user), "user data updated", 200);
     }
 }
