@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\sellsProfile\ProjectResource;
+use App\Http\Resources\sellsProfile\SellsSiteResource;
 use App\Http\Resources\sellsProfile\SellerdashResource;
 use App\Http\Resources\sellsProfile\ShowProjectResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
@@ -59,15 +60,16 @@ class SellerProfileController extends Controller
         // $user = User::with('Sellprojects')->get();
 
         $user = User::with(['Sellprojects' => function ($query) use ($projectId) {
-                $query->where('sellprojects.id', $projectId);
-        }])->where('id', $userId )->get();
-        return $user ;
-
+            $query->where('sellprojects.id', $projectId);
+        }])->where('id', $userId)->first();
+        //  return $user['id'] ;
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-        $projects = $user->Sellprojects;
-
-        return response()->json(['user' => $user]);
+        $data =  [
+            'user'         => new SellsSiteResource($user),
+            'sellprojects' => ShowProjectResource::collection($user['sellprojects'])
+        ];
+        return $this->sendResponse($data, "sells site", 200);
     }
 }
