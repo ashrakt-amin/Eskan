@@ -29,7 +29,7 @@ class ImageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'image_name' => 'required|unique:images,name',
+            'image_name' => 'required',
             'img'  => 'required'
         ]);
 
