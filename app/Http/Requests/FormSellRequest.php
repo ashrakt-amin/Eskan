@@ -18,10 +18,12 @@ class FormSellRequest extends FormRequest
         switch ($this->method()) {
             case 'POST':
                 return [
-                    'name'      => 'required',
-                    'phone'     => ['required', 'regex:/^\d{7,}$/'],
-                    'date'      => 'nullable',
-                    'user_id'   => 'required',
+                    'name'          => 'required',
+                    'phone'         => ['required', 'regex:/^\d{7,}$/'],
+                    'date'          => 'nullable',
+                    'user_id'       => 'required',
+                    'sellproject_id'=> 'required',
+                    'status'        => 'nullable',
                    
                 ];
             default:
