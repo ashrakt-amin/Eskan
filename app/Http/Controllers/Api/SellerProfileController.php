@@ -32,7 +32,8 @@ class SellerProfileController extends Controller
         //
     }
 
-    public function show_user()
+    
+    public function show_user() //seller dash
     {
         $user = Auth::user();
         //  return $user ;
@@ -63,11 +64,12 @@ class SellerProfileController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-        $sellproject = $user->sellprojects()->where('sellprojects.id', $projectId)->first();
+        $sellproject = $user->sellprojects()->where('sellprojects.id', $projectId)->first();       
         $data =  [
-            'user'         => new SellsSiteResource($user),
-            'sellproject' =>   new  ShowProjectResource($sellproject)
+            'user'        => new SellsSiteResource($user),
+            'sellproject' => new ShowProjectResource($sellproject)
         ];
+
         return $this->sendResponse($data, "sells site", 200);
     }
 }

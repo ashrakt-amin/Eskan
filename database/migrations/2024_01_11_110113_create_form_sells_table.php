@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->String('name');
             $table->String('phone');
-            $table->String('date');
+            $table->String('date')->nullable();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete()->cascadeOnUpdate();
             $table->timestamps();
         });

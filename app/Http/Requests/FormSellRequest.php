@@ -20,7 +20,7 @@ class FormSellRequest extends FormRequest
                 return [
                     'name'      => 'required',
                     'phone'     => ['required', 'regex:/^\d{7,}$/'],
-                    'date'      => 'required',
+                    'date'      => 'nullable',
                     'user_id'   => 'required',
                    
                 ];
