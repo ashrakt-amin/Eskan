@@ -219,6 +219,9 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/profile/project/dash/{id}', 'show_project');
         });
     });
+
+    Route::post('sells/client', [FormsellsController::class , "update_status"]);
+
 });
 
 // end auth
