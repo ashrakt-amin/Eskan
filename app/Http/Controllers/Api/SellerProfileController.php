@@ -59,16 +59,14 @@ class SellerProfileController extends Controller
 
         // $user = User::with('Sellprojects')->get();
 
-        $user = User::with(['Sellprojects' => function ($query) use ($projectId) {
-            $query->where('sellprojects.id', $projectId);
-        }])->where('id', $userId)->first();
-        //  return $user['id'] ;
+        $user = User::where('id', $userId)->first();
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
+        $sellproject = $user->sellprojects()->where('sellprojects.id', $projectId)->first();
         $data =  [
             'user'         => new SellsSiteResource($user),
-            'sellprojects' => ShowProjectResource::collection($user['sellprojects'])
+            'sellproject' =>   new  ShowProjectResource($sellproject)
         ];
         return $this->sendResponse($data, "sells site", 200);
     }
