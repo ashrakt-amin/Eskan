@@ -214,6 +214,8 @@ Route::middleware('auth:sanctum')->group(function () {
     //sells project 
     Route::prefix("sells")->group(function () {
         Route::resource('/project', SellProjectController::class)->except(['index', 'show']);
+        Route::post('/project/update', [SellProjectController::class,'update_sellProject']);
+
         Route::controller(SellerProfileController::class)->group(function () {
             Route::get('/profile/dash', 'show_user');
             Route::get('/profile/project/dash/{id}', 'show_project');

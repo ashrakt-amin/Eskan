@@ -49,17 +49,10 @@ class SellProjectRepository implements SellProjectInterface
 
 
 
-    public function edit($attributes , $id): ?Sellproject
+    public function edit($attributes): ?Sellproject
     {
         try {
-            $project = $this->model->findOrFail($id);
-            $user = Auth::User()->id ;
-           
-            return   $project->users->get ; 
-            // if(){
-
-            // }
-
+            $project = $this->model->findOrFail($attributes->id);
             if ($attributes['img']) {
                 $this->deleteImage(Sellproject::IMAGE_PATH, $project->img);
                 $img = $this->aspectForResize($attributes['img'], Sellproject::IMAGE_PATH, 500, 600);
@@ -69,6 +62,7 @@ class SellProjectRepository implements SellProjectInterface
             }
             return $project;
         } catch (\Exception $e) {
+
             return $e->getMessage();
         }
     }
