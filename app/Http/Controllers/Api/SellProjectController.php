@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Sellproject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\SellProjectRequest;
-use App\Repository\SellProject\SellProjectInterface;
 use App\Http\Resources\SellProject\ProjectResource;
+use App\Repository\SellProject\SellProjectInterface;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
-
 
 class SellProjectController extends Controller
 {
@@ -45,9 +46,14 @@ class SellProjectController extends Controller
     }
 
 
-    public function updateProject(Request $request)
+    public function update(Request $request ,$id)
     {
-        $data = $this->Repository->edit($request);
+        $project = Sellproject::findOrFail($id);
+        $user = Auth::User()->id ;
+       
+        return   $project->users; 
+
+        $data = $this->Repository->edit($request ,$id);
         if (isset($data->errorInfo)) {
             return $this->sendError($data->errorInfo, 'error', 404);
         } else {

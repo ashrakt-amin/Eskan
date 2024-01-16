@@ -14,7 +14,7 @@ interface SellProjectInterface
 
     public function find($id):?Sellproject;
 
-    public function edit($attributes):?Sellproject;
+    public function edit($attributes ,$id):?Sellproject;
 
 
     public function delete($id);

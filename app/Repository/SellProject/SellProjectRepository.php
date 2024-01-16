@@ -49,10 +49,16 @@ class SellProjectRepository implements SellProjectInterface
 
 
 
-    public function edit($attributes): ?Sellproject
+    public function edit($attributes , $id): ?Sellproject
     {
         try {
-            $project = $this->model->findOrFail($attributes->id);
+            $project = $this->model->findOrFail($id);
+            $user = Auth::User()->id ;
+           
+            return   $project->users->get ; 
+            // if(){
+
+            // }
 
             if ($attributes['img']) {
                 $this->deleteImage(Sellproject::IMAGE_PATH, $project->img);
