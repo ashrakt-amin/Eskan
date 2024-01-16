@@ -20,14 +20,14 @@ class FormSellerdashResource extends JsonResource
             'date'            => $this->date,
             'status'          => $this->status == 0 ? false : true,
             'created_at'      => $formattedCreatedAt ,
-            'seller'          =>[
-                'user_id'         => $this->user_id,
-                'name'         => $this->user->name,
-            ],
-            'project'          =>[
-                'sellproject_id'  => $this->sellproject_id,
-                'name'            => $this->sellproject->name,
-            ]
+            // 'seller'          =>[
+            //     'user_id'         => $this->user_id,
+            //     'name'         => $this->user->name,
+            // ],
+            // 'project'          =>[
+            //     'sellproject_id'  => $this->sellproject_id,
+            //     'name'            => $this->sellproject->name,
+            // ]
         ];
     }
 }

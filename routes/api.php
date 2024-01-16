@@ -217,6 +217,8 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::controller(SellerProfileController::class)->group(function () {
             Route::get('/profile/dash', 'show_user');
             Route::get('/profile/project/dash/{id}', 'show_project');
+            Route::get('/clients', 'sells_project_client');
+
         });
     });
 

@@ -12,9 +12,10 @@ class SellerdashResource extends JsonResource
         return [
             'id'              => $this->id,
             'name'            => $this->name,
+            'phone'           => $this->phone,
             'role'            => $this->role,
             'img'             => $this->img == NULL ? NULL : $this->path,
-            'projects'        => $this->Sellprojects == null ? "null" : ProjectResource::collection($this->Sellprojects),
+            'projects'        => $this->Sellprojects == null ? "null" :ProjectResource::collection($this->Sellprojects),
         ];
     }
 }

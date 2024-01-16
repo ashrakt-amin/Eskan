@@ -29,8 +29,8 @@ class FormsellsController extends Controller
 
     public function update_status(Request $request)
     {
-        $role = Auth::user()->role;
-        if ($role == "admin" ||  $role == "مسؤل مبيعات") {
+        $user = Auth::user();
+        if ($user->role == "admin" ||  ($user->role == "مسؤل مبيعات" && $user->parent_id == NULL )) {
             $data = FormSell::findOrFail($request->client_id);
             $data->update([
                 'status' => 1

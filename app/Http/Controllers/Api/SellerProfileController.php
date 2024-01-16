@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\User;
+use App\Models\FormSell;
 use App\Models\Sellproject;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,6 +13,7 @@ use App\Http\Resources\sellsProfile\SellsSiteResource;
 use App\Http\Resources\sellsProfile\SellerdashResource;
 use App\Http\Resources\sellsProfile\ShowProjectResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
+use App\Http\Resources\sellsProfile\FormSellerdashResource;
 
 class SellerProfileController extends Controller
 {
@@ -32,7 +34,7 @@ class SellerProfileController extends Controller
         //
     }
 
-    
+
     public function show_user() //seller dash
     {
         $user = Auth::user();
@@ -40,6 +42,20 @@ class SellerProfileController extends Controller
         if ($user->role == "مسؤل مبيعات") {
             return $this->sendResponse(new SellerdashResource($user), "sells user", 200);
         }
+    }
+
+    public function sells_project_client(Request $request)
+    {
+
+        $projectId = $request->query('project_id');
+        $userId = $request->query('user_id');
+        //  return $user ;
+        $clients = FormSell::with('user', 'sellproject')
+        ->where('user_id', $userId)
+        ->where('sellproject_id', $projectId)
+        ->get();
+
+        return $this->sendResponse(FormSellerdashResource::collection($clients), "clints", 200);
     }
 
     public function show_project($id)
@@ -64,7 +80,7 @@ class SellerProfileController extends Controller
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);
         }
-        $sellproject = $user->sellprojects()->where('sellprojects.id', $projectId)->first();       
+        $sellproject = $user->sellprojects()->where('sellprojects.id', $projectId)->first();
         $data =  [
             'user'        => new SellsSiteResource($user),
             'sellproject' => new ShowProjectResource($sellproject)

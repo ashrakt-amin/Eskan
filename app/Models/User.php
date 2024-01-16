@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'parent_id');
     }
+
+    public function clients()
+    {
+        return $this->hasMany(FormSell::class);
+    }
 }
