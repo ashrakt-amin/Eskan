@@ -47,8 +47,11 @@ class ImageController extends Controller
 
     public function show($name)
     {
-        $image = Image::where('name', 'like', '%' . $name . '%')->get();
-        return $this->sendResponse(ImageResource::collection($image), "success", 200);
+        // $image = Image::where('name', 'like', '%' . $name . '%')->get();
+        // return $this->sendResponse(ImageResource::collection($image), "success", 200);
+
+        $image = Image::where('name', $name)->first();
+        return $this->sendResponse(new ImageResource($image), "success", 200);
     }
 
     public function updateImage(Request $request)
