@@ -33,7 +33,7 @@ class FormsellsController extends Controller
         if ($user->role == "admin" ||  ($user->role == "مسؤل مبيعات" && $user->parent_id == NULL )) {
             $data = FormSell::findOrFail($request->client_id);
             $data->update([
-                'status' => 1
+                'status' =>  $request->status
             ]);
         }
         return $this->sendResponse(new FormSellerdashResource($data), "update client status", 200);
