@@ -18,6 +18,7 @@ class UserResource extends JsonResource
 
             'id'        => $this->id,
             'name'      => $this->name,
+            'img   '    => $this->img == NULL ? NULL : $this->path ,
             'phone'     => $this->phone,
             'role'      => $this->role,
             'parent'    => $this->parent_id == NULL ? NULL :
