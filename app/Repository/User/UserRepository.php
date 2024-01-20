@@ -75,6 +75,9 @@ class UserRepository implements UserInterface
         return function ($q) use ($attributes) {
             !array_key_exists('sells', $attributes) ?: $q
                 ->where(['role' => 'مسؤل مبيعات']);
+
+            !array_key_exists('parent', $attributes) ?: $q
+                ->where(['parent_id' => NULL]);
         };
     }
 

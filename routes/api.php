@@ -217,9 +217,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/project/update', [SellProjectController::class,'update_sellProject']);
 
         Route::controller(SellerProfileController::class)->group(function () {
-            Route::get('/profile/dash', 'show_user');
+            Route::get('/profile/dash/{id?}', 'show_user');
             Route::get('/profile/project/dash/{id}', 'show_project');
             Route::get('/clients', 'sells_project_client');
+            Route::get('/sells', 'sells_project_sells');
+            Route::get('/profiles', 'index');
+
+
 
         });
     });

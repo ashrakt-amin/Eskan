@@ -15,7 +15,7 @@ class ProjectResource extends JsonResource
             'name'            => $this->name,
             'description'     => $this->description,
             'img'             => $this->path,
-            'sells'           => $this->users == null ? "null" : UserResource::collection($this->users),
+          //'sells'           => $this->users == null ? "null" : UserResource::collection($this->users),
 
 
         ];

@@ -24,7 +24,7 @@ class UserResource extends JsonResource
                 'id'=> $this->parent_id ,
                 'name'=>$this->parent->name 
             ],
-            'projects' => $this->Sellprojects == NULL ? NULL : ProjectResource::collection($this->Sellprojects),
+          //  'projects' => $this->Sellprojects == NULL ? NULL : ProjectResource::collection($this->Sellprojects),
 
         ];
     }
