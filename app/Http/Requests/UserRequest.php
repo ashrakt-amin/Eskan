@@ -20,7 +20,7 @@ class UserRequest extends FormRequest
                 return [
                     'name'      => 'required|unique:users|max:255',
                     'password'  => 'required|unique:users|min:6',
-                    'phone'     => 'required|unique:users',
+                    'phone'     => 'required',
                     'role'      => 'required',
                     'img'       => 'nullable',
                     'parent_id' => 'nullable'
