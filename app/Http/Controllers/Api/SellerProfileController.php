@@ -23,13 +23,13 @@ class SellerProfileController extends Controller
 
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            $user = Auth::user();
-            if (($user->role == 'مسؤل مبيعات'  || $user->role == 'sells admin' )) {
-                return $next($request);
-            }
-            return $this->sendError("Unauthorized", "you must be sells admin or sells", 404);
-        });
+        // $this->middleware(function ($request, $next) {
+        //     $user = Auth::user();
+        //     if (($user->role == 'مسؤل مبيعات'  || $user->role == 'sells admin' )) {
+        //         return $next($request);
+        //     }
+        //     return $this->sendError("Unauthorized", "you must be sells admin or sells", 404);
+        // });
     }
 
     public function index() //seller dash
