@@ -59,20 +59,20 @@ class SellerProfileController extends Controller
         $projectId = $request->query('project_id');
         $userId = $request->query('user_id');
         if ($user->role == 'مسؤل مبيعات' && ($user->parent_id == NULL || $user->id == $userId)) {
-            //  return $user ;
-            // $clients = FormSell::with('user', 'sellproject')
-            //     ->where('user_id', $userId)
-            //     ->where('sellproject_id', $projectId)
-            //     ->get();
+           $seller = User::findOrFail($userId);
+            $clients = FormSell::where('user_id', $userId)
+                ->where('sellproject_id', $projectId)
+                ->get();
+                // return $clients ;
 
-            $clients =  User::with('clients')->whereHas('Sellprojects', function ($query) use ($projectId) {
-                $query->where('sellproject_id', $projectId);
-            })->where('id', $userId)->first();
+            // $clients =  User::whereHas('Sellprojects', function ($query) use ($projectId) {
+            //     $query->where('sellproject_id', $projectId);
+            // })->with('clients')->where('id', $userId)->first();
 
 
             $data =  [
-                'user'        => new UserResource($clients),
-                'clients'     => FormSellerdashResource::collection($clients->clients)
+                'user'        => new UserResource($seller),
+                'clients'     => FormSellerdashResource::collection($clients)
             ];
             // return $clients->clients ;
             return $this->sendResponse($data, "seller with clints", 200);
