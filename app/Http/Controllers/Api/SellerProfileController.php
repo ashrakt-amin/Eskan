@@ -16,6 +16,7 @@ use App\Http\Resources\sellsProfile\parentSellsResource;
 use App\Http\Resources\sellsProfile\ShowProjectResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Resources\sellsProfile\FormSellerdashResource;
+use App\Http\Resources\sellsProfile\SellswithClientsResource;
 
 class SellerProfileController extends Controller
 {
@@ -33,23 +34,22 @@ class SellerProfileController extends Controller
     }
 
     public function index() //seller dash
-    {        
+    {
         $user = Auth::user()->role;
-        if( $user == "sells admin"){
-            $sells =User::whereHas('children')->get();
+        if ($user == "sells admin") {
+            $sells = User::whereHas('children')->get();
             return $this->sendResponse(parentSellsResource::collection($sells), "sells admin", 200);
-        }else{
+        } else {
             return $this->sendError("Unauthorized", "you must be sells admin ", 404);
-
         }
     }
     public function show_user($id = null) //seller dash
     {
-        if(Auth::user()->role == "sells admin"){
+        if (Auth::user()->role == "sells admin") {
             $user = User::findOrFail($id);
-        }elseif(Auth::user()->role == "مسؤل مبيعات"){
+        } elseif (Auth::user()->role == "مسؤل مبيعات") {
             $user = Auth::user();
-            }
+        }
         return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
     }
 
@@ -60,12 +60,22 @@ class SellerProfileController extends Controller
         $userId = $request->query('user_id');
         if ($user->role == 'مسؤل مبيعات' && ($user->parent_id == NULL || $user->id == $userId)) {
             //  return $user ;
-            $clients = FormSell::with('user', 'sellproject')
-                ->where('user_id', $userId)
-                ->where('sellproject_id', $projectId)
-                ->get();
+            // $clients = FormSell::with('user', 'sellproject')
+            //     ->where('user_id', $userId)
+            //     ->where('sellproject_id', $projectId)
+            //     ->get();
 
-            return $this->sendResponse(FormSellerdashResource::collection($clients), "clints", 200);
+            $clients =  User::with('clients')->whereHas('Sellprojects', function ($query) use ($projectId) {
+                $query->where('sellproject_id', $projectId);
+            })->where('id', $userId)->first();
+
+             
+            $data =  [
+                'user'        => new UserResource($clients),
+                'clients'     => FormSellerdashResource::collection($clients->clients)
+            ];
+            // return $clients->clients ;
+            return $this->sendResponse( $data , "seller with clints", 200);
         }
     }
 

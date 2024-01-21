@@ -11,9 +11,9 @@ class UserResource extends JsonResource
 {
     public function toArray(Request $request): array
     {
-        if ($this->parent === null) {
-            return [];
-        }
+        // if ($this->parent === null) {
+        //     return [];
+        // }
         return [
 
             'id'        => $this->id,
