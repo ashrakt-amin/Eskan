@@ -69,13 +69,13 @@ class SellerProfileController extends Controller
                 $query->where('sellproject_id', $projectId);
             })->where('id', $userId)->first();
 
-             
+
             $data =  [
                 'user'        => new UserResource($clients),
                 'clients'     => FormSellerdashResource::collection($clients->clients)
             ];
             // return $clients->clients ;
-            return $this->sendResponse( $data , "seller with clints", 200);
+            return $this->sendResponse($data, "seller with clints", 200);
         }
     }
 
