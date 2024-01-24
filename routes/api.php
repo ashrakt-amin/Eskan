@@ -165,6 +165,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/update', 'storeUp');
             Route::post('/images', 'storeImages');
             Route::delete('/delete/image/{id}', 'destroyImage');
+            Route::post('commercial', 'storeCommercial');
+
         });
     });
     Route::resource('unit_images', UnitsImageController::class)->except(['index', 'show']);

@@ -9,7 +9,9 @@ use App\Http\Requests\UnitRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Repository\Units\UnitInterface;
+use App\Http\Requests\CommericalRequest;
 use App\Http\Resources\Unit\UnitResource;
+use App\Http\Resources\Unit\CommercialResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 
@@ -32,11 +34,15 @@ class UnitController extends Controller
 
     public function index(Request $request)
     {
-        return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
+            if ($request->has('housing')) {
+            return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
+        } elseif ($request->has('commerical')) {
+            return $this->Repository->forAllConditionsReturn($request->all(), CommercialResource::class);
+        }
     }
 
 
-
+    //سكنى
     public function store(UnitRequest $request)
     {
         $role = Auth::user()->role;
@@ -46,6 +52,22 @@ class UnitController extends Controller
                 return $this->sendError($data, 'error', 404);
             } else {
                 return $this->sendResponse($data, "تم تسجيل وحده جديده بنجاح", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+    }
+
+    //تجارى
+    public function storeCommercial(CommericalRequest $request)
+    {
+        $role = Auth::user()->role;
+        if (Auth::check() && ($role == "مدخل البيانات" || $role == "admin")) {
+            $data = $this->Repository->storeCommerical($request->validated());
+            if (!isset($data->id)) {
+                return $this->sendError($data, 'error', 404);
+            } else {
+                return $this->sendResponse($data, "تم تسجيل وحده تجاريه جديده بنجاح", 200);
             }
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
@@ -162,7 +184,7 @@ class UnitController extends Controller
         $meter_price = collect($response)->sortBy(function ($item) {
             return $item;
         })->values()->all();
-    
+
         return response()->json([
             'status' => true,
             'message' => "unique meter_price!",
@@ -190,7 +212,8 @@ class UnitController extends Controller
 
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)) {
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+        ) {
 
             $unit = Unit::all();
             $response = $unit->unique('space')->pluck('space')->values()->all();
@@ -207,7 +230,7 @@ class UnitController extends Controller
         $spaces = collect($response)->sortBy(function ($item) {
             return $item;
         })->values()->all();
-       
+
         return response()->json([
             'status' => true,
             'message' => "unique spaces!",
@@ -381,7 +404,7 @@ class UnitController extends Controller
     }
 
 
-   
+
 
 
 

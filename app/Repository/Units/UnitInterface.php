@@ -12,6 +12,8 @@ interface UnitInterface
 
     public function store(array $attributes);
 
+    public function storeCommerical(array $attributes);
+
     public function find($id):?Unit;
 
     public function edit($attributes);

@@ -32,9 +32,19 @@ class UnitRepository implements UnitInterface
     public function store(array $attributes)
     {
         try {
-
-            // $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
+            $data = $this->model->create($attributes);
+            return $data;
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function storeCommerical(array $attributes)
+    {
+        try {
+
+            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units/Commerical', 500, 600);
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -145,6 +155,12 @@ class UnitRepository implements UnitInterface
 
             !array_key_exists('appear', $attributes) || $attributes['appear'] == 0   ?: $q
                 ->where(['appear' => $attributes['appear']]);
+
+                !array_key_exists('housing', $attributes)?: $q
+                ->where(['type_id' => 1]);
+
+                !array_key_exists('commerical', $attributes) ?: $q
+                ->where(['type_id' => 2]);
         };
     }
 
