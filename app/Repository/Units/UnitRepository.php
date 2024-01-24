@@ -90,9 +90,13 @@ class UnitRepository implements UnitInterface
             $unit = $this->model->findOrFail($attributes->id);
             if ($attributes['img']) {
                $this->deleteImage('Units', $unit->img);
-                $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
-            }
+                $img = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+                $unit->update(['img'=>$img]);
+
+            }else{
                 $unit->update($attributes->all());
+
+            }
             return $unit;
         } catch (\Exception $e) {
 
