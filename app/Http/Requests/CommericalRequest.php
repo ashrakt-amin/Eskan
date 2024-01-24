@@ -16,7 +16,7 @@ class CommericalRequest extends FormRequest
     {
 
         return [
-            'number'      => 'nullable',
+            'number'      => 'required',
             'space'       => 'required',
             'contract'    => 'nullable',
             'rooms'       => 'nullable',

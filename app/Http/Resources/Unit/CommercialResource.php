@@ -12,6 +12,7 @@ class CommercialResource extends JsonResource
         return [
             'id'          => $this->id,
             'duration'    => $this->duration,
+            'number'      => $this->number,
             'space'       => is_int($this->space) ? (int)$this->space : (float)$this->space,
             'meter_price' => is_int($this->meter_price) ? (int)$this->meter_price : (float)$this->meter_price,
             'advance'     => is_int($this->advance) ? (int)$this->advance : (float)$this->advance,
