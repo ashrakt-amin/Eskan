@@ -44,7 +44,7 @@ class UnitRepository implements UnitInterface
     {
         try {
 
-            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units/Commerical', 500, 600);
+            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -83,6 +83,23 @@ class UnitRepository implements UnitInterface
             return $e->getMessage();
         }
     }
+
+    public function editCommercial($attributes)
+    {
+        try {
+            $unit = $this->model->findOrFail($attributes->id);
+            if ($attributes['img']) {
+               $this->deleteImage('Units', $unit->img);
+                $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+            }
+                $unit->update($attributes->all());
+            return $unit;
+        } catch (\Exception $e) {
+
+            return $e->getMessage();
+        }
+    }
+
 
     public function delete($id)
     {

@@ -18,6 +18,9 @@ interface UnitInterface
 
     public function edit($attributes);
 
+    public function editCommercial($attributes);
+
+
     public function storeImages($attributes);
 
     public function deleteImageUnit($id);

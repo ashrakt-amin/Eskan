@@ -67,7 +67,7 @@ class UnitController extends Controller
             if (!isset($data->id)) {
                 return $this->sendError($data, 'error', 404);
             } else {
-                return $this->sendResponse($data, "تم تسجيل وحده تجاريه جديده بنجاح", 200);
+                return $this->sendResponse(new CommercialResource($data), "تم تسجيل وحده تجاريه جديده بنجاح", 200);
             }
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
@@ -91,6 +91,22 @@ class UnitController extends Controller
                 return $this->sendError($data->errorInfo, 'error', 404);
             } else {
                 return $this->sendResponse($data, "تم التعديل ", 200);
+            }
+        } else {
+            return $this->sendError('sorry', "you don't have permission to access this", 404);
+        }
+    }
+
+
+    public function commercialUpdate(Request $request)
+    {
+           $role = Auth::user()->role;
+        if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
+            $data = $this->Repository->editCommercial($request);
+            if (isset($data->errorInfo)) {
+                return $this->sendError($data->errorInfo, 'error', 404);
+            } else {
+                return $this->sendResponse(new CommercialResource($data), "تم التعديل ", 200);
             }
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);

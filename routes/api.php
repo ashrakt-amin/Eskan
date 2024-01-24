@@ -166,6 +166,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::post('/images', 'storeImages');
             Route::delete('/delete/image/{id}', 'destroyImage');
             Route::post('commercial', 'storeCommercial');
+            Route::post('commercial/update', 'commercialUpdate');
+
 
         });
     });

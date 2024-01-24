@@ -11,7 +11,6 @@ class CommercialResource extends JsonResource
 
         return [
             'id'          => $this->id,
-            'contract'    => $this->contract,
             'duration'    => $this->duration,
             'space'       => is_int($this->space) ? (int)$this->space : (float)$this->space,
             'meter_price' => is_int($this->meter_price) ? (int)$this->meter_price : (float)$this->meter_price,
@@ -22,6 +21,7 @@ class CommercialResource extends JsonResource
                 'id'     => $this->level_id,
                 'name'   => $this->level->name,
             ],
+            'img'                  =>$this->img == null ? "null" : $this->path ,
             'images'                  =>$this->unitImage == null ? "null" : [
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,

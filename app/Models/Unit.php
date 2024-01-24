@@ -8,17 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Unit extends Model
 {
     use HasFactory;
-
-    protected $fillable = ['number','contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
-                           'advance_rate' , 'advance', 'installment', 'type_id', 'project_id' ,'unit_image_id',
-                           'block_id','appear','img'];
+    const IMAGE_PATH = 'Units';
+    protected $appends = ['path'];
+    protected $fillable = [
+        'number', 'contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
+        'advance_rate', 'advance', 'installment', 'type_id', 'project_id', 'unit_image_id',
+        'block_id', 'appear', 'img'
+    ];
 
     public function type()
     {
         return $this->belongsTo(UnitsType::class, 'type_id');
     }
 
-    
+
     public function unitImage()
     {
         return $this->belongsTo(UnitsImage::class, 'unit_image_id');
@@ -40,8 +43,13 @@ class Unit extends Model
     {
         return $this->belongsTo(Block::class, 'block_id');
     }
-    
 
-   
-   
+    public function getPathAttribute()
+    {
+        if (env('APP_URL') == "http://localhost") {
+            return asset('storage/images/Units') . "/" . $this->img;
+        } else {
+            return asset('storage/app/public/images/Units') . "/" . $this->img;
+        }
+    }
 }
