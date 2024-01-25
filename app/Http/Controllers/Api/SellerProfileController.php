@@ -33,7 +33,7 @@ class SellerProfileController extends Controller
         // });
     }
 
-    public function index() //seller dash
+    public function index() //all sells dash
     {
         $user = Auth::user()->role;
         if ($user == "sells admin") {

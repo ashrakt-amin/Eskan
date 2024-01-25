@@ -13,8 +13,8 @@ class SellsSiteResource extends JsonResource
         return [
             'id'              => $this->id,
             'name'            => $this->name,
-            'phone'            => $this->phone,
-            'img'             =>  $this->img == null ? "null" : $this->path,
+            'phone'           => $this->parent == null ? $this->phone : $this->parent->phone,
+            'img'             => $this->img == null ? "null" : $this->path,
         ];
     }
 }
