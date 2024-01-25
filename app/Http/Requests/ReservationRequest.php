@@ -18,11 +18,11 @@ class ReservationRequest extends FormRequest
 
         return [
             'name'      => 'required',
-            'phone'     => 'required|unique:reservations,phone',
+            'phone'     => ['required','regex:/^\d{7,}$/'],
             'job'       => 'required',
             'project_id'=> 'required',
             'unit_id'   => 'nullable',
-            'feedback'  =>'nullable',
+            'feedback'  => 'nullable',
 
 
 

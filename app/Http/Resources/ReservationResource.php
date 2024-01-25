@@ -28,10 +28,10 @@ class ReservationResource extends JsonResource
                 'space'       => $this->unit->space,
                 'meter_price' => $this->unit->meter_price,
                 'advance'     => $this->unit->advance,
-                'installment' => $this->unit->installment,
-                'type'        => $this->unit->type->name,
+                'installment' => $this->unit->installment == null ? "null" : $this->unit->installment ,
+                'type'        => $this->unit->type->name ,
                 'level'       => $this->unit->level->name,
-                'block'       => $this->unit->block->name
+                'block'       => $this->unit->block == null ? "null" : $this->unit->block->name
             ],
             'created_at'      =>  $formattedCreatedAt,
             'feedback'        => $this->feedback
