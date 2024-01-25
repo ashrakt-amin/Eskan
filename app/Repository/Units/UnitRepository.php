@@ -180,7 +180,7 @@ class UnitRepository implements UnitInterface
             !array_key_exists('housing', $attributes)?: $q
                 ->where(['type_id' => 1]);
 
-            !array_key_exists('commerical', $attributes) ?: $q
+            !array_key_exists('commercial', $attributes) ?: $q
                 ->where(['type_id' => 2]);
         };
     }
