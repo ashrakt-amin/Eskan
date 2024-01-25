@@ -34,9 +34,10 @@ class UnitController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->has('housing')) {
+    //   return $request['type'] ;
+        if ( $request['type'] == "سكنى") {
             return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
-        } elseif ($request->has('commercial')) {
+        } elseif ( $request['type'] == "تجارى") {
             return $this->Repository->forAllConditionsReturn($request->all(), CommercialResource::class);
         }
     }

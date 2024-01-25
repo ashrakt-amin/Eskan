@@ -148,6 +148,7 @@ class UnitRepository implements UnitInterface
 
     public function filter(array $attributes)
     {
+      
         return function ($q) use ($attributes) {
 
             !array_key_exists('project_id', $attributes) || $attributes['project_id'] == 0   ?: $q
@@ -177,11 +178,14 @@ class UnitRepository implements UnitInterface
             !array_key_exists('appear', $attributes) || $attributes['appear'] == 0   ?: $q
                 ->where(['appear' => $attributes['appear']]);
 
-            !array_key_exists('housing', $attributes)?: $q
-                ->where(['type_id' => 1]);
+                $type =$attributes['type'];
+            !array_key_exists('type', $attributes)?: $q
+            ->whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            });
 
-            !array_key_exists('commercial', $attributes) ?: $q
-                ->where(['type_id' => 2]);
+            // !array_key_exists('commercial', $attributes) ?: $q
+            //     ->where(['type_id' => 2]);
         };
     }
 
