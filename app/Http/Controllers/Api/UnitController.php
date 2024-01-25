@@ -36,7 +36,7 @@ class UnitController extends Controller
     {
         if ($request->has('housing')) {
             return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
-        } elseif ($request->has('commerical')) {
+        } elseif ($request->has('commercial')) {
             return $this->Repository->forAllConditionsReturn($request->all(), CommercialResource::class);
         }
     }
