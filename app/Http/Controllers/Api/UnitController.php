@@ -34,7 +34,7 @@ class UnitController extends Controller
 
     public function index(Request $request)
     {
-            if ($request->has('housing')) {
+        if ($request->has('housing')) {
             return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
         } elseif ($request->has('commerical')) {
             return $this->Repository->forAllConditionsReturn($request->all(), CommercialResource::class);
@@ -100,7 +100,7 @@ class UnitController extends Controller
 
     public function commercialUpdate(Request $request)
     {
-           $role = Auth::user()->role;
+        $role = Auth::user()->role;
         if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             $data = $this->Repository->editCommercial($request);
             if (isset($data->errorInfo)) {
@@ -165,8 +165,11 @@ class UnitController extends Controller
     public function meterPrice(Request $request)
     {
         $q = Unit::query();
-
         $attributes = $request->all();
+        $type = $attributes['type'];
+        $q->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->get();
 
         if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
             $q->where(['space' => $attributes['space']]);
@@ -184,7 +187,11 @@ class UnitController extends Controller
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
             (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
         ) {
-            $unit = Unit::all();
+            // $unit = Unit::all();
+            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            })->get();
+
             $response = $unit->unique('meter_price')->pluck('meter_price')->values()->all();
             $unique_data = collect($response)->sortBy(function ($item) {
                 return $item;
@@ -211,8 +218,11 @@ class UnitController extends Controller
     public function space(Request $request)
     {
         $q = Unit::query();
-
         $attributes = $request->all();
+        $type = $attributes['type'];
+        $q->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->get();
 
         if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
             $q->where(['meter_price' => $attributes['meter_price']]);
@@ -231,7 +241,9 @@ class UnitController extends Controller
             (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
         ) {
 
-            $unit = Unit::all();
+            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            })->get();
             $response = $unit->unique('space')->pluck('space')->values()->all();
             $unique_data = collect($response)->sortBy(function ($item) {
                 return $item;
@@ -258,8 +270,11 @@ class UnitController extends Controller
     public function levels(Request $request)
     {
         $q = Unit::query();
-
         $attributes = $request->all();
+        $type = $attributes['type'];
+        $q->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->get();
 
         if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
             $q->where(['meter_price' => $attributes['meter_price']]);
@@ -278,7 +293,9 @@ class UnitController extends Controller
             (!array_key_exists('space', $attributes) || $attributes['space'] == 0)
         ) {
 
-            $unit = Unit::all();
+            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            })->get();
             $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
             // $unit_levels = sort($unit_level);
 
