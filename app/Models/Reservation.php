@@ -19,6 +19,10 @@ class Reservation extends Model
         return $this->belongsTo(Project::class,'project_id');
     }
 
+    public function type(){
+        return $this->hasOneThrough(UnitsType::class,Unit::class);
+    }
+
 
 }
 

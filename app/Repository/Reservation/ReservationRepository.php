@@ -30,9 +30,9 @@ class ReservationRepository implements ReservationInterface
     {
         $data = $this->model->create($attributes);
 
-        if($data->unit_id != NULL ){
+        if ($data->unit_id != NULL) {
             $unit_number = $data->unit->number;
-        }else{
+        } else {
             $unit_number = NULL;
         }
 
@@ -102,13 +102,26 @@ class ReservationRepository implements ReservationInterface
         };
     }
 
+    public function type(array $attributes)
+    {
+        return function ($q) use ($attributes) {
+            $type = $attributes['type'];
+            !array_key_exists('type', $attributes) ?: $q
+                ->whereHas('unit.type', function ($query) use ($type) {
+                    $query->where('name', $type);
+                });
+        };
+    }
+
+
 
 
     public function forAllConditions(array $attributes)
     {
         return $this->model
             ->where($this->theLatest($attributes))
-            ->where($this->filter($attributes));
+            ->where($this->filter($attributes))
+            ->where($this->type($attributes));
     }
 
 
