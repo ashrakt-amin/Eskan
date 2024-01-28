@@ -105,11 +105,12 @@ class ReservationRepository implements ReservationInterface
     public function type(array $attributes)
     {
         return function ($q) use ($attributes) {
-            $type = $attributes['type'];
-            !array_key_exists('type', $attributes) ?: $q
-                ->whereHas('unit.type', function ($query) use ($type) {
+            if(array_key_exists('type', $attributes ) && $attributes['type'] != 0){
+             $type = $attributes['type'];
+            $q->whereHas('unit.type', function ($query) use ( $type) {
                     $query->where('name', $type);
                 });
+            }
         };
     }
 
