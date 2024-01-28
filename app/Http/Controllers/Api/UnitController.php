@@ -297,21 +297,29 @@ class UnitController extends Controller
             $unit  = Unit::whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
-            $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
-            // $unit_levels = sort($unit_level);
-
-            $unit_levels = collect($response)->sortBy(function ($item) {
-                return $item;
-            })->values()->all();
-
-            $levels = Level::all();
-            foreach ($unit_levels as $unit_level) {
-                foreach ($levels as $level) {
-                    if ($level->id == $unit_level) {
-                        $data[] = $level;
+            if(count($unit) >1){
+                $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
+         
+                if($unit == null){
+                    $data = [];
+                }
+                $unit_levels = collect($response)->sortBy(function ($item) {
+                    return $item;
+                })->values()->all();
+    
+                $levels = Level::all();
+                foreach ($unit_levels as $unit_level) {
+                    foreach ($levels as $level) {
+                        if ($level->id == $unit_level) {
+                            $data[] = $level;
+                        }
                     }
                 }
+            }else{
+                $data = [];
             }
+           
+           
 
             return response()->json([
                 'status' => true,
