@@ -47,12 +47,24 @@ class SellerProfileController extends Controller
 
     public function show_user($id = null) //seller or sells admin dash
     {
-        if($id == null && (Auth::user()->role == "sells admin" || Auth::user()->role == "مسؤل مبيعات")){
+        if($id == null && Auth::user()->role == "sells admin"){
             $user = Auth::user();
+            $sells = User::whereHas('children')->get();
+            $data =  [
+                'sells admin'   => new SellerdashResource($user),
+                'sells'         => parentSellsResource::collection($sells)
+            ];
+            return $this->sendResponse($data , "sells admin profile dash with all sells", 200);
+
+        } elseif($id == null && Auth::user()->role == "مسؤل مبيعات"){
+            $user = Auth::user();
+            return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
+
         } elseif ($id != null && (Auth::user()->role == "sells admin" || Auth::user()->role == "مسؤل مبيعات")) {
             $user = User::findOrFail($id);
+            return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
+
         }
-        return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
     }
 
     public function index() //all sells dash

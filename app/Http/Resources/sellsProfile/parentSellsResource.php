@@ -19,6 +19,8 @@ class parentSellsResource extends JsonResource
             'img   '    => $this->img == NULL ? NULL : $this->path ,
             'phone'     => $this->phone,
             'role'      => $this->role,
+            'projects'        => $this->Sellprojects == null ? "null" :ProjectResource::collection($this->Sellprojects),
+
           
          
         ];
