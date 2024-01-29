@@ -168,7 +168,7 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->whereHas('type', function ($query) use ($type) {
+        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
@@ -189,7 +189,7 @@ class UnitController extends Controller
             (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
         ) {
             // $unit = Unit::all();
-            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
 
@@ -221,7 +221,7 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->whereHas('type', function ($query) use ($type) {
+        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
@@ -242,7 +242,7 @@ class UnitController extends Controller
             (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
         ) {
 
-            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
             $response = $unit->unique('space')->pluck('space')->values()->all();
@@ -273,7 +273,7 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->whereHas('type', function ($query) use ($type) {
+        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
@@ -294,7 +294,7 @@ class UnitController extends Controller
             (!array_key_exists('space', $attributes) || $attributes['space'] == 0)
         ) {
 
-            $unit  = Unit::whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
             if(count($unit) >1){
