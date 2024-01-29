@@ -33,6 +33,28 @@ class SellerProfileController extends Controller
         // });
     }
 
+    public function sells_project() //all sells project for sells admin
+    {
+        $user = Auth::user()->role;
+        if ($user == "sells admin") {
+            $sells = Sellproject::all();
+            return $this->sendResponse(ProjectResource::collection($sells), "sells admin", 200);
+        } else {
+            return $this->sendError("Unauthorized", "you must be sells admin ", 404);
+        }
+    }
+
+
+    public function show_user($id = null) //seller or sells admin dash
+    {
+        if($id == null && (Auth::user()->role == "sells admin" || Auth::user()->role == "مسؤل مبيعات")){
+            $user = Auth::user();
+        } elseif ($id != null && (Auth::user()->role == "sells admin" || Auth::user()->role == "مسؤل مبيعات")) {
+            $user = User::findOrFail($id);
+        }
+        return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
+    }
+
     public function index() //all sells dash
     {
         $user = Auth::user()->role;
@@ -43,15 +65,6 @@ class SellerProfileController extends Controller
             return $this->sendError("Unauthorized", "you must be sells admin ", 404);
         }
     }
-    public function show_user($id = null) //seller dash
-    {
-        if (Auth::user()->role == "sells admin") {
-            $user = User::findOrFail($id);
-        } elseif (Auth::user()->role == "مسؤل مبيعات") {
-            $user = Auth::user();
-        }
-        return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
-    }
 
     public function sells_project_client(Request $request)
     {
@@ -59,11 +72,11 @@ class SellerProfileController extends Controller
         $projectId = $request->query('project_id');
         $userId = $request->query('user_id');
         if ($user->role == 'مسؤل مبيعات' && ($user->parent_id == NULL || $user->id == $userId)) {
-           $seller = User::findOrFail($userId);
+            $seller = User::findOrFail($userId);
             $clients = FormSell::where('user_id', $userId)
                 ->where('sellproject_id', $projectId)
                 ->get();
-                // return $clients ;
+            // return $clients ;
 
             // $clients =  User::whereHas('Sellprojects', function ($query) use ($projectId) {
             //     $query->where('sellproject_id', $projectId);

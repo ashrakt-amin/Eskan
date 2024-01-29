@@ -226,7 +226,8 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/clients', 'sells_project_client');
             Route::get('/sells', 'sells_project_sells');
             Route::get('/profiles', 'index');
-
+             //sells admin
+            Route::get('/admin/prjects', 'sells_project');
 
 
         });
