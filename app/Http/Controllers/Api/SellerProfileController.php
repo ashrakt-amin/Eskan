@@ -44,26 +44,24 @@ class SellerProfileController extends Controller
         }
     }
 
-
-    public function show_user($id = null) //seller or sells admin dash
+    /*seller or sells admin dash which return in data of user admin if
+  role sells admin or all sells with them projects */
+    public function show_user($id = null)
     {
-        if($id == null && Auth::user()->role == "sells admin"){
+        if ($id == null && Auth::user()->role == "sells admin") {
             $user = Auth::user();
             $sells = User::whereHas('children')->get();
             $data =  [
-                'sells admin'   => new SellerdashResource($user),
+                'sells_admin'   => new SellerdashResource($user),
                 'sells'         => parentSellsResource::collection($sells)
             ];
-            return $this->sendResponse($data , "sells admin profile dash with all sells", 200);
-
-        } elseif($id == null && Auth::user()->role == "مسؤل مبيعات"){
+            return $this->sendResponse($data, "sells admin profile dash with all sells", 200);
+        } elseif ($id == null && Auth::user()->role == "مسؤل مبيعات") {
             $user = Auth::user();
             return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
-
         } elseif ($id != null && (Auth::user()->role == "sells admin" || Auth::user()->role == "مسؤل مبيعات")) {
             $user = User::findOrFail($id);
             return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);
-
         }
     }
 
@@ -83,13 +81,12 @@ class SellerProfileController extends Controller
         $user = Auth::user();
         $projectId = $request->query('project_id');
         $userId = $request->query('user_id');
-        if ($user->role == 'مسؤل مبيعات' && ($user->parent_id == NULL || $user->id == $userId)) {
+        if (($user->role == 'مسؤل مبيعات' || $user->role == 'sells admin') && ($user->parent_id == NULL || $user->id == $userId)) {
             $seller = User::findOrFail($userId);
             $clients = FormSell::where('user_id', $userId)
                 ->where('sellproject_id', $projectId)
                 ->get();
             // return $clients ;
-
             // $clients =  User::whereHas('Sellprojects', function ($query) use ($projectId) {
             //     $query->where('sellproject_id', $projectId);
             // })->with('clients')->where('id', $userId)->first();
@@ -106,14 +103,12 @@ class SellerProfileController extends Controller
 
     public function sells_project_sells(Request $request)
     {
-
-
         $projectId = $request->query('project_id');
         $userId = $request->query('user_id');
         $parent = User::findOrFail($userId);
         $user = Auth::user();
 
-        if ($user->role == 'مسؤل مبيعات' && ($user->parent_id == NULL || $user->id == $userId)) {
+        if (($user->role == 'مسؤل مبيعات'  || $user->role == 'sells admin') && ($user->parent_id == NULL || $user->id == $userId)) {
             $users = User::whereHas('Sellprojects', function ($query) use ($projectId) {
                 $query->where('sellproject_id', $projectId);
             })->where('parent_id', $userId)->get();

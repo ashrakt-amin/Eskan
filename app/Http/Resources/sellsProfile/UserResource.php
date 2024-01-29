@@ -26,6 +26,7 @@ class UserResource extends JsonResource
                 'id'=> $this->parent_id ,
                 'name'=>$this->parent->name 
             ],
+            // 'sells'    => $this->children == NULL ? NULL : UserResource::collection($this->children)
          
         ];
     
