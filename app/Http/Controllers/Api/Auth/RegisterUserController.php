@@ -23,7 +23,7 @@ class RegisterUserController extends Controller
         try {
         $admin = Auth::user();
         // return $request->project_id ;
-        if ($admin->role == 'admin' || $admin->role == "sales admin" || ($admin->role == "مسؤل مبيعات" && $admin->parent_ID == null) ) {
+        if ($admin->role == 'admin' || $admin->role == "admin sells" || ($admin->role == "مسؤل مبيعات" && $admin->parent_ID == null) ) {
             $data =  $request->validated();
             if ($request->img != NULL) {
                 $data['img'] = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);

@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Requests\UserRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
@@ -44,7 +45,7 @@ class UpdateController extends Controller
             return response()->json(['message' => 'you must be in users'], 404);
         } else {
             $request->validate([
-                'phone'     => ['regex:/^\d{7,}$/', 'required', Rule::unique('users')->ignore($user->id),],
+                'phone'     => ['regex:/^\d{7,}$/', 'required'],
                 'name'      => [Rule::unique('users')->ignore($user->id)],
             ]);
             // return $request->project_id ;

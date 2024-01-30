@@ -55,7 +55,7 @@ class SellerProfileController extends Controller
                 'sells_admin'   => new SellerdashResource($user),
                 'sells'         => parentSellsResource::collection($sells)
             ];
-            return $this->sendResponse($data, "sales admin profile dash with all sells", 200);
+            return $this->sendResponse($data, "sales admin profile dash with all sales", 200);
         } elseif ($id == null && Auth::user()->role == "مسؤل مبيعات") {
             $user = Auth::user();
             return $this->sendResponse(new SellerdashResource($user), "sells profile dash", 200);

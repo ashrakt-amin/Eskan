@@ -19,7 +19,7 @@ class UserRequest extends FormRequest
             case 'POST':
                 return [
                     'name'      => 'required|unique:users|max:255',
-                    'password'  => 'required|unique:users|min:6',
+                    'password'  => 'required|min:6',
                     'phone'     => 'required',
                     'role'      => 'required',
                     'img'       => 'nullable',
