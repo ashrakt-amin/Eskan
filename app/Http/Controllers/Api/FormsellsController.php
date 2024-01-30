@@ -22,7 +22,7 @@ class FormsellsController extends Controller
     public function store(FormSellRequest $request)
     {
         $data = FormSell::create($request->validated());
-        return $this->sendResponse(new FormSellerdashResource($data), "sells client", 200);
+        return $this->sendResponse(new FormSellerdashResource($data), "saless client", 200);
     }
 
 
