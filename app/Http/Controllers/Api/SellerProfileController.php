@@ -50,7 +50,7 @@ class SellerProfileController extends Controller
     {
         if ($id == null && Auth::user()->role == "sales admin") {
             $user = Auth::user();
-            $sells = User::whereHas('children')->get();
+            $sells = User::where('parent_id',null)->where('role',"مسؤل مبيعات")->get();
             $data =  [
                 'sells_admin'   => new SellerdashResource($user),
                 'sells'         => parentSellsResource::collection($sells)

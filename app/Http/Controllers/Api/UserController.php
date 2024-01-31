@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $this->Repository = $Repository;
         $this->middleware(function ($request, $next) {
-            if (Auth::check() && (Auth::user()->role !== 'admin')) {
+            if (Auth::check() && ((Auth::user()->role !== 'admin') ||(Auth::user()->role !== 'admin'))) {
                 return $this->sendError('sorry', "you don't have permission to access this", 404);
             } else {
                 return $next($request);
