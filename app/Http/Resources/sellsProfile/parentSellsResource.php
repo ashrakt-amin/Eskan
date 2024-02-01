@@ -16,7 +16,7 @@ class parentSellsResource extends JsonResource
 
             'id'        => $this->id,
             'name'      => $this->name,
-            'img   '    => $this->img == NULL ? NULL : $this->path ,
+            'img'    => $this->img == NULL ? NULL : $this->path ,
             'phone'     => $this->phone,
             'role'      => $this->role,
             'projects'  => $this->Sellprojects == null ? "null" :ProjectResource::collection($this->Sellprojects),
