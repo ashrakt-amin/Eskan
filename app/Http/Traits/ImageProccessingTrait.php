@@ -110,6 +110,20 @@ trait ImageProccessingTrait
         return $imgPath ;
     }
 
+    public function setImageWithoutsize($image, $path)
+    {
+        $img = Image::make($image);
+        $name = $image->getClientOriginalName();
+        $strRandom = Str::random(8);
+        $imgPath = $strRandom . $name;
+        $thepath = storage_path('app/public/images/'.$path);
+        if (!File::exists($thepath)) {
+            File::makeDirectory($thepath, 0755, true, true);
+        }
+        $img->save($thepath . '/' . $imgPath);
+        return $imgPath ;
+    }
+
 
     /**
      * crop image width and height

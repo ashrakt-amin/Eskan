@@ -44,7 +44,7 @@ class UnitRepository implements UnitInterface
     {
         try {
 
-            $attributes['img'] = $this->aspectForResize($attributes['img'], 'Units', 500, 600);
+            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
