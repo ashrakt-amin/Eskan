@@ -33,7 +33,7 @@ class ProjectRepository implements ProjectInterface
     public function store(array $attributes)
     {
         $project = $this->model->create($attributes);
-        $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img', 500, 500));
+        $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img'));
 
         // $project = Projectimages::create($attributes);
         return $project;
@@ -53,7 +53,7 @@ class ProjectRepository implements ProjectInterface
         $project = $this->model->findOrFail($id);
         $data = $attributes->all();
         if($attributes['img']){
-            $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img', 500, 500));
+            $project->projectimages()->createMany($this->setImages($attributes['img'], Projectimages::IMAGE_PATH, 'img'));
         }
         $project->update($data);
         return $project;
@@ -65,7 +65,7 @@ class ProjectRepository implements ProjectInterface
 
         $project = Projectimages::findOrFail($id);
         $this->deleteImage(Projectimages::IMAGE_PATH, $project->img);
-        $img = $this->aspectForResize($attributes['img'], Projectimages::IMAGE_PATH, 500, 600);
+        $img = $this->aspectForResize($attributes['img'], Projectimages::IMAGE_PATH);
         $project->update(['img' => $img]);
         return $project;
     }

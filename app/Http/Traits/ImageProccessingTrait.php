@@ -92,7 +92,7 @@ trait ImageProccessingTrait
     /**
      * update image width and height
      */
-    public function aspectForResize($image, $path, $width, $height)
+    public function aspectForResize($image, $path,$width = null, $height = null)
     {
         $img = Image::make($image);
         $name = $image->getClientOriginalName();
