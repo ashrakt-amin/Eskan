@@ -81,7 +81,7 @@ trait ImageProccessingTrait
 
     }
 
-    public function setImages($images, $path, $column, $width = null, $height = null)
+    public function setImages($images, $path, $column, $width, $height)
     {
         $imagesName = [];
         foreach($images as $image){
@@ -92,7 +92,7 @@ trait ImageProccessingTrait
     /**
      * update image width and height
      */
-    public function aspectForResize($image, $path,$width = null, $height = null)
+    public function aspectForResize($image, $path,$width, $height)
     {
         $img = Image::make($image);
         $name = $image->getClientOriginalName();
