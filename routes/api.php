@@ -32,6 +32,7 @@ use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\CustomerQuestionController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
+use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\RealEstateProjectController;
 
 //start register
@@ -116,7 +117,7 @@ Route::prefix("user")->group(function () {
 });
 Route::resource('sells/project', SellProjectController::class)->only(['index', 'show']);
 Route::resource('sells/project/client', FormsellsController::class)->only(['store']);
-Route::get('sells/site', [SellerProfileController::class ,'sells_site']);
+Route::get('sells/site', [SellerProfileController::class, 'sells_site']);
 
 
 
@@ -167,8 +168,6 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::delete('/delete/image/{id}', 'destroyImage');
             Route::post('commercial', 'storeCommercial');
             Route::post('commercial/update', 'commercialUpdate');
-
-
         });
     });
     Route::resource('unit_images', UnitsImageController::class)->except(['index', 'show']);
@@ -218,7 +217,7 @@ Route::middleware('auth:sanctum')->group(function () {
     //sells project 
     Route::prefix("sells")->group(function () {
         Route::resource('/project', SellProjectController::class)->except(['index', 'show']);
-        Route::post('/project/update', [SellProjectController::class,'update_sellProject']);
+        Route::post('/project/update', [SellProjectController::class, 'update_sellProject']);
 
         Route::controller(SellerProfileController::class)->group(function () {
             Route::get('/profile/dash/{id?}', 'show_user');
@@ -226,15 +225,14 @@ Route::middleware('auth:sanctum')->group(function () {
             Route::get('/clients', 'sells_project_client');
             Route::get('/sells', 'sells_project_sells');
             Route::get('/profiles', 'index');
-             //sells admin
+            //sells admin
             Route::get('/admin/prjects', 'sells_project');
-
-
         });
     });
 
-    Route::post('sells/client', [FormsellsController::class , "update_status"]);
+    Route::post('sells/client', [FormsellsController::class, "update_status"]);
 
+    Route::resource('link', LinkController::class);
 });
 
 // end auth

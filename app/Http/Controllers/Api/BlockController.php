@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Block;
 use Illuminate\Http\Request;
 use App\Http\Requests\BlockRequest;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\BlockResource;
-use App\Models\Block;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
 
