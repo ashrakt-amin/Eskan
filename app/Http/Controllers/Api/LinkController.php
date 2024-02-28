@@ -18,7 +18,6 @@ class LinkController extends Controller
     {
         $data = Link::all();
         return $this->sendResponse(LinkResource::collection($data), "كل اللينكات", 200);
-
     }
 
 
