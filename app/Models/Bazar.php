@@ -12,6 +12,7 @@ class Bazar extends Model
     protected $appends = ['path'];
     protected $fillable = ['number','space','meter_price','advance','installment','img','revenue','contract'];
 
+    
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {

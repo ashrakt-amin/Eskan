@@ -4,17 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Unit extends Model
 {
     use HasFactory;
+
     const IMAGE_PATH = 'Units';
+
     protected $appends = ['path'];
+
     protected $fillable = [
         'number', 'contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
         'advance_rate', 'advance', 'installment', 'type_id', 'project_id', 'unit_image_id',
         'block_id', 'appear', 'img'
     ];
+    
 
     public function type()
     {

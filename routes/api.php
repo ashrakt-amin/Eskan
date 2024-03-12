@@ -119,6 +119,7 @@ Route::resource('sells/project', SellProjectController::class)->only(['index', '
 Route::resource('sells/project/client', FormsellsController::class)->only(['store']);
 Route::get('sells/site', [SellerProfileController::class, 'sells_site']);
 
+Route::resource('link', LinkController::class)->only(['index', 'show']);
 
 
 
@@ -232,7 +233,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('sells/client', [FormsellsController::class, "update_status"]);
 
-    Route::resource('link', LinkController::class);
+    Route::resource('link', LinkController::class)->except(['index', 'show']);
 });
 
 // end auth
