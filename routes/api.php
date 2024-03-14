@@ -53,9 +53,9 @@ Route::resource('projects-wallet', RealEstateProjectController::class)->only(['i
 Route::resource('wallet_units', WalletUnitController::class)->only(['index', 'show']);
 Route::resource('units', UnitController::class)->only(['index', 'show']);
 Route::resource('unit_images', UnitsImageController::class)->only(['index', 'show']);
-Route::resource('bazar', BazarController::class)->only(['index', 'show']);
+Route::resource('cityCenter', BazarController::class)->only(['index', 'show']);
 Route::resource('block', BlockController::class)->only(['index', 'show']);
-Route::prefix("bazar")->group(function () {
+Route::prefix("cityCenter")->group(function () {
     Route::controller(BazarController::class)->group(function () {
         Route::get('/space/{meter_price?}', 'space');
         Route::get('/meter_price/{space?}', 'meterPrice');
@@ -159,8 +159,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('units_type', unitsTypeController::class)->except(['index', 'show']);
     Route::resource('units', UnitController::class)->except(['index', 'show']);
-    Route::resource('bazar', BazarController::class)->except(['index', 'show']);
-    Route::post('bazar/update', [BazarController::class, 'storeUp']);
+    Route::resource('cityCenter', BazarController::class)->except(['index', 'show']);
+    Route::post('cityCenter/update', [BazarController::class, 'storeUp']);
     Route::resource('seek_money', SeekMoneyController::class)->except('store');
     Route::prefix("units")->group(function () {
         Route::controller(UnitController::class)->group(function () {
