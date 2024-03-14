@@ -10,6 +10,7 @@ class BazarResource extends JsonResource
     {
 
         return [
+            
             'id'          => $this->id,
             'number'      => $this->number,
             'space'       => is_int($this->space) ? (int)$this->space : (float)$this->space,
@@ -18,7 +19,8 @@ class BazarResource extends JsonResource
             'installment' => is_int($this->installment) ? (int)$this->installment : (float)$this->installment,
             'img'         => $this->path,
             'revenue'     => $this->revenue,
-            'contract'    => $this->contract
+            'contract'    => $this->contract,
+            'section'     => $this->section
 
               
         ];

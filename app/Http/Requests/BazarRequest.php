@@ -23,7 +23,8 @@ class BazarRequest extends FormRequest
             'installment' => 'required',
             'img'         => 'required',
             'revenue'     => 'nullable',
-            'contract'    => 'nullable'
+            'contract'    => 'nullable',
+            'section'     => 'nullable',
 
 
         ];
