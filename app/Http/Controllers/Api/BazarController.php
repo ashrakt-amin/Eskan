@@ -93,10 +93,10 @@ class BazarController extends Controller
 
 
 
-    public function numbers()
+    public function numbers(Request $request)
     {
 
-        $numbers = Bazar::orderBy('number', 'asc')->get();
+        $numbers = Bazar::orderBy('number', 'asc')->where('section', $request['section'])->get();
         $unique_data = $numbers->unique('number')->pluck('number')
             ->values()->all();
         return response()->json([
@@ -107,10 +107,10 @@ class BazarController extends Controller
     }
 
 
-    public function revenue()
+    public function revenue(Request $request)
     {
 
-        $revenue = Bazar::orderBy('revenue', 'asc')->get();
+        $revenue = Bazar::orderBy('revenue', 'asc')->where('section', $request['section'])->get();
         $unique_data = $revenue->unique('revenue')->pluck('revenue')
             ->values()->all();
         return response()->json([
@@ -120,12 +120,12 @@ class BazarController extends Controller
         ], 200);
     }
 
-    public function space($meter_price = '')
+    public function space($meter_price = '', Request $request)
     {
         if ($meter_price != null && $meter_price != 0) {
-            $spaces = Bazar::where('meter_price', $meter_price)->orderBy('space', 'asc')->get();
+            $spaces = Bazar::where('meter_price', $meter_price)->where('section', $request['section'])->orderBy('space', 'asc')->get();
         } else {
-            $spaces = Bazar::orderBy('space', 'asc')->get();
+            $spaces = Bazar::orderBy('space', 'asc')->where('section', $request['section'])->get();
         }
         $unique_data = $spaces->unique('space')->pluck('space')
             ->values()->all();
@@ -137,12 +137,12 @@ class BazarController extends Controller
     }
 
 
-    public function meterPrice($space = '')
+    public function meterPrice($space = '', Request $request)
     {
         if ($space != null && $space != 0) {
-            $unit = Bazar::where('space', $space)->orderBy('meter_price', 'asc')->get();
+            $unit = Bazar::where('space', $space)->where('section', $request['section'])->orderBy('meter_price', 'asc')->get();
         } else {
-            $unit = Bazar::orderBy('meter_price', 'asc')->get();
+            $unit = Bazar::orderBy('meter_price', 'asc')->where('section', $request['section'])->get();
         }
         $unique_data = $unit->unique('meter_price')
             ->pluck('meter_price')->values()->all();
