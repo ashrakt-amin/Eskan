@@ -21,7 +21,7 @@ Route::get('/', function () {
 });
 
 
-Route::get('/test',[TestController::Class,'index']);
+// Route::get('/test',[TestController::Class,'index']);
 
 
 Route::delete('/delete', function () {
