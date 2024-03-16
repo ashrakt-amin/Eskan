@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class BazarRequest extends FormRequest
 {
-
+    
     public function authorize(): bool
     {
         return true;
@@ -19,7 +19,7 @@ class BazarRequest extends FormRequest
             'number'      => 'required',
             'space'       => 'required',
             'meter_price' => 'required',
-            'advance'     => 'nullable',
+            'advance'     => 'required',
             'installment' => 'required',
             'img'         => 'required',
             'revenue'     => 'nullable',

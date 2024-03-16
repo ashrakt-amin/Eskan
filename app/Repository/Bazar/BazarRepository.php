@@ -31,7 +31,11 @@ class BazarRepository implements BazarInterface
         try {
             $percentage = 25;
             $numberOfMonths = 12;
-            $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
+            if($attributes['section'] == "مطاعم"){
+                $attributes['revenue'] = null;
+            }else{
+                $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
+            }
             $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
             $data = $this->model->create($attributes);
             return true;
@@ -70,7 +74,11 @@ class BazarRepository implements BazarInterface
                 $data->update(['revenue' => $revenue,
                 'meter_price' => $attributes['meter_price']
             ]);
-            } else {
+            }elseif ($attributes['section'] == "مطاعم") {
+                $data->update([
+                    'revenue' => null,
+                ]);
+            }else {
                 $data->update($attributes->all());
             }
 
