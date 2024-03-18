@@ -184,9 +184,14 @@ class UnitController extends Controller
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
+        if (array_key_exists('number', $attributes) && $attributes['number'] != 0) {
+            $q->where(['number' => $attributes['number']]);
+        }
+
         if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)&&
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
         ) {
             // $unit = Unit::all();
             $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
@@ -237,9 +242,14 @@ class UnitController extends Controller
             $q->where(['level_id' => $attributes['level_id']]);
         }
 
+        if (array_key_exists('number', $attributes) && $attributes['number'] != 0) {
+            $q->where(['number' => $attributes['number']]);
+        }
+
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0) &&
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
         ) {
 
             $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
@@ -289,9 +299,14 @@ class UnitController extends Controller
             $q->where(['space' => $attributes['space']]);
         }
 
+        if (array_key_exists('number', $attributes) && $attributes['number'] != 0) {
+            $q->where(['number' => $attributes['number']]);
+        }
+
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('space', $attributes) || $attributes['space'] == 0)
+            (!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
         ) {
 
             $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
