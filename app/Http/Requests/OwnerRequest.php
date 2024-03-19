@@ -17,14 +17,13 @@ class OwnerRequest extends FormRequest
         return [
             'name'        => 'required',
             'phone'       => 'required|unique:owners,phone|regex:/^\d{7,}$/',
-            'job'         => 'required',
-            'address'     => 'required',
-            'unit_type'   => 'required',
-            'price'       => 'required',
+            'job'         => 'nullable',
+            'address'     => 'nullable',
+            'unit_type'   => 'nullable',
+            'price'       => 'nullable',
             'premium'     => 'required',
-            'feedback' =>'nullable',
-
-
+            'place'       => 'nullable',
+            'feedback'    => 'nullable',
         ];
     }
 }

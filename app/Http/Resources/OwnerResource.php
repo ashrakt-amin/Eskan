@@ -8,11 +8,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class OwnerResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+  
     public function toArray(Request $request): array
     {
         $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d H:i:s');
@@ -27,7 +23,8 @@ class OwnerResource extends JsonResource
             'price'       => $this->price,
             'premium'     => $this->premium,
             'created_at'  => $formattedCreatedAt,
-            'feedback'        => $this->feedback
+            'place'       => $this->place,
+            'feedback'    => $this->feedback
 
 
         ];

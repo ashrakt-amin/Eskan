@@ -10,5 +10,5 @@ class Owner extends Model
 {
     use HasFactory, SoftDeletes;
 
-    protected $fillable = ['name', 'phone', 'job', 'address', 'unit_type', 'price', 'premium' ,'feedback'];
+    protected $fillable = ['name', 'phone', 'job', 'address', 'unit_type', 'price', 'premium' ,'place','feedback'];
 }
