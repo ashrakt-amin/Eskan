@@ -360,6 +360,63 @@ class UnitController extends Controller
     }
 
 
+    public function numbers(Request $request)
+    {
+        $q = Unit::query();
+        $attributes = $request->all();
+        $type = $attributes['type'];
+        $q->where('appear', 1)->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->get();
+
+        if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
+            $q->where(['meter_price' => $attributes['meter_price']]);
+        }
+
+        // if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
+        //     $q->where(['block_id' => $attributes['block_id']]);
+        // }
+
+        if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
+            $q->where(['space' => $attributes['space']]);
+        }
+
+        if (array_key_exists('level_id', $attributes) && $attributes['level_id'] != 0) {
+            $q->where(['level_id' => $attributes['level_id']]);
+        }
+
+        if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
+            (!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
+            ){
+
+            $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            })->get();
+            $response = $unit->unique('number')->pluck('number')->values()->all();
+            $unique_data = collect($response)->sortBy(function ($item) {
+                return $item;
+            })->values()->all();
+            return response()->json([
+                'status' => true,
+                'message' => "unique numbers!",
+                'data' => $unique_data
+            ], 200);
+        }
+        $response = $q->orderBy('number', 'asc')->pluck('number')->values()->unique()->all();
+        $numbers = collect($response)->sortBy(function ($item) {
+            return $item;
+        })->values()->all();
+
+        return response()->json([
+            'status' => true,
+            'message' => "unique numbers!",
+            'data' => $numbers
+        ], 200);
+    }
+
+
+
     //end filter ------------------------------------
 
 
@@ -409,7 +466,7 @@ class UnitController extends Controller
         ], 200);
     }
 
-    public function numbers($level, $number)
+    public function number($level, $number)
     {
         $unit = Unit::where('level_id', $level)->where('number', $number)->first();
         if (isset($unit)) {

@@ -17,7 +17,9 @@ class OwnerRepository implements OwnerInterface
     public function __construct(Owner $model)
     {
         $this->model = $model  ;
-      }
+    }
+
+
 
     public function all(): Collection
     {
@@ -44,11 +46,13 @@ class OwnerRepository implements OwnerInterface
     public function edit($id,  $attributes): ?Owner
     {
         $data = $this->model->findOrFail($id);
+
         if ($attributes['feedback'] != null) {
             $data->update([
                 'feedback' => $attributes['feedback']
             ]);
         }
+
         return $data;
     }
 
