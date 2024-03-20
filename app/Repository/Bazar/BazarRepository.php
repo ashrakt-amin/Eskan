@@ -31,13 +31,15 @@ class BazarRepository implements BazarInterface
         try {
             $percentage = 25;
             $numberOfMonths = 12;
-            if($attributes['section'] == "مطاعم"){
+
+            if ($attributes['section'] == "مطاعم") {
                 $attributes['revenue'] = null;
-            }else{
+            } elseif ($attributes['section'] == "بزار") {
                 $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
             }
+
             $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
-            $data = $this->model->create($attributes);
+            $this->model->create($attributes);
             return true;
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -66,19 +68,20 @@ class BazarRepository implements BazarInterface
             } elseif ($attributes['space']) {
                 $revenue = number_format(($attributes['space'] * $data->meter_price * ($percentage / 100)) / $numberOfMonths);
                 $data->update([
-                    'revenue' => $revenue ,
+                    'revenue' => $revenue,
                     'space' => $attributes['space']
                 ]);
             } elseif ($attributes['meter_price']) {
                 $revenue = number_format(($data->space * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
-                $data->update(['revenue' => $revenue,
-                'meter_price' => $attributes['meter_price']
-            ]);
-            }elseif ($attributes['section'] == "مطاعم") {
+                $data->update([
+                    'revenue' => $revenue,
+                    'meter_price' => $attributes['meter_price']
+                ]);
+            } elseif ($attributes['section'] == "مطاعم") {
                 $data->update([
                     'revenue' => null,
                 ]);
-            }else {
+            } else {
                 $data->update($attributes->all());
             }
 
