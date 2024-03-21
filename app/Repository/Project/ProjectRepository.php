@@ -24,9 +24,13 @@ class ProjectRepository implements ProjectInterface
         $this->model = $model;
     }
 
-    public function all(): Collection
+    public function all(array $attributes)
     {
-        return $this->model->all();
+        if(isset($attributes['type'])){
+            return $this->model->where('type', $attributes['type'])->get();
+        }else{
+            return $this->model->all();
+        }
     }
 
 

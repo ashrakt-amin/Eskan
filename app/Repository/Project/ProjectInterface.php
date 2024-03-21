@@ -8,7 +8,7 @@ use App\Models\Project;
 
 interface ProjectInterface
 {
-    public function all(): Collection;
+    public function all(array $attributes);
 
     public function store(array $attributes);
 

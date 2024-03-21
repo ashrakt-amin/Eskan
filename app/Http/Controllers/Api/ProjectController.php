@@ -21,9 +21,9 @@ class ProjectController extends Controller
         $this->Repository = $Repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $data = $this->Repository->all();
+        $data = $this->Repository->all($request->all());
         return $this->sendResponse(ProjectResource::collection($data), " ", 200);
     }
 

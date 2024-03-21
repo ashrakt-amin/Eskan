@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
 {
-   
+
     public function authorize(): bool
     {
         return true;
@@ -16,7 +16,9 @@ class ProjectRequest extends FormRequest
     {
         return [
             'name'    => 'required',
+            'type'    => 'nullable',
             'img'     => 'nullable',
+
 
         ];
     }

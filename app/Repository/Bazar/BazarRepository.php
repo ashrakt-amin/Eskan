@@ -34,7 +34,7 @@ class BazarRepository implements BazarInterface
 
             if ($attributes['section'] == "مطاعم") {
                 $attributes['revenue'] = null;
-            } elseif ($attributes['section'] == "بزار") {
+            } elseif ($attributes['section'] == "بازار") {
                 $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
             }
 
