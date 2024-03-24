@@ -50,8 +50,14 @@ class ImageController extends Controller
         // $image = Image::where('name', 'like', '%' . $name . '%')->get();
         // return $this->sendResponse(ImageResource::collection($image), "success", 200);
 
-        $image = Image::where('name', $name)->first();
-        return $this->sendResponse(new ImageResource($image), "success", 200);
+        $image = Image::where('name', $name)->get();
+        if($image->count() > 1){
+            return $this->sendResponse(ImageResource::collection($image), "success", 200);
+
+        }else{
+            return $this->sendResponse(new ImageResource($image->first()), "success", 200);
+
+        }
     }
 
     public function updateImage(Request $request)
