@@ -90,8 +90,7 @@ class BazarCustomerRepository implements BazarCustomerInterface
     public function forAllConditions(array $attributes)
     {
         return $this->model
-            ->where($this->theLatest($attributes))
-            ->orderByRaw('(created_at)ASC');
+            ->where($this->theLatest($attributes));
     }
 
 

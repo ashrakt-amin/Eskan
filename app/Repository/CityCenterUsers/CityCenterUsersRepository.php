@@ -69,7 +69,7 @@ class CityCenterUsersRepository implements CityCenterUsersInterface
     {
         return function ($q) use ($attributes) {
             !array_key_exists('latest', $attributes) ?: $q
-                ->latest()->orderByRaw('(created_at)ASC');
+                ->latest();
         };
     }
 
