@@ -287,6 +287,8 @@ class UnitController extends Controller
             $query->where('name', $type);
         })->get();
 
+         
+
         if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
             $q->where(['meter_price' => $attributes['meter_price']]);
         }
@@ -344,14 +346,19 @@ class UnitController extends Controller
         }
 
         $unit_levels = $q->orderBy('level_id', 'asc')->pluck('level_id')->values()->unique()->all();
-        $levels = Level::all();
-        foreach ($unit_levels as $unit_level) {
-            foreach ($levels as $level) {
-                if ($level->id == $unit_level) {
-                    $data[] = $level;
+        if($unit_levels != null){
+            $levels = Level::all();
+            foreach ($unit_levels as $unit_level) {
+                foreach ($levels as $level) {
+                    if ($level->id == $unit_level) {
+                        $data[] = $level;
+                    }
                 }
             }
+        }else{
+            $data = [];
         }
+       
         return response()->json([
             'status' => true,
             'message' => "unique level",
