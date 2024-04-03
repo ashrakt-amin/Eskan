@@ -18,6 +18,7 @@ class BazarCustomerRequest extends FormRequest
             'name'         => 'required',
             'phone'        => ['required','regex:/^\d{7,}$/'],
             'bazar_number' => 'required',
+            'section'      => 'nullable',
             'feedback'     => 'nullable',
 
         ];

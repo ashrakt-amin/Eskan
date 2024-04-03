@@ -8,5 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BazarCustomer extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','phone','bazar_number','feedback'];
+
+    protected $fillable = ['name','phone','bazar_number','feedback','section'];
+    
 }
