@@ -12,7 +12,7 @@ use App\Repository\Bazar\BazarInterface;
 use App\Http\Resources\Unit\BazarResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
-class BazarController extends Controller
+class  BazarController extends Controller
 {
     use TraitResponseTrait;
     protected $Repository;

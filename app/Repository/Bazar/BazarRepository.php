@@ -121,6 +121,9 @@ class BazarRepository implements BazarInterface
 
             !array_key_exists('section', $attributes) || $attributes['section'] == null ?: $q
                 ->where(['section' => $attributes['section']]);
+
+            !array_key_exists('appear', $attributes) || $attributes['appear'] == null ?: $q
+                ->where(['appear' => $attributes['appear']]);
         };
     }
 

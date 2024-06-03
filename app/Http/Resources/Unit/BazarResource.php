@@ -20,7 +20,9 @@ class BazarResource extends JsonResource
             'img'         => $this->path,
             'revenue'     => $this->revenue,
             'contract'    => $this->contract,
-            'section'     => $this->section
+            'section'     => $this->section,
+            'appear'     => $this->appear
+
 
               
         ];
