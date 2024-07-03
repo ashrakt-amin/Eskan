@@ -34,6 +34,7 @@ use App\Http\Controllers\Api\CustomerQuestionController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\RealEstateProjectController;
+use App\Http\Controllers\Api\SouqistanboulController;
 use App\Http\Controllers\OwnersystemController;
 
 //start register
@@ -80,6 +81,8 @@ Route::resource('seek_money', SeekMoneyController::class)->only('store');
 Route::resource('user/wallet_unit', UserWalletController::class)->only('store');
 Route::resource('park_user', ParkUsersController::class)->only('store');
 Route::resource('ownerSystem', OwnersystemController::class)->only(['store']);
+Route::resource('souq_istanboul', SouqistanboulController::class)->only(['store']);
+
 
 
 Route::get('unit/levels', [LevelController::class, 'index']);
@@ -201,6 +204,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('park_user', ParkUsersController::class)->except('store');
     Route::resource('customer/question', CustomerQuestionController::class);
     Route::resource('ownerSystem', OwnersystemController::class)->except(['store']);
+    Route::resource('souq_istanboul', SouqistanboulController::class)->except(['store']);
+
 
 
     Route::delete('seek_money/force_delete/{id}', [SeekMoneyController::class, 'forceDelete']);
