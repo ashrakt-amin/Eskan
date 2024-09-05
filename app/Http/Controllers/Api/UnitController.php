@@ -34,10 +34,10 @@ class UnitController extends Controller
 
     public function index(Request $request)
     {
-    //   return $request['type'] ;
-        if ( $request['type'] == "سكنى") {
+        //   return $request['type'] ;
+        if ($request['type'] == "سكنى") {
             return $this->Repository->forAllConditionsReturn($request->all(), UnitResource::class);
-        } elseif ( $request['type'] == "تجارى") {
+        } elseif ($request['type'] == "تجارى") {
             return $this->Repository->forAllConditionsReturn($request->all(), CommercialResource::class);
         }
     }
@@ -168,7 +168,7 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
+        $q->where('appear', 1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
@@ -188,13 +188,20 @@ class UnitController extends Controller
             $q->where(['number' => $attributes['number']]);
         }
 
+
+        if (array_key_exists('revenue', $attributes) && $attributes['revenue'] != 0) {
+            $q->where(['revenue' => $attributes['revenue']]);
+        }
+
+
         if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)&&
-            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0) &&
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) &&
+            (!array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0)
         ) {
             // $unit = Unit::all();
-            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
 
@@ -226,7 +233,7 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
+        $q->where('appear', 1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
@@ -246,13 +253,18 @@ class UnitController extends Controller
             $q->where(['number' => $attributes['number']]);
         }
 
+        if (array_key_exists('revenue', $attributes) && $attributes['revenue'] != 0) {
+            $q->where(['revenue' => $attributes['revenue']]);
+        }
+
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
             (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0) &&
-            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) &&
+            (!array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0)
         ) {
 
-            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
             $response = $unit->unique('space')->pluck('space')->values()->all();
@@ -283,11 +295,11 @@ class UnitController extends Controller
         $q = Unit::query();
         $attributes = $request->all();
         $type = $attributes['type'];
-        $q->where('appear',1)->whereHas('type', function ($query) use ($type) {
+        $q->where('appear', 1)->whereHas('type', function ($query) use ($type) {
             $query->where('name', $type);
         })->get();
 
-         
+
 
         if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
             $q->where(['meter_price' => $attributes['meter_price']]);
@@ -305,25 +317,30 @@ class UnitController extends Controller
             $q->where(['number' => $attributes['number']]);
         }
 
+        if (array_key_exists('revenue', $attributes) && $attributes['revenue'] != 0) {
+            $q->where(['revenue' => $attributes['revenue']]);
+        }
+
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
             (!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
-            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) 
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0) &&
+            (!array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0)
         ) {
 
-            $unit  = Unit::where('appear',1)->whereHas('type', function ($query) use ($type) {
+            $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
             })->get();
-            if(count($unit) >1){
+            if (count($unit) > 1) {
                 $response = $unit->unique('level_id')->pluck('level_id')->values()->all();
-         
-                if($unit == null){
+
+                if ($unit == null) {
                     $data = [];
                 }
                 $unit_levels = collect($response)->sortBy(function ($item) {
                     return $item;
                 })->values()->all();
-    
+
                 $levels = Level::all();
                 foreach ($unit_levels as $unit_level) {
                     foreach ($levels as $level) {
@@ -332,11 +349,11 @@ class UnitController extends Controller
                         }
                     }
                 }
-            }else{
+            } else {
                 $data = [];
             }
-           
-           
+
+
 
             return response()->json([
                 'status' => true,
@@ -346,7 +363,7 @@ class UnitController extends Controller
         }
 
         $unit_levels = $q->orderBy('level_id', 'asc')->pluck('level_id')->values()->unique()->all();
-        if($unit_levels != null){
+        if ($unit_levels != null) {
             $levels = Level::all();
             foreach ($unit_levels as $unit_level) {
                 foreach ($levels as $level) {
@@ -355,10 +372,10 @@ class UnitController extends Controller
                     }
                 }
             }
-        }else{
+        } else {
             $data = [];
         }
-       
+
         return response()->json([
             'status' => true,
             'message' => "unique level",
@@ -380,9 +397,9 @@ class UnitController extends Controller
             $q->where(['meter_price' => $attributes['meter_price']]);
         }
 
-        // if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
-        //     $q->where(['block_id' => $attributes['block_id']]);
-        // }
+        if (array_key_exists('revenue', $attributes) && $attributes['revenue'] != 0) {
+            $q->where(['revenue' => $attributes['revenue']]);
+        }
 
         if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
             $q->where(['space' => $attributes['space']]);
@@ -394,8 +411,10 @@ class UnitController extends Controller
 
         if ((!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
             (!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
-            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0)
-            ){
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0) &&
+            (!array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0)
+
+        ) {
 
             $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
                 $query->where('name', $type);
@@ -421,6 +440,77 @@ class UnitController extends Controller
             'data' => $numbers
         ], 200);
     }
+
+
+    public function revenue(Request $request)
+    {
+        $q = Unit::query();
+        $attributes = $request->all();
+        $type = $attributes['type'];
+        $q->where('appear', 1)->where('revenue','<>',null)->whereHas('type', function ($query) use ($type) {
+            $query->where('name', $type);
+        })->get();
+
+        if (array_key_exists('space', $attributes) && $attributes['space'] != 0) {
+            $q->where(['space' => $attributes['space']]);
+        }
+
+        if (array_key_exists('block_id', $attributes) && $attributes['block_id'] != 0) {
+            $q->where(['block_id' => $attributes['block_id']]);
+        }
+
+        if (array_key_exists('level_id', $attributes) && $attributes['level_id'] != 0) {
+            $q->where(['level_id' => $attributes['level_id']]);
+        }
+
+        if (array_key_exists('number', $attributes) && $attributes['number'] != 0) {
+            $q->where(['number' => $attributes['number']]);
+        }
+
+        if (array_key_exists('meter_price', $attributes) && $attributes['meter_price'] != 0) {
+            $q->where(['meter_price' => $attributes['meter_price']]);
+        }
+
+
+        if ((!array_key_exists('space', $attributes) || $attributes['space'] == 0) &&
+            (!array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0) &&
+            (!array_key_exists('level_id', $attributes) || $attributes['level_id'] == 0) &&
+            (!array_key_exists('meter_price', $attributes) || $attributes['meter_price'] == 0) &&
+            (!array_key_exists('number', $attributes) || $attributes['number'] == 0)
+        ) {
+            // $unit = Unit::all();
+            $unit  = Unit::where('appear', 1)->whereHas('type', function ($query) use ($type) {
+                $query->where('name', $type);
+            })->get();
+
+            // $response = $unit->unique('revenue')->pluck('revenue')->values()->all();
+            $response = $unit->filter(function ($item) {
+                return isset($item->revenue) && $item->revenue !== null;
+            })->unique('revenue')->pluck('revenue')->values()->all();
+
+            $unique_data = collect($response)->sortBy(function ($item) {
+                return $item;
+            })->values()->all();
+            return response()->json([
+                'status' => true,
+                'message' => "unique revenues!",
+                'data' => $unique_data
+            ], 200);
+        }
+
+        $response = $q->orderBy('revenue', 'asc')->pluck('revenue')->unique()->values()->all();
+
+        $revenue = collect($response)->sortBy(function ($item) {
+            return $item;
+        })->values()->all();
+
+        return response()->json([
+            'status' => true,
+            'message' => "unique revenues!",
+            'data' => $revenue
+        ], 200);
+    }
+
 
 
 

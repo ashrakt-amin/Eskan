@@ -30,11 +30,13 @@ class UnitResource extends JsonResource
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
             ],
-            'block_id'                  => [
+            'block_id'                  => $this->block_id == null ? "null" :  [
                 'id'     => $this->block_id,
                 'name'   => $this->block->name,
             ],
-            'appear'     =>$this->appear
+            'appear'     =>$this->appear,
+            'revenue'       => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
+
 
         ];
     }

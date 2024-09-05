@@ -28,7 +28,10 @@ class CommercialResource extends JsonResource
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
             ],
-            'appear'     =>$this->appear
+            'appear'     =>$this->appear,
+            'revenue'       => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
+
+
 
         ];
     }
