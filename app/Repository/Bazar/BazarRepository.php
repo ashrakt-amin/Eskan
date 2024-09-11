@@ -35,9 +35,9 @@ class BazarRepository implements BazarInterface
             if ($attributes['section'] == "مطاعم") {
                 $attributes['revenue'] = null;
             }elseif ($attributes['section'] == "بازار") {
-                $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
+                $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
             }else{
-                $attributes['revenue'] = number_format(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
+                $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
             }
 
             $attributes['img'] = $this->aspectForResize($attributes['img'], 'Bazar', 500, 600);
@@ -68,13 +68,13 @@ class BazarRepository implements BazarInterface
                 $img = $this->aspectForResize($attributes['img'], Bazar::IMAGE_PATH, 500, 600);
                 $data->update(['img' => $img]);
             } elseif ($attributes['space'] && $data->section == "بازار") {
-                $revenue = number_format(($attributes['space'] * $data->meter_price * ($percentage / 100)) / $numberOfMonths);
+                $revenue = FLOOR(($attributes['space'] * $data->meter_price * ($percentage / 100)) / $numberOfMonths);
                 $data->update([
                     'revenue' => $revenue,
                     'space' => $attributes['space']
                 ]);
             } elseif ($attributes['meter_price']&& $data->section == "بازار") {
-                $revenue = number_format(($data->space * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
+                $revenue = FLOOR(($data->space * $attributes['meter_price'] * ($percentage / 100)) / $numberOfMonths);
                 $data->update([
                     'revenue' => $revenue,
                     'meter_price' => $attributes['meter_price']
@@ -85,13 +85,13 @@ class BazarRepository implements BazarInterface
                 ]);
             } else {
                  if($attributes['space']) {
-                $revenue = number_format(($attributes['space'] * $data->meter_price * .21) / 12);
+                $revenue = FLOOR(($attributes['space'] * $data->meter_price * .21) / 12);
                 $data->update([
                     'revenue' => $revenue,
                     'space' => $attributes['space']
                 ]);
                 } elseif($attributes['meter_price']){
-                    $revenue = number_format(($attributes['meter_price'] * $data->space * .21) / 12);
+                    $revenue = FLOOR(($attributes['meter_price'] * $data->space * .21) / 12);
                     $data->update([
                         'revenue' => $revenue,
                         'space' => $attributes['space']

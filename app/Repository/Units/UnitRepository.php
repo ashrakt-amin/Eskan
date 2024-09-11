@@ -44,7 +44,7 @@ class UnitRepository implements UnitInterface
     {
         try {
             $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
-            $attributes['revenue'] = ($attributes['space'] * $attributes['meter_price'] * .21 ) / 12 ;
+            $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21 ) / 12) ;
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -93,7 +93,7 @@ class UnitRepository implements UnitInterface
                 $img = $this->setImageWithoutsize($attributes['img'], 'Units');
                 $unit->update(['img'=>$img]);
             }elseif($attributes['meter_price']!= null  ||  $attributes['space'] != null ){
-                $attributes['revenue'] = ($attributes['space'] * $attributes['meter_price'] * .21) / 12;
+                $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
             }else{
                 $unit->update($attributes->all());
 
