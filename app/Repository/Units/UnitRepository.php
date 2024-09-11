@@ -43,9 +43,8 @@ class UnitRepository implements UnitInterface
     public function storeCommerical(array $attributes)
     {
         try {
-
             $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
-            $attributes['revenue'] = $attributes['space'] * 825 ;
+            $attributes['revenue'] = ($attributes['space'] * $attributes['meter_price'] * .21 ) / 12 ;
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -93,8 +92,8 @@ class UnitRepository implements UnitInterface
                $this->deleteImage('Units', $unit->img);
                 $img = $this->setImageWithoutsize($attributes['img'], 'Units');
                 $unit->update(['img'=>$img]);
-            }elseif(isset($attributes['space']) && $attributes['space'] != null ){
-                $attributes['revenue'] = $attributes['space'] * 825;
+            }elseif($attributes['meter_price']!= null  ||  $attributes['space'] != null ){
+                $attributes['revenue'] = ($attributes['space'] * $attributes['meter_price'] * .21) / 12;
             }else{
                 $unit->update($attributes->all());
 
