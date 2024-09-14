@@ -179,6 +179,10 @@ class UnitRepository implements UnitInterface
             !array_key_exists('appear', $attributes)?: $q
                 ->where(['appear' => $attributes['appear']]);
 
+            !array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0   ?: $q
+                ->where(['revenue' => $attributes['revenue']]);
+
+
                 $type =$attributes['type'];
             !array_key_exists('type', $attributes)?: $q
             ->whereHas('type', function ($query) use ($type) {
