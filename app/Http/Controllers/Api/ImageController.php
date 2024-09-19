@@ -28,7 +28,6 @@ class ImageController extends Controller
 
     public function uniqueNames()
     {
-        return "ll";
         $uniqueNames = Image::select('name')->distinct()->pluck('name');
         return $this->sendResponse($uniqueNames, "unique Names", 200);
     }
