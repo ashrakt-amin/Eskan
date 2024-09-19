@@ -12,6 +12,10 @@ class Image extends Model
     protected $appends = ['path'];
     protected $fillable = ['name' , 'img'];
 
+    public static function getUniqueNames()
+    {
+        return self::select('name')->distinct()->pluck('name');
+    }
     
     public function getPathAttribute()
     {

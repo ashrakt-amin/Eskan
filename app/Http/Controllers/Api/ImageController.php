@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ImageResource;
+use App\Http\Resources\ImagenameResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\ImageProccessingTrait as TraitImageProccessingTrait;
-use Illuminate\Validation\Rule;
-use App\Http\Resources\ImageResource;
 
 
 
@@ -22,9 +23,17 @@ class ImageController extends Controller
     {
         $images = Image::all();
         return $this->sendResponse(ImageResource::collection($images), "all images", 200);
-
-
     }
+
+
+    public function uniqueNames()
+    {
+        $uniqueNames = Image::getUniqueNames();
+        return $this->sendResponse(ImagenameResource::collection($uniqueNames), "unique Names", 200);
+    }
+
+
+    
 
     public function store(Request $request)
     {
