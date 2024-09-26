@@ -249,11 +249,11 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('link', LinkController::class)->except(['index', 'show']);
 
-    Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'delete']);
+    Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'destroy']);
 
 });
 
 // end auth
 
-Route::resource('visitor', VisitorController::class)->except(['index', 'show', 'delete']);
+Route::resource('visitor', VisitorController::class)->except(['index', 'show', 'destroy']);
 
