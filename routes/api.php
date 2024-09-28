@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\RealEstateProjectController;
 use App\Http\Controllers\Api\SouqistanboulController;
+use App\Http\Controllers\Api\SouqistanboulformController;
 use App\Http\Controllers\Api\VisitorController;
 use App\Http\Controllers\OwnersystemController;
 
@@ -250,10 +251,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('link', LinkController::class)->except(['index', 'show']);
 
     Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'destroy']);
+    Route::resource('Souqistanboul-form', SouqistanboulformController::class)->only(['index', 'show', 'destroy']);
+
+    
 
 });
 
 // end auth
 
 Route::resource('visitor', VisitorController::class)->except(['index', 'show', 'destroy']);
+Route::resource('Souqistanboul-form', SouqistanboulformController::class)->except(['index', 'show', 'destroy']);
+
+
 

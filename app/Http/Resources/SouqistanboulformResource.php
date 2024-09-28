@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class VisitorResource extends JsonResource
+class SouqistanboulformResource extends JsonResource
 {
 
     public function toArray(Request $request): array
@@ -17,14 +17,9 @@ class VisitorResource extends JsonResource
             'id'              => $this->id,
             'name'            => $this->name,
             'phone'           => $this->phone,
-            'job'             => $this->job,
-            'address'         => $this->address,
-            'contact_time'    => $this->contact_time,
-            'how'             => $this->how,
-            'why'             => $this->why,
+            'shop_number'     => $this->shop_number,
+            'region'          => $this->region,
             'created_at'      => $formattedCreatedAt,
-            'sales1'          => $this->sales1,
-            'sales2'          => $this->sales2,
 
         ];    
 

@@ -2,23 +2,24 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Visitor;
 use Illuminate\Http\Request;
+use App\Models\Souqistanboulform;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VisitorRequest;
-use App\Http\Resources\VisitorResource;
-use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\PaginationTrait;
+use App\Http\Requests\SouqistaboulformRequest;
+use App\Http\Resources\SouqistanboulformResource;
+use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 
 
-class VisitorController extends Controller
+
+class SouqistanboulformController extends Controller
 {
-    use TraitResponseTrait ,PaginationTrait;
-
+    use TraitResponseTrait, PaginationTrait;
 
     public function index(Request $request)
     {
-        $query = Visitor::query();
+
+        $query = Souqistanboulform::query();
 
         if ($request->has('name')) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
@@ -27,7 +28,16 @@ class VisitorController extends Controller
         if ($request->has('phone')) {
             $query->where('phone', 'like', '%' . $request->input('phone') . '%');
         }
-        
+
+        if ($request->has('region')) {
+            $query->where('region', 'like', '%' . $request->input('region') . '%');
+        }
+
+        if ($request->has('shop_number')) {
+            $query->where('shop_number', 'like', '%' . $request->input('shop_number') . '%');
+        }
+
+
         $data = $query->latest()->paginate($request['paginate']);
 
         $currentPage = $data->currentPage();
@@ -36,33 +46,32 @@ class VisitorController extends Controller
 
         $response = [
             'current_page'  => $currentPage,
-            'data'          => VisitorResource::collection($data),
+            'data'          => SouqistanboulformResource::collection($data),
             'total_pages'   => $totalPages,
             'next_page_url' => $paginationUrls['next_page_url'],
             'prev_page_url' => $paginationUrls['prev_page_url'],
         ];
 
-        return $this->sendResponse($response, "كل الزوار", 200);
+        return $this->sendResponse($response, "كل البيانات", 200);
     }
-  
 
 
     public function show($id)
     {
-        $data = Visitor::findOrFail($id);
-        return $this->sendResponse(new VisitorResource($data), "تم", 200);
+        $data = Souqistanboulform::findOrFail($id);
+        return $this->sendResponse(new SouqistanboulformResource($data), "تم", 200);
     }
 
-    public function store(VisitorRequest $request)
+    public function store(SouqistaboulformRequest $request)
     {
-        $data = Visitor::create($request->validated());
+        $data = Souqistanboulform::create($request->validated());
         return $this->sendResponse($data, "تم التسجيل  ", 200);
     }
 
 
     public function update(Request $request, $id)
     {
-        $data = Visitor::findOrFail($id);
+        $data = Souqistanboulform::findOrFail($id);
         $data->update($request->all());
         return $this->sendResponse($data, "تم التعديل  ", 200);
     }
@@ -70,9 +79,8 @@ class VisitorController extends Controller
 
     public function destroy($id)
     {
-        $data = Visitor::findOrFail($id);
+        $data = Souqistanboulform::findOrFail($id);
         $data->delete();
         return $this->sendResponse('success', "تم الحذف  ", 200);
-
     }
 }
