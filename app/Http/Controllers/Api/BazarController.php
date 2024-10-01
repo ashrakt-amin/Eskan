@@ -95,8 +95,9 @@ class  BazarController extends Controller
 
     public function numbers(Request $request)
     {
+        //->where('section', $request['section'])
 
-        $numbers = Bazar::orderBy('number', 'asc')->where('section', $request['section'])->get();
+        $numbers = Bazar::orderBy('number', 'asc')->get();
         $unique_data = $numbers->unique('number')->pluck('number')
             ->values()->all();
         return response()->json([
@@ -137,12 +138,13 @@ class  BazarController extends Controller
     }
 
 
-    public function meterPrice($space = '', Request $request)
+    public function meterPrice(Request $request ,$space = '')
     {
+        //->where('section', $request['section'])
         if ($space != null && $space != 0) {
-            $unit = Bazar::where('space', $space)->where('section', $request['section'])->orderBy('meter_price', 'asc')->get();
+            $unit = Bazar::where('space', $space)->orderBy('meter_price', 'asc')->get();
         } else {
-            $unit = Bazar::orderBy('meter_price', 'asc')->where('section', $request['section'])->get();
+            $unit = Bazar::orderBy('meter_price', 'asc')->get();
         }
         $unique_data = $unit->unique('meter_price')
             ->pluck('meter_price')->values()->all();
