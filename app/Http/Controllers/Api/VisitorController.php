@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
+use Carbon\Carbon;
 use App\Models\Visitor;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Traits\PaginationTrait;
 use App\Http\Requests\VisitorRequest;
 use App\Http\Resources\VisitorResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
-use App\Http\Traits\PaginationTrait;
 
 
 class VisitorController extends Controller
@@ -55,7 +56,9 @@ class VisitorController extends Controller
 
     public function store(VisitorRequest $request)
     {
-        $data = Visitor::create($request->validated());
+        $data = $request->validated();
+        $data['created_at'] = Carbon::parse($request['created_at'])->toDateString();
+        $data = Visitor::create($data);
         return $this->sendResponse($data, "تم التسجيل  ", 200);
     }
 
@@ -63,6 +66,11 @@ class VisitorController extends Controller
     public function update(Request $request, $id)
     {
         $data = Visitor::findOrFail($id);
+
+        if(isset($data['created_at']) && $data['created_at'] != null){
+            $data['created_at'] = Carbon::parse($request['created_at'])->toDateString();
+        }
+        
         $data->update($request->all());
         return $this->sendResponse($data, "تم التعديل  ", 200);
     }

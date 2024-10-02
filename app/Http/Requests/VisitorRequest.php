@@ -25,6 +25,7 @@ class VisitorRequest extends FormRequest
             'why'          => 'required',
             'sales1'       => 'nullable',
             'sales2'       => 'nullable',
+            // 'created_at'   => 'required'
 
         ];
     }

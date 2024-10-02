@@ -11,7 +11,7 @@ class VisitorResource extends JsonResource
 
     public function toArray(Request $request): array
     {
-        $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d H:i:s');
+        $formattedCreatedAt = Carbon::parse($this->created_at)->format('Y-m-d'  );
 
         return [
             'id'              => $this->id,
