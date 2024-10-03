@@ -37,6 +37,7 @@ class VisitorController extends Controller
 
         $response = [
             'current_page'  => $currentPage,
+            'count'         => $query->count(),
             'data'          => VisitorResource::collection($data),
             'total_pages'   => $totalPages,
             'next_page_url' => $paginationUrls['next_page_url'],
@@ -70,10 +71,21 @@ class VisitorController extends Controller
         if(isset($data['created_at']) && $data['created_at'] != null){
             $data['created_at'] = Carbon::parse($request['created_at'])->toDateString();
         }
-        
+
         $data->update($request->all());
         return $this->sendResponse($data, "تم التعديل  ", 200);
     }
+
+
+     public function updateContract($id)
+    {
+        $visitor = Visitor::findOrFail($id);
+        $visitor->update([
+            'contract' => ! $visitor->contract
+        ]);
+        return $this->sendResponse(new VisitorResource($visitor), "تم تعديل التعاقد", 200);
+    }
+
 
 
     public function destroy($id)

@@ -252,6 +252,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'destroy']);
     Route::resource('Souqistanboul-form', SouqistanboulformController::class)->only(['index', 'show', 'destroy']);
+    Route::put('updateContract/{id}', [VisitorController::class, 'updateContract']);
 
     
 

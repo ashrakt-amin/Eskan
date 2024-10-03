@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('why');
             $table->String('sales1')->nullable();
             $table->String('sales2')->nullable();
+            $table->boolean('contract')->default(0);
             $table->timestamps();
         });
     }
