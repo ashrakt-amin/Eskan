@@ -94,7 +94,7 @@ class BazarRepository implements BazarInterface
                     $revenue = FLOOR(($attributes['meter_price'] * $data->space * .21) / 12);
                     $data->update([
                         'revenue' => $revenue,
-                        'space' => $attributes['space']
+                        'meter_price' => $attributes['meter_price']
                     ]);
                 }else{
                     $data->update($attributes->all());
