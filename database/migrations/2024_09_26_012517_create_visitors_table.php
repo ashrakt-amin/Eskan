@@ -13,7 +13,7 @@ return new class extends Migration
 
             $table->id();
             $table->String('name');
-            $table->String('phone');
+            $table->String('phone')->unique();
             $table->String('job');
             $table->String('address');
             $table->String('contact_time');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->String('sales1')->nullable();
             $table->String('sales2')->nullable();
             $table->boolean('contract')->default(0);
+            $table->text('feedback')->nullable();
             $table->timestamps();
         });
     }

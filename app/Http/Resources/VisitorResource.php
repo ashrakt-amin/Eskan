@@ -25,7 +25,8 @@ class VisitorResource extends JsonResource
             'created_at'      => $formattedCreatedAt,
             'sales1'          => $this->sales1,
             'sales2'          => $this->sales2,
-            'contract'        => $this->contract
+            'contract'        => $this->contract,
+            'feedback'        => $this->feedback,
 
         ];    
 

@@ -28,6 +28,10 @@ class VisitorController extends Controller
         if ($request->has('phone')) {
             $query->where('phone', 'like', '%' . $request->input('phone') . '%');
         }
+
+        if ($request->has('date')) {
+            $query->where('created_at', 'like', '%' . $request->input('date') . '%');
+        }
         
         $data = $query->latest()->paginate($request['paginate']);
 
@@ -68,9 +72,9 @@ class VisitorController extends Controller
     {
         $data = Visitor::findOrFail($id);
 
-        if(isset($data['created_at']) && $data['created_at'] != null){
-            $data['created_at'] = Carbon::parse($request['created_at'])->toDateString();
-        }
+        // if(isset($data['created_at']) && $data['created_at'] != null){
+        //     $data['created_at'] = Carbon::parse($request['created_at'])->toDateString();
+        // }
 
         $data->update($request->all());
         return $this->sendResponse($data, "تم التعديل  ", 200);
