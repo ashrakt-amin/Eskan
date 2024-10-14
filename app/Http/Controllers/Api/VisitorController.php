@@ -32,6 +32,10 @@ class VisitorController extends Controller
         if ($request->has('date')) {
             $query->where('created_at', 'like', '%' . $request->input('date') . '%');
         }
+
+        if ($request->has('contract')) {
+            $query->where('contract', 1);
+        }
         
         $data = $query->latest()->paginate($request['paginate']);
 
