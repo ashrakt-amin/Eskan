@@ -24,9 +24,12 @@ class UpdateController extends Controller
         if (!$auth) {
             return response()->json(['message' => 'you must be in users'], 404);
         } else {
-            return  $user;
-            if ($request['img'] != "null") {
+
+            if ($user->img != null) {
                 $this->deleteImage(User::IMAGE_PATH, $user->img);
+            }
+
+            if (isset($request['img'])) {
                 $user_img = $this->aspectForResize($request['img'], User::IMAGE_PATH, 500, 600);
                 $user->update(['img' => $user_img]);
             } else {
@@ -42,20 +45,29 @@ class UpdateController extends Controller
     {
         $auth = Auth::user();
         $user = User::findOrFail($id);
-        if (!$auth) {
-            return response()->json(['message' => 'you must be in users'], 404);
-        } else {
-            $request->validate([
-                'phone'     => ['regex:/^\d{7,}$/', 'required'],
-                'name'      => [Rule::unique('users')->ignore($user->id)],
-            ]);
-            // return $request->project_id ;
 
-            $user->update($request->all());
-            $user->Sellprojects()->sync($request['project_id']);
+        $request->validate([
+            'phone'     => ['regex:/^\d{7,}$/', 'nullable'],
+            'name'      => [Rule::unique('users')->ignore($user->id)],
+        ]);
+
+        if (($request['password'] != null && isset($request['password'])) || ($request['role'] != null && isset($request['role']))) {
+            if ($auth->role != 'admin') {
+                return $this->sendError('error', 'you must be admin', 422);
+            } else {
+                $user->update([
+                    'password' => $request['password'] == null || !isset($request['password'])  ? $user->password :Hash::make($request['password']),
+                    'role'     => $request['role'] == null || !isset($request['role']) ? $user->role : $request['role'] 
+                ]);
+            }
         }
-        // $success['token']  = $user->createToken('token')->plainTextToken;
 
+        // return $request->project_id ;
+
+        $user->update($request->except(['role', 'password']));
+        $user->Sellprojects()->sync($request['project_id']);
+
+        // $success['token']  = $user->createToken('token')->plainTextToken;
         return $this->sendResponse(new UserResource($user), "user data updated", 200);
     }
 }

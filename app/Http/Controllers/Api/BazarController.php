@@ -40,8 +40,8 @@ class  BazarController extends Controller
 
     public function store(BazarRequest $request)
     {
-        $role = Auth::user()->role ;
-            if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
+        $role = Auth::user()->role;
+        if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
 
             $data = $this->Repository->store($request->validated());
             if ($data == true) {
@@ -52,7 +52,6 @@ class  BazarController extends Controller
         } else {
             return $this->sendError('sorry', "you don't have permission to access this", 404);
         }
-    
     }
 
 
@@ -65,7 +64,7 @@ class  BazarController extends Controller
 
     public function storeUp(Request $request)
     {
-        $role = Auth::user()->role ;
+        $role = Auth::user()->role;
         if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             $data = $this->Repository->edit($request);
             if ($data === true) {
@@ -82,7 +81,7 @@ class  BazarController extends Controller
 
     public function destroy($id)
     {
-        $role = Auth::user()->role ;
+        $role = Auth::user()->role;
         if (Auth::check() && ($role == "مدخل البيانات " || $role == "admin")) {
             return $this->sendResponse($this->Repository->delete($id), " تم حذف الوحده ", 200);
         } else {
@@ -111,7 +110,8 @@ class  BazarController extends Controller
     public function revenue(Request $request)
     {
 
-        $revenue = Bazar::orderBy('revenue', 'asc')->where('section', $request['section'])->get();
+        $revenue = Bazar::orderBy('revenue', 'asc')->where('section', $request['section'])
+            ->where('appear', 1)->get();
         $unique_data = $revenue->unique('revenue')->pluck('revenue')
             ->values()->all();
         return response()->json([
@@ -124,9 +124,11 @@ class  BazarController extends Controller
     public function space($meter_price = '', Request $request)
     {
         if ($meter_price != null && $meter_price != 0) {
-            $spaces = Bazar::where('meter_price', $meter_price)->where('section', $request['section'])->orderBy('space', 'asc')->get();
+            $spaces = Bazar::where('meter_price', $meter_price)->where('section', $request['section'])
+                ->where('appear', 1)->orderBy('space', 'asc')->get();
         } else {
-            $spaces = Bazar::orderBy('space', 'asc')->where('section', $request['section'])->get();
+            $spaces = Bazar::orderBy('space', 'asc')->where('section', $request['section'])
+                ->where('appear', 1)->get();
         }
         $unique_data = $spaces->unique('space')->pluck('space')
             ->values()->all();
@@ -138,14 +140,16 @@ class  BazarController extends Controller
     }
 
 
-    public function meterPrice(Request $request ,$space = '')
+    public function meterPrice(Request $request, $space = '')
     {
-        //->where('section', $request['section'])
         if ($space != null && $space != 0) {
-            $unit = Bazar::where('space', $space)->orderBy('meter_price', 'asc')->get();
+            $unit = Bazar::where('space', $space)->where('section', $request['section'])
+                ->where('appear', 1)->orderBy('meter_price', 'asc')->get();
         } else {
-            $unit = Bazar::orderBy('meter_price', 'asc')->get();
+            $unit = Bazar::orderBy('meter_price', 'asc')->where('section', $request['section'])
+                ->where('appear', 1)->get();
         }
+
         $unique_data = $unit->unique('meter_price')
             ->pluck('meter_price')->values()->all();
 

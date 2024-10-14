@@ -85,6 +85,19 @@ class ImageController extends Controller
         return $this->sendResponse($image, "update", 200);
     }
 
+    public function updateNames(Request $request)
+    {
+        // Update images with the old name to the new name
+        $updatedImages = Image::where('name', $request->input('old_name'))
+                               ->update(['name' => $request->input('new_name')]);
+
+        if ($updatedImages) {
+            return $this->sendResponse('true', "update names", 200);
+        } else {
+            return $this->sendError('false', "No images found with the provided name", 422);
+        } 
+    }
+
 
     public function destroy($id)
     {

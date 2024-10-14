@@ -108,7 +108,12 @@ Route::prefix("unit")->group(function () {
 
 
 Route::resource('image', ImageController::class)->only(['index', 'show']);
-Route::get('images/uniqueNames', [ImageController::class, 'uniqueNames']);
+Route::prefix("images")->group(function () {
+    Route::controller(ImageController::class)->group(function () {
+        Route::get('/uniqueNames', 'uniqueNames');
+        Route::post('/updateNames', 'updateNames');
+    });
+});
 
 Route::resource('post', PostController::class)->only(['index', 'show']);
 Route::resource('comment', CommentController::class);
