@@ -21,20 +21,20 @@ class VisitorController extends Controller
     {
         $query = Visitor::query();
 
-        if ($request->has('name')) {
+        if ($request->has('name') && $request->input('name') != null) {
             $query->where('name', 'like', '%' . $request->input('name') . '%');
         }
 
-        if ($request->has('phone')) {
+        if ($request->has('phone') && $request->input('phone') != null) {
             $query->where('phone', 'like', '%' . $request->input('phone') . '%');
         }
 
-        if ($request->has('date')) {
+        if ($request->has('date') && $request->input('date') != null) {
             $query->where('created_at', 'like', '%' . $request->input('date') . '%');
         }
 
-        if ($request->has('contract')) {
-            $query->where('contract', 1);
+        if ($request->has('contract') && $request->input('contract') != null) {
+            $query->where('contract', $request->input('contract'));
         }
         
         $data = $query->latest()->paginate($request['paginate']);
