@@ -92,10 +92,16 @@ class UnitRepository implements UnitInterface
                $this->deleteImage('Units', $unit->img);
                 $img = $this->setImageWithoutsize($attributes['img'], 'Units');
                 $unit->update(['img'=>$img]);
-            }elseif($attributes['meter_price']!= null  ||  $attributes['space'] != null ){
-                $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
+            }elseif($attributes['meter_price']!= null){
+                $attributes['revenue'] = Floor(($unit->space * $attributes['meter_price'] * .21) / 12);
+                // $unit->update($attributes->only(['meter_price', 'space', 'revenue']));
+                 $unit->update($attributes->except('img'));
+
+            } elseif ($attributes['space'] != null) {
+                $attributes['revenue'] = Floor(($attributes['space'] * $unit->meter_price * .21) / 12);
+                $unit->update($attributes->except('img'));
             }else{
-                $unit->update($attributes->all());
+                $unit->update($attributes->except('img'));
 
             }
             return $unit;

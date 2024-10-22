@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JobController;
+use App\Http\Controllers\Api\HomeController;
+use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TextController;
 use App\Http\Controllers\Api\UnitController;
@@ -14,6 +16,8 @@ use App\Http\Controllers\Api\OwnerController;
 use App\Http\Controllers\Api\WalletController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\ProjectController;
+use App\Http\Controllers\Api\VisitorController;
+use App\Http\Controllers\OwnersystemController;
 use App\Http\Controllers\Api\ContactUsController;
 use App\Http\Controllers\Api\FormsellsController;
 use App\Http\Controllers\Api\ParkUsersController;
@@ -28,16 +32,13 @@ use App\Http\Controllers\Api\ReservationController;
 use App\Http\Controllers\Api\SellProjectController;
 use App\Http\Controllers\Api\BazarCustomerController;
 use App\Http\Controllers\Api\SellerProfileController;
+use App\Http\Controllers\Api\SouqistanboulController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
 use App\Http\Controllers\Api\CustomerQuestionController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
-use App\Http\Controllers\Api\LinkController;
 use App\Http\Controllers\Api\RealEstateProjectController;
-use App\Http\Controllers\Api\SouqistanboulController;
 use App\Http\Controllers\Api\SouqistanboulformController;
-use App\Http\Controllers\Api\VisitorController;
-use App\Http\Controllers\OwnersystemController;
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -258,6 +259,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'destroy']);
     Route::resource('Souqistanboul-form', SouqistanboulformController::class)->only(['index', 'show', 'destroy']);
     Route::put('updateContract/{id}', [VisitorController::class, 'updateContract']);
+    
+    Route::resource('home-client-rate', HomeController::class);
 
     
 
