@@ -58,11 +58,13 @@ class ReservationRepository implements ReservationInterface
     public function edit($id,  $attributes): ?Reservation
     {
         $data = $this->model->findOrFail($id);
-        if ($attributes['feedback'] != null) {
-            $data->update([
-                'feedback' => $attributes['feedback']
-            ]);
-        }
+        // if ($attributes['feedback'] != null) {
+        //     $data->update([
+        //         'feedback' => $attributes['feedback']
+        //     ]);
+        //}
+        $data->update($attributes->all());
+
         return $data;
     }
 
@@ -105,9 +107,9 @@ class ReservationRepository implements ReservationInterface
     public function type(array $attributes)
     {
         return function ($q) use ($attributes) {
-            if(array_key_exists('type', $attributes ) && $attributes['type'] != 0){
-             $type = $attributes['type'];
-            $q->whereHas('unit.type', function ($query) use ( $type) {
+            if (array_key_exists('type', $attributes) && $attributes['type'] != 0) {
+                $type = $attributes['type'];
+                $q->whereHas('unit.type', function ($query) use ($type) {
                     $query->where('name', $type);
                 });
             }
