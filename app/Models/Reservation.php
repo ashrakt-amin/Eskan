@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Reservation extends Model
 {
     use HasFactory , SoftDeletes;
-    protected $fillable = ['name' , 'phone' , 'job' , 'unit_id' , 'project_id' ,'feedback'];
+    protected $fillable = ['name' , 'phone' , 'job' , 'unit_id' , 'project_id' ,'feedback', 'contract'];
 
     public function unit(){
         return $this->belongsTo(Unit::class,'unit_id');

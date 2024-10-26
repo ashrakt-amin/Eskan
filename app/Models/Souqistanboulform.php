@@ -9,6 +9,6 @@ class Souqistanboulform extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'phone', 'shop_number', 'region'];
+    protected $fillable = ['name', 'phone', 'shop_number','region', 'contract'];
 
 }
