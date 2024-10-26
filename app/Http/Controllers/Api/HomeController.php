@@ -57,6 +57,7 @@ class HomeController extends Controller
             });
         });
         $data_commercial_count = $data_commercial->count();
+        return $data_commercial_count;
         $data_commercial_contract = $data_commercial->where('contract', 1)->count();
 
 
