@@ -26,14 +26,14 @@ class HomeController extends Controller
         $data_one = Souqistanboulform::where('region', 'تفصيل وخياطة');
         $data_one_count = $data_one->count();
         $data_one_contract = $data_one->where('contract', 1)->count();
-        $data_one_rate_contract = $data_one_count == 0 ? 0 :  number_format($data_one_contract /$data_one_count, 1, '.', '');
+        $data_one_rate_contract = $data_one_count == 0 ? 0 :  number_format(($data_one_contract /$data_one_count )* 100, 1, '.', '');
 
 
         // مكاتب إدارية
         $data_two = Souqistanboulform::where('region', 'المكاتب الاداريه');
         $data_two_count = $data_two->count();
         $data_two_contract = $data_two->where('contract', 1)->count();
-        $data_two_rate_contract = $data_two_count == 0 ? 0 : number_format($data_two_contract /$data_two_count, 1, '.', '');
+        $data_two_rate_contract = $data_two_count == 0 ? 0 : number_format(($data_two_contract /$data_two_count )* 100, 1, '.', '');
 
 
         // reservation  project_id=1
@@ -57,19 +57,18 @@ class HomeController extends Controller
             });
         });
         $data_commercial_count = $data_commercial->count();
-        return $data_commercial_count;
         $data_commercial_contract = $data_commercial->where('contract', 1)->count();
 
 
 
-        $data_housing_rate_contract = $data_housing_count == 0 ? 0 : number_format(($data_housing_contract / $data_housing_count), 1, '.', '');
-        $data_commercial_rate_contract = $data_commercial_count == 0 ? 0 : number_format(($data_commercial_contract / $data_commercial_count), 1, '.', '');
+        $data_housing_rate_contract = $data_housing_count == 0 ? 0 : number_format(($data_housing_contract / $data_housing_count) * 100  , 1, '.', '');
+        $data_commercial_rate_contract = $data_commercial_count == 0 ? 0 : number_format(($data_commercial_contract / $data_commercial_count) * 100  , 1, '.', '');
 
         // BazarCustomer
 
         $bazarCustomer_count = BazarCustomer::count();
         $bazarCustomer_contract = $data_two->where('contract', 1)->count();
-        $bazarCustomer_rate_contract = $bazarCustomer_count == 0 ? 0 : number_format($bazarCustomer_contract / $bazarCustomer_count, 1, '.', '');
+        $bazarCustomer_rate_contract = $bazarCustomer_count == 0 ? 0 : number_format(($bazarCustomer_contract / $bazarCustomer_count)* 100, 1, '.', '');
 
 
 
@@ -77,27 +76,27 @@ class HomeController extends Controller
             'Souqistanboul_تفصيل وخياطة' => [
                 'count'         => $data_one_count,
                 'contract'      => $data_one_contract ,
-                'rate_contract' => $data_one_rate_contract * 100
+                'rate_contract' => $data_one_rate_contract 
             ],
             'Souqistanboul_مكاتب إدارية' => [
                 'count'          => $data_two_count,
                 'contract'       => $data_two_contract,
-                'rate_contract'  => $data_two_rate_contract * 100 
+                'rate_contract'  => $data_two_rate_contract 
             ],
             'reservation_سكنى'     => [
                 'count'         => $data_housing_count,
                 'contract'       => $data_housing_contract,
-                'rate_contract' => $data_housing_rate_contract * 100
+                'rate_contract' => $data_housing_rate_contract 
             ],
             'reservation_تجارى'    => [
                 'count'          => $data_commercial_count,
                 'contract'        => $data_commercial_contract,
-                'rate_contract'  => $data_commercial_rate_contract * 100
+                'rate_contract'  => $data_commercial_rate_contract 
             ],
             'BazarCustomer'        => [
                 'count'          => $bazarCustomer_count,
                 'contract'        => $bazarCustomer_contract,
-                'rate_contract'  => $bazarCustomer_rate_contract * 100
+                'rate_contract'  => $bazarCustomer_rate_contract 
             ]
         ];
 
