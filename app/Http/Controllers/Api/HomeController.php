@@ -61,8 +61,8 @@ class HomeController extends Controller
 
 
 
-        $data_housing_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : number_format($data_housing_contract / Reservation::where('project_id', 1)->count(), 1, '.', '');
-        $data_commercial_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : number_format($data_commercial_contract / Reservation::where('project_id', 1)->count(), 1, '.', '');
+        $data_housing_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : number_format(($data_housing_contract / Reservation::where('project_id', 1)->count()), 1, '.', '');
+        $data_commercial_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : number_format(($data_commercial_contract / Reservation::where('project_id', 1)->count()), 1, '.', '');
 
         // BazarCustomer
 
