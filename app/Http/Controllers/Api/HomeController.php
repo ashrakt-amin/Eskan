@@ -76,27 +76,27 @@ class HomeController extends Controller
             'Souqistanboul_تفصيل وخياطة' => [
                 'count'         => $data_one_count,
                 'contract'      => $data_one_contract ,
-                'rate_contract' => intval($data_one_rate_contract)
+                'rate_contract' => $data_one_rate_contract * 1
             ],
             'Souqistanboul_مكاتب إدارية' => [
                 'count'          => $data_two_count,
                 'contract'       => $data_two_contract,
-                'rate_contract'  => intval($data_two_rate_contract)
+                'rate_contract'  => $data_two_rate_contract 
             ],
             'reservation_سكنى'     => [
                 'count'         => $data_housing_count,
                 'contract'       => $data_housing_contract,
-                'rate_contract' => intval($data_housing_rate_contract)
+                'rate_contract' => $data_housing_rate_contract 
             ],
             'reservation_تجارى'    => [
                 'count'          => $data_commercial_count,
                 'contract'        => $data_commercial_contract,
-                'rate_contract'  => intval($data_commercial_rate_contract)
+                'rate_contract'  => $data_commercial_rate_contract 
             ],
             'BazarCustomer'        => [
                 'count'          => $bazarCustomer_count,
                 'contract'        => $bazarCustomer_contract,
-                'rate_contract'  => intval($bazarCustomer_rate_contract)
+                'rate_contract'  => $bazarCustomer_rate_contract 
             ]
         ];
 
