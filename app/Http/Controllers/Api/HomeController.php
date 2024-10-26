@@ -39,21 +39,24 @@ class HomeController extends Controller
         // reservation  project_id=1
         // type = سكنى
 
-        $data_housing_count = Reservation::where('project_id', 1)->whereHas('unit', function ($query) {
+        $data_housing = Reservation::where('project_id', 1)->whereHas('unit', function ($query) {
                 $query->whereHas('type', function ($subQuery) {
                 $subQuery->where('name', 'سكنى');
             });
-        })->count();
-        $data_housing_contract = $data_housing_count->where('contract', 1)->count();
+        });
+
+        $data_housing_count = $data_housing->count();
+        $data_housing_contract = $data_housing->where('contract', 1)->count();
 
 
 
         // type = تجارى 
-        $data_commercial_count = Reservation::where('project_id', 1)->whereHas('unit', function ($query) {
+        $data_commercial = Reservation::where('project_id', 1)->whereHas('unit', function ($query) {
             $query->whereHas('type', function ($subQuery) {
                 $subQuery->where('name', 'تجارى');
             });
-        })->count();
+        });
+        $data_commercial_count = $data_commercial->count();
         $data_commercial_contract = $data_commercial_count->where('contract', 1)->count();
 
 
