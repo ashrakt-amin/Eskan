@@ -8,7 +8,7 @@ use App\Models\BazarCustomer;
 use App\Models\Souqistanboulform;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
-
+use Nette\Utils\Floats;
 
 class HomeController extends Controller
 {
@@ -26,14 +26,14 @@ class HomeController extends Controller
         $data_one = Souqistanboulform::where('region', 'تفصيل وخياطة');
         $data_one_count = $data_one->count();
         $data_one_contract = $data_one->where('contract', 1)->count();
-        $data_one_rate_contract = $data_one_count == 0 ? 0 :  $data_one_contract / $data_one_count;
+        $data_one_rate_contract = $data_one_count == 0 ? 0 :  floor($data_one_contract / $data_one_count);
 
 
         // مكاتب إدارية
         $data_two = Souqistanboulform::where('region', 'المكاتب الاداريه');
         $data_two_count = $data_two->count();
         $data_two_contract = $data_two->where('contract', 1)->count();
-        $data_two_rate_contract = $data_two_count == 0 ? 0 : $data_two_contract / $data_two_count;
+        $data_two_rate_contract = $data_two_count == 0 ? 0 : floor($data_two_contract / $data_two_count);
 
 
         // reservation  project_id=1
@@ -61,14 +61,14 @@ class HomeController extends Controller
 
 
 
-        $data_housing_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : $data_housing_contract / Reservation::where('project_id', 1)->count();
-        $data_commercial_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : $data_commercial_contract / Reservation::where('project_id', 1)->count();
+        $data_housing_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : floor($data_housing_contract / Reservation::where('project_id', 1)->count());
+        $data_commercial_rate_contract = Reservation::where('project_id', 1)->count() == 0 ? 0 : floor($data_commercial_contract / Reservation::where('project_id', 1)->count());
 
         // BazarCustomer
 
         $bazarCustomer_count = BazarCustomer::count();
         $bazarCustomer_contract = $data_two->where('contract', 1)->count();
-        $bazarCustomer_rate_contract = $bazarCustomer_count == 0 ? 0 : $bazarCustomer_contract / $bazarCustomer_count;
+        $bazarCustomer_rate_contract = $bazarCustomer_count == 0 ? 0 : floor($bazarCustomer_contract / $bazarCustomer_count);
 
 
 
