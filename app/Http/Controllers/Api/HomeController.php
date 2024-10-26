@@ -76,7 +76,7 @@ class HomeController extends Controller
             'Souqistanboul_تفصيل وخياطة' => [
                 'count'         => $data_one_count,
                 'contract'      => $data_one_contract ,
-                'rate_contract' => $data_one_rate_contract 
+                'rate_contract' => intval($data_one_rate_contract)
             ],
             'Souqistanboul_مكاتب إدارية' => [
                 'count'          => $data_two_count,
