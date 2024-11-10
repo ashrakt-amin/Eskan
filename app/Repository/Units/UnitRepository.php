@@ -74,6 +74,9 @@ class UnitRepository implements UnitInterface
             } elseif ($attributes['meter_price']) {
                 $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
                 $attributes['advance'] = $advance;
+            } elseif($attributes['advance']) {
+                $advance_rate  = number_format(($attributes['advance'] / ( $unit->space * $unit->meter_price ))* 100);
+                $attributes['advance_rate'] = $advance_rate;
             }
 
             $unit->update($attributes->all());

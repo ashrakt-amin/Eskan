@@ -94,9 +94,7 @@ class  BazarController extends Controller
 
     public function numbers(Request $request)
     {
-        //->where('section', $request['section'])
-
-        $numbers = Bazar::orderBy('number', 'asc')->get();
+        $numbers = Bazar::orderBy('number', 'asc')->where('appear', 1)->where('section', $request['section'])->get();
         $unique_data = $numbers->unique('number')->pluck('number')
             ->values()->all();
         return response()->json([
