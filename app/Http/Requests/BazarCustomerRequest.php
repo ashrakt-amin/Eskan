@@ -20,6 +20,7 @@ class BazarCustomerRequest extends FormRequest
             'bazar_number' => 'required',
             'section'      => 'nullable',
             'feedback'     => 'nullable',
+            'national_id'  => 'required|max:20',
 
         ];
     }

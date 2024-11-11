@@ -17,6 +17,7 @@ return new class extends Migration
             $table->String('phone');
             $table->String('bazar_number');
             $table->String('feedback')->nullable();
+            $table->string('national_id', 20);
             $table->timestamps();
         });
     }

@@ -9,6 +9,6 @@ class BazarCustomer extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name','phone','bazar_number','feedback','section','contract'];
+    protected $fillable = ['name','phone','bazar_number','feedback','section','contract', 'national_id'];
     
 }
