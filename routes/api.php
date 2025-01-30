@@ -35,6 +35,7 @@ use App\Http\Controllers\Api\SellerProfileController;
 use App\Http\Controllers\Api\SouqistanboulController;
 use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\CityCenterUsersController;
+use App\Http\Controllers\Api\SeekmoneyupdateController;
 use App\Http\Controllers\Api\CustomerQuestionController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\RealEstateProjectController;
@@ -138,6 +139,9 @@ Route::resource('sells/project/client', FormsellsController::class)->only(['stor
 Route::get('sells/site', [SellerProfileController::class, 'sells_site']);
 
 Route::resource('link', LinkController::class)->only(['index', 'show']);
+
+Route::resource("seek-money-update", SeekmoneyupdateController::class)->only('store');
+
 
 
 
@@ -262,7 +266,7 @@ Route::middleware('auth:sanctum')->group(function () {
     
     Route::resource('home-client-rate', HomeController::class);
 
-    
+    Route::resource("seek-money-update", SeekmoneyupdateController::class)->except('store');
 
 });
 
