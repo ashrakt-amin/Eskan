@@ -10,6 +10,7 @@ use App\Http\Requests\SeekMoneyUpdateRequest;
 use App\Http\Resources\SeekMoneyUpdateResource;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Http\Traits\PaginationTrait;
+
 class SeekmoneyupdateController extends Controller
 
 {
@@ -68,10 +69,31 @@ class SeekmoneyupdateController extends Controller
     }
 
 
-    public function update(Request $request, $id) {}
+    public function update(Request $request, $id)
+    {
+        $role = Auth::user()->role;
+
+        if (Auth::check() && ($role == "admin")) {
+            $data = Seekmoneyupdate::findOrFail($id);
+            $data->update($request->all());
+            return $this->sendResponse("success", "تم تعديل بيانات حق السعى", 200);
+        } else {
+            return $this->sendError('sorry', "لم يكن لديك الصلاحيه", 404);
+        }
+    }
 
 
 
-    public function destroy($id) {}
+    public function destroy($id)
+    {
+
+        $role = Auth::user()->role;
+
+        if (Auth::check() && ($role == "admin")) {
+            Seekmoneyupdate::findOrFail($id)->delete();
+            return $this->sendResponse('success', "تم حذف بيانات حق السعى", 200);
+        } else {
+            return $this->sendError('sorry', "لم يكن لديك الصلاحيه", 404);
+        }
+    }
 }
-
