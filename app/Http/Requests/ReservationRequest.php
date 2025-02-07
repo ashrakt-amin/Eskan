@@ -23,6 +23,7 @@ class ReservationRequest extends FormRequest
             'project_id'=> 'required',
             'unit_id'   => 'nullable',
             'feedback'  => 'nullable',
+            'contact_time' =>'required',
 
 
 

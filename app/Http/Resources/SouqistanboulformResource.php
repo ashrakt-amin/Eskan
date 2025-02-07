@@ -20,6 +20,7 @@ class SouqistanboulformResource extends JsonResource
             'shop_number'     => $this->shop_number,
             'region'          => $this->region,
             'created_at'      => $formattedCreatedAt,
+            'contact_time'    => $this->contact_time,
 
         ];    
 

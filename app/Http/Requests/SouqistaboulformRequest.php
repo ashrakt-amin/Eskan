@@ -20,6 +20,8 @@ class SouqistaboulformRequest extends FormRequest
             'phone'        => 'required',
             'shop_number'  => 'required',
             'region'       => 'required',
+            'contact_time' => 'required',
+
         ];
     }
 

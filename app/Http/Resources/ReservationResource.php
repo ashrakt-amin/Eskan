@@ -33,11 +33,9 @@ class ReservationResource extends JsonResource
                 'level'       => $this->unit->level->name,
                 'block'       => $this->unit->block == null ? "null" : $this->unit->block->name
             ],
-            'created_at'      =>  $formattedCreatedAt,
-            'feedback'        => $this->feedback
-
-
-        
+            'created_at'      => $formattedCreatedAt,
+            'feedback'        => $this->feedback,
+            'contact_time'    => $this->contact_time,
         ];
     }
 }

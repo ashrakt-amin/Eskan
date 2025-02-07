@@ -21,6 +21,7 @@ class BazarCustomerRequest extends FormRequest
             'section'      => 'nullable',
             'feedback'     => 'nullable',
             'national_id'  => 'required|max:20',
+            'contact_time' => 'required',
 
         ];
     }

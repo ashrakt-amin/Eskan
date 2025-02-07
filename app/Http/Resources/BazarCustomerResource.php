@@ -21,7 +21,9 @@ class BazarCustomerResource extends JsonResource
             'bazar_number'    => $this->bazar_number,
             'created_at'      => $formattedCreatedAt,
             'feedback'        => $this->feedback,
-            'section'         => $this->section
+            'section'         => $this->section,
+            'contact_time'    => $this->contact_time,
+
 
 
         ];    
