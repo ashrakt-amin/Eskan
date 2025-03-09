@@ -26,17 +26,19 @@ class UnitResource extends JsonResource
                 'id'     => $this->level_id,
                 'name'   => $this->level->name,
             ],
-            'images'                  =>$this->unitImage == null ? "null" : [
-                'unit_img'     => $this->unitImage->unitpath,
+            'levelimg'             => $this->levelimg == null ? "null" : $this->levelimgpath,
+            'img'             => $this->img == null ? "null" : $this->path,
+            'images'     => $this->unitImage == null ? "null" : [
+                'unit_img'    => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
             ],
-            'block_id'                  => $this->block_id == null ? "null" :  [
+            'block_id'        => $this->block_id == null ? "null" :  [
                 'id'     => $this->block_id,
                 'name'   => $this->block->name,
             ],
-            'appear'     =>$this->appear,
-            'revenue'       => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
-
+            'appear'     => $this->appear,
+            'revenue'    => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
+            'step'       => $this->step,
 
         ];
     }

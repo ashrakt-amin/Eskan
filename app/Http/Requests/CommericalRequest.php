@@ -31,6 +31,9 @@ class CommericalRequest extends FormRequest
             'img'         => 'required',
             'unit_image_id' => 'nullable',
             'appear'        => 'nullable',
+            'step'          => 'nullable',
+
+
 
 
         ];

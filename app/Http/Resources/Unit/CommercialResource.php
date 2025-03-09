@@ -8,7 +8,6 @@ class CommercialResource extends JsonResource
 {
     public function toArray($request)
     {
-
         return [
             'id'          => $this->id,
             'duration'    => $this->duration,
@@ -24,12 +23,16 @@ class CommercialResource extends JsonResource
                 'name'   => $this->level->name,
             ],
             'img'                  =>$this->img == null ? "null" : $this->path ,
+            'levelimg'             => $this->levelimg == null ? "null" : $this->levelimgpath,
+
             'images'                  =>$this->unitImage == null ? "null" : [
                 'unit_img'     => $this->unitImage->unitpath,
                 'block_img'   => $this->unitImage->blockpath,
             ],
-            'appear'     =>$this->appear,
-            'revenue'       => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
+            'appear'     => $this->appear,
+            'revenue'    => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
+            'step'       => $this->step,
+
 
 
 

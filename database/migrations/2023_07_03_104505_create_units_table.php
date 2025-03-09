@@ -20,11 +20,14 @@ return new class extends Migration
             $table->decimal('advance')->nullable();
             $table->String('installment');
             $table->String('contract')->nullable();
-            $table->integer('rooms');
+            $table->integer('rooms')->nullable();
             $table->String('duration');
             $table->foreignId('level_id')->constrained('levels')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('type_id')->constrained('units_types')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->String('levelimg')->nullable();
+            $table->String('levelimg')->nullable();
+            $table->String('step')->nullable();
             $table->timestamps();
         });
     }

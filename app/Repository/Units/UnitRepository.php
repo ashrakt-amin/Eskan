@@ -33,6 +33,8 @@ class UnitRepository implements UnitInterface
     {
         try {
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
+            ($attributes['levelimg'] && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], 'Units'): $attributes['levelimg']=null;
+            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -44,7 +46,7 @@ class UnitRepository implements UnitInterface
     {
         try {
             $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
-            $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21 ) / 12) ;
+            $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -74,12 +76,19 @@ class UnitRepository implements UnitInterface
             } elseif ($attributes['meter_price']) {
                 $advance = $unit->space * $attributes['meter_price'] * ($unit->advance_rate / 100);
                 $attributes['advance'] = $advance;
-            } elseif($attributes['advance']) {
-                $advance_rate  = number_format(($attributes['advance'] / ( $unit->space * $unit->meter_price ))* 100);
+            } elseif ($attributes['advance']) {
+                $advance_rate  = number_format(($attributes['advance'] / ($unit->space * $unit->meter_price)) * 100);
                 $attributes['advance_rate'] = $advance_rate;
             }
 
-            $unit->update($attributes->all());
+            if ($attributes['levelimg'] && $attributes['levelimg'] != null) {
+                $this->deleteImage('Units', $unit->levelimg);
+                $levelimg = $this->setImageWithoutsize($attributes['levelimg'], 'Units');
+                $unit->update(['levelimg' => $levelimg]);
+            }
+
+            $unit->update($attributes->except('levelimg'));
+
             return $unit;
         } catch (\Exception $e) {
 
@@ -92,20 +101,18 @@ class UnitRepository implements UnitInterface
         try {
             $unit = $this->model->findOrFail($attributes->id);
             if ($attributes['img']) {
-               $this->deleteImage('Units', $unit->img);
+                $this->deleteImage('Units', $unit->img);
                 $img = $this->setImageWithoutsize($attributes['img'], 'Units');
-                $unit->update(['img'=>$img]);
-            }elseif($attributes['meter_price']!= null){
+                $unit->update(['img' => $img]);
+            } elseif ($attributes['meter_price'] != null) {
                 $attributes['revenue'] = Floor(($unit->space * $attributes['meter_price'] * .21) / 12);
                 // $unit->update($attributes->only(['meter_price', 'space', 'revenue']));
-                 $unit->update($attributes->except('img'));
-
+                $unit->update($attributes->except('img'));
             } elseif ($attributes['space'] != null) {
                 $attributes['revenue'] = Floor(($attributes['space'] * $unit->meter_price * .21) / 12);
                 $unit->update($attributes->except('img'));
-            }else{
+            } else {
                 $unit->update($attributes->except('img'));
-
             }
             return $unit;
         } catch (\Exception $e) {
@@ -119,6 +126,8 @@ class UnitRepository implements UnitInterface
     {
         $user = Auth::user();
         $unit = $this->model->findOrFail($id);
+        $this->deleteImage('Units', $unit->levelimg);
+
         // if ($unit->unitImages != null) {
         //     foreach ($unit->unitImages as $img) {
         //         $this->deleteImage('Units', $img->img);
@@ -158,7 +167,7 @@ class UnitRepository implements UnitInterface
 
     public function filter(array $attributes)
     {
-      
+
         return function ($q) use ($attributes) {
 
             !array_key_exists('project_id', $attributes) || $attributes['project_id'] == 0   ?: $q
@@ -185,18 +194,21 @@ class UnitRepository implements UnitInterface
             !array_key_exists('block_id', $attributes) || $attributes['block_id'] == 0   ?: $q
                 ->where(['block_id' => $attributes['block_id']]);
 
-            !array_key_exists('appear', $attributes)?: $q
+            !array_key_exists('appear', $attributes) ?: $q
                 ->where(['appear' => $attributes['appear']]);
 
             !array_key_exists('revenue', $attributes) || $attributes['revenue'] == 0   ?: $q
                 ->where(['revenue' => $attributes['revenue']]);
 
+            !array_key_exists('step', $attributes) || $attributes['step'] == 0   ?: $q
+                ->where(['step' => $attributes['step']]);
 
-                $type =$attributes['type'];
-            !array_key_exists('type', $attributes)?: $q
-            ->whereHas('type', function ($query) use ($type) {
-                $query->where('name', $type);
-            });
+
+            $type = $attributes['type'];
+            !array_key_exists('type', $attributes) ?: $q
+                ->whereHas('type', function ($query) use ($type) {
+                    $query->where('name', $type);
+                });
 
             // !array_key_exists('commercial', $attributes) ?: $q
             //     ->where(['type_id' => 2]);

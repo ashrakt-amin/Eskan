@@ -30,21 +30,21 @@ class ReservationRepository implements ReservationInterface
     {
         $data = $this->model->create($attributes);
 
-        if ($data->unit_id != NULL) {
-            $unit_number = $data->unit->number;
-        } else {
-            $unit_number = NULL;
-        }
+        // if ($data->unit_id != NULL) {
+        //     $unit_number = $data->unit->number;
+        // } else {
+        //     $unit_number = NULL;
+        // }
 
-        $mailData = [
-            'title' => 'Dear ziad',
-            'name' => 'new reservation from ' . $attributes['name'],
-            'phone' => ' phone : ' . $attributes['phone'],
-            'job' => 'job : ' . $attributes['job'],
-            'project' => 'project name : ' . $data->project->name,
-            'unit' => 'unit numer : ' . $unit_number,
-        ];
-        SendEmailJob::dispatch($mailData);
+        // $mailData = [
+        //     'title' => 'Dear ziad',
+        //     'name' => 'new reservation from ' . $attributes['name'],
+        //     'phone' => ' phone : ' . $attributes['phone'],
+        //     'job' => 'job : ' . $attributes['job'],
+        //     'project' => 'project name : ' . $data->project->name,
+        //     'unit' => 'unit numer : ' . $unit_number,
+        // ];
+        // SendEmailJob::dispatch($mailData);
         return $data;
     }
 
