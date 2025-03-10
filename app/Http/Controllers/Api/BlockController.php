@@ -16,9 +16,16 @@ class BlockController extends Controller
 {
     use TraitResponseTrait, TraitImageProccessingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
-        return BlockResource::collection(Block::all());
+        $query = Block::query();
+
+        if ($request->has('project_id') && $request->input('project_id') != null) {
+            $query->where('project_id', $request->input('project_id'));
+        }
+
+        $data = $query->latest()->get();
+        return BlockResource::collection($data);
     }
 
     public function store(BlockRequest $request)

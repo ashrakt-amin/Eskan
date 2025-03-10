@@ -33,8 +33,8 @@ class UnitRepository implements UnitInterface
     {
         try {
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
-            ($attributes['levelimg'] && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], 'Units'): $attributes['levelimg']=null;
-            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
+            ($attributes['levelimg'] && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], Unit::IMAGE_PATH): $attributes['levelimg']=null;
+            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -45,7 +45,7 @@ class UnitRepository implements UnitInterface
     public function storeCommerical(array $attributes)
     {
         try {
-            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], 'Units');
+            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
             $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
             $data = $this->model->create($attributes);
             return $data;
@@ -83,11 +83,17 @@ class UnitRepository implements UnitInterface
 
             if ($attributes['levelimg'] && $attributes['levelimg'] != null) {
                 $this->deleteImage('Units', $unit->levelimg);
-                $levelimg = $this->setImageWithoutsize($attributes['levelimg'], 'Units');
+                $levelimg = $this->setImageWithoutsize($attributes['levelimg'], Unit::IMAGE_PATH);
                 $unit->update(['levelimg' => $levelimg]);
             }
 
-            $unit->update($attributes->except('levelimg'));
+            if ($attributes['img'] && $attributes['img'] != null) {
+                $this->deleteImage('Units', $unit->img);
+                $img = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
+                $unit->update(['img' => $img]);
+            }
+
+            $unit->update($attributes->except(['levelimg','img']));
 
             return $unit;
         } catch (\Exception $e) {
@@ -102,7 +108,7 @@ class UnitRepository implements UnitInterface
             $unit = $this->model->findOrFail($attributes->id);
             if ($attributes['img']) {
                 $this->deleteImage('Units', $unit->img);
-                $img = $this->setImageWithoutsize($attributes['img'], 'Units');
+                $img = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
                 $unit->update(['img' => $img]);
             } elseif ($attributes['meter_price'] != null) {
                 $attributes['revenue'] = Floor(($unit->space * $attributes['meter_price'] * .21) / 12);

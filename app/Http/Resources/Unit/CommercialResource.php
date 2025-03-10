@@ -32,6 +32,10 @@ class CommercialResource extends JsonResource
             'appear'     => $this->appear,
             'revenue'    => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
             'step'       => $this->step,
+            'block_id'   => $this->block_id == null ? "null" :  [
+                'id'     => $this->block_id,
+                'name'   => $this->block->name,
+            ],
 
 
 

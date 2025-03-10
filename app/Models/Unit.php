@@ -16,7 +16,8 @@ class Unit extends Model
 
     protected $fillable = ['number', 'contract', 'rooms', 'duration', 'level_id', 'space', 'meter_price',
                            'advance_rate', 'advance', 'installment', 'type_id', 'project_id', 'unit_image_id',
-                           'block_id', 'appear', 'img' , 'revenue' , 'levelimg','step'];
+                           'block_id', 'appear', 'img' , 'revenue' ,
+        'levelimg','step'];
     
 
     public function type()
