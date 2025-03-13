@@ -39,6 +39,7 @@ class UnitResource extends JsonResource
             'appear'     => $this->appear,
             'revenue'    => is_int($this->revenue) ? (int)$this->revenue : (float)$this->revenue,
             'step'       => $this->step,
+            'receiving'  => is_int($this->receiving) ? (int)$this->receiving : (float)$this->receiving,
 
         ];
     }

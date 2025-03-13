@@ -34,7 +34,9 @@ class UnitRequest extends FormRequest
             'levelimg'      => 'nullable',
             'step'          => 'nullable',
             'img'           => 'nullable',
-            
+            'receiving'     => 'nullable',
+
+
         ];
     }
 }

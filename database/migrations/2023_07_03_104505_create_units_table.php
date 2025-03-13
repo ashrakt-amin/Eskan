@@ -28,6 +28,7 @@ return new class extends Migration
             $table->String('levelimg')->nullable();
             $table->String('levelimg')->nullable();
             $table->String('step')->nullable();
+            $table->decimal('receiving')->nullable();
             $table->timestamps();
         });
     }

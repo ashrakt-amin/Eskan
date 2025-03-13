@@ -33,6 +33,7 @@ class CommericalRequest extends FormRequest
             'unit_image_id' => 'nullable',
             'appear'        => 'nullable',
             'step'          => 'nullable',
+            'receiving'     => 'nullable',
 
 
 

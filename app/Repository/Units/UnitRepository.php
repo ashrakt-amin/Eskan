@@ -33,8 +33,8 @@ class UnitRepository implements UnitInterface
     {
         try {
             $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
-            ($attributes['levelimg'] && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], Unit::IMAGE_PATH): $attributes['levelimg']=null;
-            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
+            (isset($attributes['levelimg']) && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], Unit::IMAGE_PATH): $attributes['levelimg']=null;
+            (isset($attributes['img']) && $attributes['img'] != null)? $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH) : $attributes['img']=null;
             $data = $this->model->create($attributes);
             return $data;
         } catch (\Exception $e) {
@@ -45,7 +45,7 @@ class UnitRepository implements UnitInterface
     public function storeCommerical(array $attributes)
     {
         try {
-            $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH);
+            (isset($attributes['img']) && $attributes['img'] != null) ? $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH) : $attributes['img'] = null;
             $attributes['revenue'] = FLOOR(($attributes['space'] * $attributes['meter_price'] * .21) / 12);
             $data = $this->model->create($attributes);
             return $data;

@@ -36,6 +36,8 @@ class CommercialResource extends JsonResource
                 'id'     => $this->block_id,
                 'name'   => $this->block->name,
             ],
+            'receiving'  => is_int($this->receiving) ? (int)$this->receiving : (float)$this->receiving,
+
 
 
 
