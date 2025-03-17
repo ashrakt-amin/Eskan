@@ -32,7 +32,7 @@ class UnitRepository implements UnitInterface
     public function store(array $attributes)
     {
         try {
-            $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100);
+            (isset($attributes['advance_rate']) &&  $attributes['advance_rate']  != null) ? $attributes['advance'] = $attributes['space'] * $attributes['meter_price'] * ($attributes['advance_rate'] / 100) : $attributes['advance'] = $attributes['advance'];
             (isset($attributes['levelimg']) && $attributes['levelimg'] != null)? $attributes['levelimg'] = $this->setImageWithoutsize($attributes['levelimg'], Unit::IMAGE_PATH): $attributes['levelimg']=null;
             (isset($attributes['img']) && $attributes['img'] != null)? $attributes['img'] = $this->setImageWithoutsize($attributes['img'], Unit::IMAGE_PATH) : $attributes['img']=null;
             $data = $this->model->create($attributes);
