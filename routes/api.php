@@ -40,6 +40,8 @@ use App\Http\Controllers\Api\CustomerQuestionController;
 use App\Http\Controllers\Api\Auth\RegisterUserController;
 use App\Http\Controllers\Api\RealEstateProjectController;
 use App\Http\Controllers\Api\SouqistanboulformController;
+use App\Http\Controllers\Api\Ai\ExcelDataController;
+
 
 //start register
 Route::middleware('auth:sanctum')->prefix("register")->group(function () {
@@ -263,17 +265,19 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('visitor', VisitorController::class)->only(['index', 'show', 'destroy']);
     Route::resource('Souqistanboul-form', SouqistanboulformController::class)->only(['index', 'show', 'destroy']);
     Route::put('updateContract/{id}', [VisitorController::class, 'updateContract']);
-    
+
     Route::resource('home-client-rate', HomeController::class);
 
     Route::resource("seek-money-update", SeekmoneyupdateController::class)->except('store');
 
+    Route::controller(ExcelDataController::class)->group(function () {
+        Route::post('/ai-file', 'store');
+        Route::post('/ai-file/{id}', 'update');
+    });
 });
 
 // end auth
 
 Route::resource('visitor', VisitorController::class)->except(['index', 'show', 'destroy']);
 Route::resource('Souqistanboul-form', SouqistanboulformController::class)->except(['index', 'show', 'destroy']);
-
-
-
+Route::get('ai-file/{id}', [ExcelDataController::class, 'show']);

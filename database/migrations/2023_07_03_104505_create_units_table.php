@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreignId('type_id')->constrained('units_types')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('project_id')->constrained('projects')->cascadeOnDelete()->cascadeOnUpdate();
             $table->String('levelimg')->nullable();
-            $table->String('levelimg')->nullable();
             $table->String('step')->nullable();
             $table->decimal('receiving')->nullable();
             $table->timestamps();

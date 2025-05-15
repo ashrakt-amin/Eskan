@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Excel extends Model
+{
+    use HasFactory;
+    const IMAGE_PATH = 'Eskan/files';
+    protected $appends = ['path'];
+    protected $fillable = ['name', 'file'];
+
+
+
+    public function getPathAttribute()
+    {
+        if (env('APP_URL') == "http://localhost") {
+            return asset('storage/images/Eskan/files') . "/" . $this->file;
+        } else {
+            return asset('storage/app/public/images/Eskan/files') . "/" . $this->file;
+        }
+    }
+}
