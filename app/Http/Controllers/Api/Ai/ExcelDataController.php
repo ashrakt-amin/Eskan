@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\Ai;
 
-use App\Classes\ChunkReadFilter;
+use App\Http\Classes\ChunkReadFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Jobs\ProcessExcel;

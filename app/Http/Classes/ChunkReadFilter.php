@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes;
+namespace App\Http\Classes;
 
 use PhpOffice\PhpSpreadsheet\Reader\IReadFilter;
 
