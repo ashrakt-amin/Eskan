@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Ai;
 
 use App\Http\Classes\ChunkReadFilter;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ExcelFiles;
 use App\Http\Traits\ResponseTrait as TraitResponseTrait;
 use App\Jobs\ProcessExcel;
 use App\Models\Excel;
@@ -17,6 +18,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class ExcelDataController extends Controller
 {
     use TraitResponseTrait;
+
+
+
+    public function index()
+    {
+        $uploadedFiles = Excel::all();
+        return $this->sendResponse(ExcelFiles::collection($uploadedFiles), 'جميع الملفات', 200);
+    }
 
 
     public function show($id)
