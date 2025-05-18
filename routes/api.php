@@ -271,8 +271,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource("seek-money-update", SeekmoneyupdateController::class)->except('store');
 
     Route::controller(ExcelDataController::class)->group(function () {
-        Route::post('/ai-file', 'store');
-        Route::post('/ai-file/{id}', 'update');
+        Route::post('/ai-files', 'store');
+        Route::post('/ai-files/{id}', 'update');
     });
 });
 
@@ -280,4 +280,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::resource('visitor', VisitorController::class)->except(['index', 'show', 'destroy']);
 Route::resource('Souqistanboul-form', SouqistanboulformController::class)->except(['index', 'show', 'destroy']);
-Route::get('ai-file/{id}', [ExcelDataController::class, 'show']);
+Route::controller(ExcelDataController::class)->group(function () {
+    Route::get('/ai-files', 'index');
+    Route::get('/ai-files/{id}', 'show');
+});
