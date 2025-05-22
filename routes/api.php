@@ -283,4 +283,5 @@ Route::resource('Souqistanboul-form', SouqistanboulformController::class)->excep
 Route::controller(ExcelDataController::class)->group(function () {
     Route::get('/ai-files', 'index');
     Route::get('/ai-files/{id}', 'show');
+    Route::delete('/ai-files/{id}', 'destroy');
 });

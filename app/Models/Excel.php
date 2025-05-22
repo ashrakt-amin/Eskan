@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Excel extends Model
 {
     use HasFactory;
-    const IMAGE_PATH = 'Eskan/files';
+    const IMAGE_PATH = 'files';
     protected $appends = ['path'];
     protected $fillable = ['name', 'file'];
 
@@ -17,9 +17,9 @@ class Excel extends Model
     public function getPathAttribute()
     {
         if (env('APP_URL') == "http://localhost") {
-            return asset('storage/images/Eskan/files') . "/" . $this->file;
+            return asset('storage/images/files') . "/" . $this->file;
         } else {
-            return asset('storage/app/public/images/Eskan/files') . "/" . $this->file;
+            return asset('storage/app/public/images/files') . "/" . $this->file;
         }
     }
 }
